@@ -22,14 +22,17 @@ public class IndexServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		if (req.getParameter("guessGame") != null){
-			resp.sendRedirect(req.getContextPath() + "/guessingGame");
+		if (req.getParameter("studentCreation") != null){
+			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
-		else if (req.getParameter("addNumbers") != null){
-			resp.sendRedirect(req.getContextPath() + "/addNumbers");
+		else if (req.getParameter("facultyCreation") != null){
+			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
-		else if (req.getParameter("multiplyNumbers") != null){
-			resp.sendRedirect(req.getContextPath() + "/multiplyNumbers");
+		else if (req.getParameter("guestCreation") != null){
+			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+		}
+		else if (req.getParameter("login") != null){
+			resp.sendRedirect(req.getContextPath() + "/login");
 		}
 	}
 }

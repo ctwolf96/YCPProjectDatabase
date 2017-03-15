@@ -1,0 +1,46 @@
+#webpageTitle { 
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border-top: thick solid black;
+	background-color: lightgreen;
+	border-bottom: thick solid black;
+	border-left: thick solid black;
+	border-right: thick solid black;
+	border-width: 2px;
+	color: blue;
+	text-align: center;
+	text-decoration: underline;
+	font-variant: small-caps;
+}
+
+#webpageSubtitle{
+	
+	margin-left: 15px;
+	border-top: none;
+	border-bottom: thick solid black;
+	border-width: 1px;
+	color: blue;
+	width: 450px;
+	
+	}
+	
+#loginPart{
+	margin-top: 20px;
+	padding-top: 5px;
+	margin-left: 40px;
+	padding-left: 10px;
+	background-color: lightgreen;
+	border: 2px solid black;
+	width: 250px;
+	
+	}
+	
+.error {
+	color: red;
+		}
+		
+td.label {
+	text-align: right;
+		}
