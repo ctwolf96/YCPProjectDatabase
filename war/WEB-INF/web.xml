@@ -37,6 +37,18 @@
     <servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.NextGuessAjaxServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>AccountCreationFacultyAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationFacultyAjaxServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AccountCreationGuestAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationGuestAjaxServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AccountCreationStudentAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationStudentAjaxServlet</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>LoginAjaxServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.LoginAjaxServlet</servlet-class>
   </servlet>
@@ -75,6 +87,18 @@
   <servlet-mapping>
   	<servlet-name>LoginAjaxServlet</servlet-name>
   	<url-pattern>/ajax/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationStudentAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationStudent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationFacultyAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationFaculty</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationGuestAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationGuest</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
