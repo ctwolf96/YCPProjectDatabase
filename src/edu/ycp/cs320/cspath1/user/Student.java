@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.project.Project;
 
-public class Student {
+public class Student extends User {
 	private ClassType classLevel;
 	private MajorType major;
 	private ArrayList<Project> activeProjects;
