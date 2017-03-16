@@ -20,7 +20,7 @@
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 			<table>
 				<tr>
-					<td class="label">Password:</td>
+					<td class="label">Email:</td>
 					<td><input type="text" name="email" size="12" value="${email}" /></td>
 				</tr>
 				<tr>
