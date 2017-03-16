@@ -20,30 +20,36 @@
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 			<table>
 				<tr>
-					<td class="label">Password:</td>
+					<td class="label">Email:</td>
 					<td><input type="text" name="email" size="12" value="${email}" /></td>
 				</tr>
 				<tr>
-					<td class="label">First name:</td>
+					<td class="label">Username:</td>
 					<td><input type="text" name="username" size="12" value="${username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="text" name="password" size="12" value="${password}" /></td>
+					<td><input type="password" name="password" size="12" value="${password}" /></td>
 				</tr>
 				
 			</table>
 			<p></p>
 			<p>Major/Discipline: </p>
-			<input type="radio" name="computerEngineer" value="CE"> Computer Engineering<br>
-			<input type="radio" name="computerScience" value="CS"> Computer Science<br>
-			<input type="radio" name="electricalEngineer" value="EE"> Electrical Engineering<br>
-			<input type="radio" name="mechanicalEngineer" value="ME"> Mechanical Engineering<br>
+			<input type="radio" name="majortype" value="CE"> Computer Engineering<br>
+			<input type="radio" name="majortype" value="CS"> Computer Science<br>
+			<input type="radio" name="majortype" value="EE"> Electrical Engineering<br>
+			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br>
 			
-			<input type="Submit" name="submit" value="Login Account">
+			<p>Current Year: </p>
+			<input type="radio" name="classtype" value="FRESHMAN">Freshman<br>
+			<input type="radio" name="classtype" value="SOPHOMORE">Sophomore<br>
+			<input type="radio" name="classtype" value="JUNIOR">Junior<br>
+			<input type="radio" name="classtype" value="SENIOR">Senior<br>
+			
+			<input type="Submit" name="submit" value="Create Account">
 			<p></p>
-			<input type="Submit" name="faculty" value="Faculty Account">
-			<input type="Submit" name="guest" value="Guest Account">
+			<input type="Submit" name="faculty" value="Faculty Account Link">
+			<input type="Submit" name="guest" value="Guest Account Link">
 		</form>
 		</div>
 	</body>

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.enums.ClassType;
+import edu.ycp.cs320.cspath1.enums.MajorType;
+
 
 
 public class AccountCreationFacultyServlet extends HttpServlet {
@@ -25,15 +28,16 @@ private static final long serialVersionUID = 1L;
 		String result = null;
 		
 		
-		//TODO: Add enums for classtype and majortype and accommodate 
-		//corresponding data to account creation servlets
+		
 		try {
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
+			MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 			
-			if (username == null || password == null || email == null) {
-				errorMessage = "Please specify username, password, and email";
+			
+			if (username == null || password == null || email == null || majortype == null) {
+				errorMessage = "Please specify required fields";
 			}
 			
 			result = username + password;
@@ -45,6 +49,7 @@ private static final long serialVersionUID = 1L;
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
 		req.setAttribute("email", req.getParameter("email"));
+		req.setAttribute("majortype", req.getParameter("majortype"));
 		
 		
 		// Add result objects as request attributes
@@ -62,6 +67,28 @@ private static final long serialVersionUID = 1L;
 		req.getRequestDispatcher("/_view/accountCreationFaculty.jsp").forward(req, resp);
 		}
 	}
+	
+	private MajorType getMajorTypeFromParameter(String s){
+		MajorType majortype = null;
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("ME")){
+			majortype = MajorType.ME;
+			
+		}
+		else if (s.equals("CE")){
+			majortype = MajorType.CE;
+		}
+		else if(s.equals("CS")){
+			majortype = MajorType.CS;
+		}
+		else if(s.equals("EE")){
+			majortype = MajorType.EE;
+		}
+		return majortype;
+	}
+	
 	
 	
 

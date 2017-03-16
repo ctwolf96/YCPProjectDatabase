@@ -30,10 +30,10 @@ private static final long serialVersionUID = 1L;
 			String password = req.getParameter("password");
 			
 			if (username == null || password == null || email == null) {
-				errorMessage = "Please specify username, password, and email";
+				errorMessage = "Please specify required fields";
 			}
 			
-			result = username + password;
+			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
