@@ -2,6 +2,8 @@ package edu.ycp.cs320.cspath1.user;
 
 import java.util.ArrayList;
 
+import edu.ycp.cs320.cspath1.enums.ClassType;
+import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.project.Project;
 
 public class Student extends User {
