@@ -17,6 +17,8 @@
 			<input name="login" type="submit" value="Login Page" />
 			<p>Want to find projects? Click here!</p>
 			<input name="projectSolicitation" type="submit" value="Project Solicitation" />
+			<p>Want to create a project? Click here!</p>
+			<input name="projectProposal" type="submit" value="Project Proposal" />
 		</form>
 	</body>
 </html>

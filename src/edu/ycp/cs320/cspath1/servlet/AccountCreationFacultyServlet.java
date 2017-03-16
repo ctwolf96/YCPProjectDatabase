@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 
 
@@ -30,6 +29,7 @@ private static final long serialVersionUID = 1L;
 		
 		
 		try {
+			//All required fields for faculty account
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
@@ -68,6 +68,7 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 	
+	//translate parameter to MajorType
 	private MajorType getMajorTypeFromParameter(String s){
 		MajorType majortype = null;
 		if (s == null || s.equals("")){

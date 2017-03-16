@@ -36,10 +36,10 @@
 			</table>
 			<p></p>
 			<p>Major/Discipline: </p>
-			<input type="radio" name="CE" value="CE"> Computer Engineering<br>
-			<input type="radio" name="CS" value="CS"> Computer Science<br>
-			<input type="radio" name="EE" value="EE"> Electrical Engineering<br>
-			<input type="radio" name="ME" value="ME"> Mechanical Engineering<br>
+			<input type="radio" name="majortype" value="CE"> Computer Engineering<br>
+			<input type="radio" name="majortype" value="CS"> Computer Science<br>
+			<input type="radio" name="majortype" value="EE"> Electrical Engineering<br>
+			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br>
 			
 			<input type="Submit" name="submit" value="Create Account">
 			<p></p>

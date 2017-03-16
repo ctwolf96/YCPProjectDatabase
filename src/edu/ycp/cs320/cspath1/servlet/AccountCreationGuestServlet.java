@@ -25,6 +25,7 @@ private static final long serialVersionUID = 1L;
 		String result = null;
 		
 		try {
+			//Required fields for guest account
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");

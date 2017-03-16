@@ -29,6 +29,7 @@ private static final long serialVersionUID = 1L;
 		
 		
 		try {
+			//Required fields to create student account
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
@@ -67,6 +68,7 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 	
+	//Translate parameter to MajorType
 	private MajorType getMajorTypeFromParameter(String s){
 		MajorType majortype = null;
 		if (s == null || s.equals("")){
@@ -88,6 +90,7 @@ private static final long serialVersionUID = 1L;
 		return majortype;
 	}
 	
+	//Translate parameter to ClassType
 	private ClassType getClassTypeFromParameter(String s){
 		ClassType classtype = null;
 		if(s == null || s.equals("")){

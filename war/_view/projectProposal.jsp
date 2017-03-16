@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Project Solicitation</title>
+		<title>Project Proposal</title>
 		<link rel="stylesheet" href="TestCSS.css">
 	</head>
 	
@@ -13,12 +13,12 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1 id="webpageTitle">Project Solicitation</h1>
+	<h1 id="webpageTitle">Project Proposal</h1>
 	
 	
 	<div id="loginPart">
 	<h3 id="webpageSubtitle">Please fill out the following information</h3>
-	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
+	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
 	
 		<p>Hardware?</p>
 		<select name="hardware">
@@ -30,6 +30,11 @@
 			<option value="true">Yes</option>
 			<option value="false">No</option>
 		</select>
+		<p>Is this proposal funded?</p>
+		<select name="isfunded">
+			<option value="true">Yes</option>	
+			<option value="false">No</option>
+		</select>
 		
 			<table>
 				<tr>
@@ -39,6 +44,10 @@
 				<tr>
 					<td class="label">Start Time:</td>
 					<td><input type="text" name="startTime" size="12" value="${startTime}" /></td>
+				</tr>
+				<tr>
+					<td class="label">Project Title:</td>
+					<td><input type="text" name="startTime" size="12" value="${title}" /></td>
 				</tr>
 			</table>
 			<br>

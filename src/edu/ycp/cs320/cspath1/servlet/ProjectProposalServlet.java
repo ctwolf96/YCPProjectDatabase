@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 
-public class ProjectSolicitationServlet extends HttpServlet{
+public class ProjectProposalServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -32,15 +32,16 @@ private static final long serialVersionUID = 1L;
 			//All fields needed for project solicitation
 			String duration = req.getParameter("duration");
 			String startTime = req.getParameter("startTime");
-			String password = req.getParameter("password");
+			String title = req.getParameter("title");
 			//Until we make a model, these will be considered unused
 			ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 			ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
 			
 			Boolean hardware = getBooleanFromParameter(req.getParameter("hardware"));
-			Boolean software = getBooleanFromParameter(req.getParameter("hardware"));
+			Boolean software = getBooleanFromParameter(req.getParameter("software"));
+			Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
 			//Placeholder until I get all fields down
-			if (duration == null) {
+			if (title == null) {
 				errorMessage = "Please specify at least one field";
 			}
 			
@@ -65,7 +66,7 @@ private static final long serialVersionUID = 1L;
 		// Forward to view to render the result HTML document
 		
 		
-		req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 		
 	}
 	
