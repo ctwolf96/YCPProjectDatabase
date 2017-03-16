@@ -1,8 +1,8 @@
-package edu.ycp.cs320.cspath1.user;
+package edu.ycp.cs320.cspath1.enums;
 
 public enum ClassType {
 	FRESHMAN,
-	SOHPOMORE,
+	SOPHOMORE,
 	JUNIOR,
 	SENIOR
 }

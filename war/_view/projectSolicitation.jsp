@@ -44,11 +44,12 @@
 			<br>
 			
 			<p>Majors/Disciplines: </p>
-			<input type="checkbox" name="computerEngineer" value="CE">Computer Engineering<br>
-			<input type="checkbox" name="computerScience" value="CS">Computer Science<br>
-			<input type="checkbox" name="electricalEngineer" value="EE">Electrical Engineering<br>
-			<input type="checkbox" name="mechanicalEngineer" value="ME">Mechanical Engineering<br>
+			<input type="checkbox" name="CE" value="CE">Computer Engineering<br>
+			<input type="checkbox" name="CS" value="CS">Computer Science<br>
+			<input type="checkbox" name="EE" value="EE">Electrical Engineering<br>
+			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br>
 			<br>
+			
 			<p>Student Class</p>
 			<input type="checkbox" name="freshman" value="FR">Freshman<br>
 			<input type="checkbox" name="sophomore" value="SO">Sophomore<br>
