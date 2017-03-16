@@ -15,6 +15,8 @@
 			<input name="guestCreation" type="submit" value="Guest Account Creation" />
 			<p>Already have an account? Click here!</p>
 			<input name="login" type="submit" value="Login Page" />
+			<p>Want to find projects? Click here!</p>
+			<input name="projectSolicitation" type="submit" value="Project Solicitation" />
 		</form>
 	</body>
 </html>

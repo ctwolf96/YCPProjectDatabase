@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Account Creation</title>
+		<title>Project Solicitation</title>
 		<link rel="stylesheet" href="TestCSS.css">
 	</head>
 	

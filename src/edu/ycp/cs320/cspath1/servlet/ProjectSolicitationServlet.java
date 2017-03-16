@@ -17,7 +17,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/accountCreationFaculty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ private static final long serialVersionUID = 1L;
 			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
 		else {
-		req.getRequestDispatcher("/_view/accountCreationFaculty.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
 		}
 	}
 	private MajorType getMajorTypeFromParameter(String s){
