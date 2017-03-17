@@ -48,4 +48,5 @@ public abstract class User {
 	public void createAcct() {
 		
 	}
+	public abstract void proposeProject();
 }

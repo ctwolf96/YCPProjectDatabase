@@ -2,9 +2,10 @@ package edu.ycp.cs320.cspath1.user;
 
 import java.util.ArrayList;
 
+import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.project.Project;
 
-public class Faculty {
+public class Faculty extends User{
 	private MajorType major;
 	private ArrayList<String> disciplines;
 	private ArrayList<Project> activeProjects;

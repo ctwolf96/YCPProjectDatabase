@@ -1,6 +1,6 @@
 package edu.ycp.cs320.cspath1.user;
 
-public class Business {
+public class Business extends User {
 	private String number;
 	private String address;
 	
