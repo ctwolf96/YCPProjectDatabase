@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-public class LoginAjaxServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
+public class ProjectSolicitationAjaxServlet extends HttpServlet{
+private static final long serialVersionUID = 1L;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -26,19 +24,21 @@ public class LoginAjaxServlet extends HttpServlet {
 
 	private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Get parameters
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String duration = req.getParameter("duration");
+		String startTime = req.getParameter("startTime");
+		String email = req.getParameter("email");
 		
 		// Check whether parameters are valid
-		if (username == null || password == null) {
+		if (duration == null || startTime == null) {
 			badRequest("Bad parameters", resp);
 			return;
 		}
 		
 		// Send back a response
 		resp.setContentType("text/plain");
-		resp.getWriter().println("Username: " + username);
-		resp.getWriter().println("Password: " + password);
+		resp.getWriter().println("Username: " + duration);
+		resp.getWriter().println("Password: " + startTime);
+		
 	}
 
 	

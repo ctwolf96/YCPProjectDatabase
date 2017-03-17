@@ -34,5 +34,8 @@ public class IndexServlet extends HttpServlet {
 		else if (req.getParameter("login") != null){
 			resp.sendRedirect(req.getContextPath() + "/login");
 		}
+		else if (req.getParameter("projectSolicitation") != null){
+			resp.sendRedirect(req.getContextPath() +"/projectSolicitation");
+		}
 	}
 }

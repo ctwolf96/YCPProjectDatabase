@@ -21,30 +21,30 @@
 	<form action="${pageContext.servletContext.contextPath}/accountCreationFaculty" method="post">
 			<table>
 				<tr>
-					<td class="label">Password:</td>
+					<td class="label">Email:</td>
 					<td><input type="text" name="email" size="12" value="${email}" /></td>
 				</tr>
 				<tr>
-					<td class="label">First name:</td>
+					<td class="label">Username:</td>
 					<td><input type="text" name="username" size="12" value="${username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="text" name="password" size="12" value="${password}" /></td>
+					<td><input type="password" name="password" size="12" value="${password}" /></td>
 				</tr>
 				
 			</table>
-			<p></p>]
+			<p></p>
 			<p>Major/Discipline: </p>
-			<input type="radio" name="computerEngineer" value="CE"> Computer Engineering<br>
-			<input type="radio" name="computerScience" value="CS"> Computer Science<br>
-			<input type="radio" name="electricalEngineer" value="EE"> Electrical Engineering<br>
-			<input type="radio" name="mechanicalEngineer" value="ME"> Mechanical Engineering<br>
+			<input type="radio" name="CE" value="CE"> Computer Engineering<br>
+			<input type="radio" name="CS" value="CS"> Computer Science<br>
+			<input type="radio" name="EE" value="EE"> Electrical Engineering<br>
+			<input type="radio" name="ME" value="ME"> Mechanical Engineering<br>
 			
 			<input type="Submit" name="submit" value="Create Account">
 			<p></p>
-			<input type="Submit" name="student" value="Student Account">
-			<input type="Submit" name="guest" value="Guest Account">
+			<input type="Submit" name="student" value="Student Account Link">
+			<input type="Submit" name="guest" value="Guest Account Link">
 		</form>
 		</div>
 	</body>
