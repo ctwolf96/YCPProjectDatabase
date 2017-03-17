@@ -22,7 +22,7 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
+		
 		
 		try {
 			//Required fields for guest account
@@ -47,7 +47,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		
 		
 		// Forward to view to render the result HTML document
 		if (req.getParameter("student") != null){

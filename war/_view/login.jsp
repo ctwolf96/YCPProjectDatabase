@@ -13,7 +13,7 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-		<h1 id="webpageTitle">Account Creation (Student)</h1>
+		<h1 id="webpageTitle">Login</h1>
 		
 		<div id="loginPart">
 		<h3 id="webpageSubtitle">Please fill out the following information</h3>

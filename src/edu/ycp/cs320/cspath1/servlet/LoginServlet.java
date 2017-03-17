@@ -22,7 +22,8 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
+		
+		
 		try {
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
@@ -30,7 +31,7 @@ private static final long serialVersionUID = 1L;
 			if (username == null || password == null) {
 				errorMessage = "Please specify username and password";
 			}
-			result = username + password;
+			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
@@ -42,7 +43,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
