@@ -121,4 +121,42 @@ public class AccountCreationModelTest {
 		model.setEmailValidator(emailValidator);
 		assertEquals(emailValidator, model.getEmailValidator());
 	}
+	
+	@Test
+	public void testAllFieldsMet(){
+		//TEST THAT SHOULD RETURN TRUE
+		//Student User Test
+		model.setUsertype(UserType.STUDENT);
+		model.setClasstype(ClassType.FRESHMAN);
+		model.setMajortype(MajorType.CE);
+		model.setEmail("cspath1@ycp.edu");
+		model.setUsername("cspath1");
+		model.setPassword("password");
+		Boolean bool = model.allFieldsMet();
+		assertEquals(bool, true);
+		//Faculty User Test
+		model.setUsertype(UserType.FACULTY);
+		bool = model.allFieldsMet();
+		assertEquals(bool, true);
+		//Guest User Test
+		model.setUsertype(UserType.GUEST);
+		bool = model.allFieldsMet();
+		assertEquals(bool, true);
+		//Admin User Test
+		model.setUsertype(UserType.ADMIN);
+		assertEquals(bool, true);
+		
+		//TESTS THAT SHOULD RETURN FALSE
+		model.setEmail(null);
+		model.setUsertype(UserType.FACULTY);
+		bool = model.allFieldsMet();
+		assertEquals(bool, false);
+		model.setUsertype(UserType.STUDENT);
+		bool = model.allFieldsMet();
+		assertEquals(bool, false);
+		model.setUsertype(UserType.GUEST);
+		bool = model.allFieldsMet();
+		assertEquals(bool, false);
+		
+	}
 }

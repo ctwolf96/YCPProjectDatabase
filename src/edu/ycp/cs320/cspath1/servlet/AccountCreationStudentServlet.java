@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 
 
 
@@ -25,25 +27,26 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
+		AccountCreationModel model = new AccountCreationModel();
 		
 		
-		try {
-			//Required fields to create student account
-			String email = req.getParameter("email");
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
-			MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
-			ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
+		String email = req.getParameter("email");
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
+		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
 			
-			if (username == null || password == null || email == null || majortype == null || classtype == null) {
+		model.setEmail(email);
+		model.setPassword(password);
+		model.setUsername(username);
+		model.setMajortype(majortype);
+		model.setUsertype(UserType.FACULTY);
+		model.setClasstype(classtype);
+			
+		if (username == null || password == null || email == null || majortype == null || classtype == null) {
 				errorMessage = "Please specify required fields";
-			}
-			
-			
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
 		}
+			
 		
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
@@ -54,7 +57,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		req.setAttribute("model", model);
 		
 		//See if the user clicked either of the other account types, redirect accordingly
 		if (req.getParameter("guest") != null){

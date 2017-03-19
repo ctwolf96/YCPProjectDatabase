@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+
 
 
 public class AccountCreationGuestServlet extends HttpServlet {
@@ -22,6 +25,7 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
+		AccountCreationModel model = new AccountCreationModel();
 		
 		
 		try {
@@ -29,6 +33,12 @@ private static final long serialVersionUID = 1L;
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
+			
+			model.setEmail(email);
+			model.setPassword(password);
+			model.setUsername(username);
+			model.setUsertype(UserType.GUEST);
+			
 			
 			if (username == null || password == null || email == null) {
 				errorMessage = "Please specify required fields";
@@ -47,6 +57,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
+		req.setAttribute("model", model);
 		
 		
 		// Forward to view to render the result HTML document

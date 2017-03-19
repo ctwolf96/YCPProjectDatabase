@@ -11,7 +11,7 @@ public class Proposal extends Project {
 	private String description;
 	private String duration;
 	private String startTime;
-	private String numStudents;
+	private int numStudents;
 	private double cost;
 
 }

@@ -21,15 +21,15 @@
 			<table>
 				<tr>
 					<td class="label">Email:</td>
-					<td><input type="text" name="email" size="12" value="${email}" /></td>
+					<td><input type="text" name="email" size="12" value="${model.email}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Username:</td>
-					<td><input type="text" name="username" size="12" value="${username}" /></td>
+					<td><input type="text" name="username" size="12" value="${model.username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="password" name="password" size="12" value="${password}" /></td>
+					<td><input type="password" name="password" size="12" value="${model.password}" /></td>
 				</tr>
 			</table>
 			<input type="Submit" name="submit" value="Create Account">

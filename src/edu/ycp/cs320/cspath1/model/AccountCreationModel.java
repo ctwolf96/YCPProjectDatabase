@@ -83,11 +83,29 @@ public class AccountCreationModel {
 	}
 	
 	//this will change soon...ignore for now
-	public Boolean allFieldsMet(String errorMessage){
-		if (errorMessage == null){
+	public Boolean allFieldsMet(){
+		//placeholder for now
+		if (usertype == UserType.ADMIN){
 			return true;
 		}
-		else { return false; }
+		else if (usertype == UserType.FACULTY){
+			if (email != null && username != null && password != null && majortype != null){
+				return true;
+			}
+			else { return false; }
+		}
+		else if (usertype == UserType.STUDENT){
+			if (email != null && username != null && password != null && majortype != null && classtype != null){
+				return true;
+			}
+			else { return false; }
+		}
+		else{
+			if (email != null && username != null && password != null){
+				return true;
+			}
+			else { return false; }
+		}
 	}
 	
 	
