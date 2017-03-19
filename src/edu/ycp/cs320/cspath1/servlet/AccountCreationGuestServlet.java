@@ -68,7 +68,7 @@ private static final long serialVersionUID = 1L;
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
 		else{
-			req.getRequestDispatcher("/_view/guestHome.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/accountCreationGuest.jsp").forward(req, resp);
 		}
 	}
 	

@@ -12,8 +12,12 @@ public class ProjectModel {
 	private ArrayList <ClassType> classes;
 	private String description;
 	private String duration;
-	private int numStudents;
+	private String title;
+	private String startTime;
+	private String numStudents;
 	private boolean isFunded;
+	private boolean hardware;
+	private boolean software;
 	
 	public User getCreator() {
 		return creator;
@@ -55,11 +59,11 @@ public class ProjectModel {
 		this.duration = duration;
 	}
 
-	public int getNumStudents() {
+	public String getNumStudents() {
 		return numStudents;
 	}
 
-	public void setNumStudents(int numStudents) {
+	public void setNumStudents(String numStudents) {
 		this.numStudents = numStudents;
 	}
 
@@ -69,6 +73,38 @@ public class ProjectModel {
 
 	public void setFunded(boolean isFunded) {
 		this.isFunded = isFunded;
+	}
+
+	public boolean isHardware() {
+		return hardware;
+	}
+
+	public void setHardware(boolean hardware) {
+		this.hardware = hardware;
+	}
+
+	public boolean isSoftware() {
+		return software;
+	}
+
+	public void setSoftware(boolean software) {
+		this.software = software;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	

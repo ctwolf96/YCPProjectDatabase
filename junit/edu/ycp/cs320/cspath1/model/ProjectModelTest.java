@@ -54,10 +54,10 @@ public class ProjectModelTest {
 	
 	@Test
 	public void testSetNumStudents(){
-		model.setNumStudents(8);
-		assertEquals(8, model.getNumStudents());
-		model.setNumStudents(4);
-		assertEquals(4, model.getNumStudents());
+		model.setNumStudents("8");
+		assertEquals("8", model.getNumStudents());
+		model.setNumStudents("4");
+		assertEquals("4", model.getNumStudents());
 	}
 	
 	@Test
@@ -66,5 +66,33 @@ public class ProjectModelTest {
 		assertEquals(model.isFunded(), true);
 		model.setFunded(false);
 		assertEquals(model.isFunded(), false);
+	}
+	
+	@Test
+	public void testIsHardware(){
+		model.setHardware(true);
+		assertEquals(model.isHardware(), true);
+		model.setHardware(false);
+		assertEquals(model.isHardware(), false);
+	}
+	
+	@Test
+	public void testIsSoftware(){
+		model.setSoftware(true);
+		assertEquals(model.isSoftware(), true);
+		model.setSoftware(false);
+		assertEquals(model.isSoftware(), false);
+	}
+	
+	@Test
+	public void testSetStartTime(){
+		model.setStartTime("1/17/17");
+		assertEquals("1/17/17", model.getStartTime());
+	}
+	
+	@Test
+	public void testSetTitle(){
+		model.setTitle("PROJECT TITLE");
+		assertEquals("PROJECT TITLE", model.getTitle());
 	}
 }

@@ -69,7 +69,7 @@
 			<input type="Submit" name="submit" value="Find Projects">
 			<br>
 			<br>
-			<input type="Submit" name="project" value="Project Creation">
+			<input type="Submit" name="solicit" value="Project Creation">
 			
 		</form>
 		</div>
