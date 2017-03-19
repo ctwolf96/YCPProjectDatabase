@@ -19,6 +19,11 @@
 	<div id="loginPart">
 	<h3 id="webpageSubtitle">Please fill out the following information</h3>
 	<form action="${pageContext.servletContext.contextPath}/accountCreationFaculty" method="post">
+		<select name="userType">
+			<option value="guest">Business/Guest</option>	
+			<option value="faculty">Faculty</option>
+			<option value="student">Student</option>
+		</select>
 			<table>
 				<tr>
 					<td class="label">Email:</td>
