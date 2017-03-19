@@ -22,6 +22,7 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
+
 		
 		
 		try {
@@ -44,6 +45,7 @@ private static final long serialVersionUID = 1L;
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		
+
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);

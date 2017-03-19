@@ -63,8 +63,11 @@ private static final long serialVersionUID = 1L;
 		else if (req.getParameter("faculty") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
+		else if(req.getParameter("submit") != null){
+			resp.sendRedirect(req.getContextPath() + "/studentHome");
+		}
 		else {
-			req.getRequestDispatcher("/_view/accountCreationStudent.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
 		}
 	}
 	

@@ -26,6 +26,15 @@
 	
 	}
 	
+#sectionSubtitle{
+	
+	margin-left: 15px;
+	border-width: 1px;
+	color: blue;
+	width: 450px;
+	text-decoration: underline;
+	}
+	
 #loginPart{
 	margin-top: 20px;
 	padding-top: 5px;
@@ -36,7 +45,26 @@
 	width: 250px;
 	
 	}
-	
+#ProjectList{
+	margin-top: 10px;
+	margin-left: 10px;
+	border: 2px solid black;
+	width: 300px;
+	}
+
+.sections{
+	background-color: lightgreen;
+	float: left;
+	border: solid black;
+	width: 300px;
+}	
+.info{
+	float: right;
+	text-align: center;
+	background-color: lightgreen;
+	border: solid black;
+	width: 300px;
+}	
 .error {
 	color: red;
 		}
@@ -44,3 +72,9 @@
 td.label {
 	text-align: right;
 		}
+table{
+	border-collapse: collapse;
+}
+th, td{
+	border-right: 1px solid black;
+}
