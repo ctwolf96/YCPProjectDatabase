@@ -39,15 +39,15 @@
 			<table>
 				<tr>
 					<td class="label">Duration of Project (# of semesters):</td>
-					<td><input type="text" name="duration" size="12" value="${duration}" /></td>
+					<td><input type="text" name="duration" size="12" value="${model.duration}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Start Time:</td>
-					<td><input type="text" name="startTime" size="12" value="${startTime}" /></td>
+					<td><input type="text" name="startTime" size="12" value="${model.startTime}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Project Title:</td>
-					<td><input type="text" name="startTime" size="12" value="${title}" /></td>
+					<td><input type="text" name="startTime" size="12" value="${model.title}" /></td>
 				</tr>
 			</table>
 			<br>
