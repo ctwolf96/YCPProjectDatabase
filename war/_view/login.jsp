@@ -13,7 +13,7 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-		<h1 id="webpageTitle">Account Creation (Student)</h1>
+		<h1 id="webpageTitle">Login</h1>
 		
 		<div id="loginPart">
 		<h3 id="webpageSubtitle">Please fill out the following information</h3>
@@ -21,11 +21,11 @@
 			<table>
 				<tr>
 					<td class="label">Username:</td>
-					<td><input type="text" name="username" size="12" value="${username}" /></td>
+					<td><input type="text" name="username" size="12" value="${model.username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="password" name="password" size="12" value="${password}" /></td>
+					<td><input type="password" name="password" size="12" value="${model.password}" /></td>
 				</tr>
 			</table>
 			<input type="Submit" name="submit" value="Login">

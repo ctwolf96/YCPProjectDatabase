@@ -12,13 +12,13 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 
-public class ProjectSolicitationServlet extends HttpServlet{
+public class ProjectProposalServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -28,36 +28,38 @@ private static final long serialVersionUID = 1L;
 		ProjectModel model = new ProjectModel();
 		
 		
-		
-	
-			//All fields needed for project solicitation
-		String project = req.getParameter("project");
-		String title = req.getParameter("title");
-		String description = req.getParameter("description");
+
+		//All fields needed for project solicitation
+		String solicit =req.getParameter("solicit");
 		String duration = req.getParameter("duration");
 		String startTime = req.getParameter("startTime");
-		String password = req.getParameter("password");
-			//Until we make a model, these will be considered unused
+		String title = req.getParameter("title");
+		String description= req.getParameter("description");
+		//Until we make a model, these will be considered unused
 		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
-			
+		String numStudents = req.getParameter("numStudents");
 		Boolean hardware = getBooleanFromParameter(req.getParameter("hardware"));
-		Boolean software = getBooleanFromParameter(req.getParameter("hardware"));
-		
-		model.setClasses(classtypes);
-		model.setMajors(majortypes);
+		Boolean software = getBooleanFromParameter(req.getParameter("software"));
+		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
+			
 		model.setTitle(title);
-		model.setDescription(description);
-		model.setDuration(duration);
 		model.setStartTime(startTime);
+		model.setDuration(duration);
+		model.setDescription(description);
 		model.setHardware(hardware);
 		model.setSoftware(software);
+		model.setClasses(classtypes);
+		model.setMajors(majortypes);
+		model.setFunded(isFunded);
+		model.setNumStudents(numStudents);
 		//Placeholder until I get all fields down
-		if (duration == null) {
-				errorMessage = "Please specify at least one field";
+		if (title == null) {
+			errorMessage = "Please specify at least one field";
 		}
 			
 			
+		
 		
 		// Add parameters as request attributes
 		//Pretty certain this is used to put things into a model or controller
@@ -71,13 +73,15 @@ private static final long serialVersionUID = 1L;
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		req.setAttribute("model", model);
+	
 		
 		// Forward to view to render the result HTML document
-		if (project != null){
-			resp.sendRedirect(req.getContextPath() + "/projectProposal");
+		
+		if (solicit != null){
+			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
-		else{
-			req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+		else {
+		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 		}
 	}
 	

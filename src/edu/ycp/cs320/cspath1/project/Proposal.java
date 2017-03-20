@@ -13,7 +13,7 @@ public class Proposal extends Project {
 	private String duration;
 	private String startDate;
 	private String endDate;
-	private String numStudents;
+	private int numStudents;
 	private double cost;
 	private boolean isFunded;
 

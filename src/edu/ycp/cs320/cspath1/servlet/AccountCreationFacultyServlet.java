@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 
 
 
@@ -25,25 +26,27 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
+		AccountCreationModel model = new AccountCreationModel();
 		
 		
-		
-		try {
-			String email = req.getParameter("email");
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
-			MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
+	
+			//All required fields for faculty account
+		String email = req.getParameter("email");
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
+			
+		model.setEmail(email);
+		model.setPassword(password);
+		model.setUsername(username);
+		model.setMajortype(majortype);
+		model.setUsertype(UserType.FACULTY);
 			
 			
-			if (username == null || password == null || email == null || majortype == null) {
-				errorMessage = "Please specify required fields";
-			}
-			
-			result = username + password;
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+		if (username == null || password == null || email == null) {
+			errorMessage = "Please specify required fields";
 		}
+		
 		
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
@@ -54,7 +57,8 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		req.setAttribute("model", model);
+		
 		
 		// Forward to view to render the result HTML document
 		if (req.getParameter("guest") != null){
@@ -64,10 +68,11 @@ private static final long serialVersionUID = 1L;
 			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
 		else {
-		req.getRequestDispatcher("/_view/accountCreationFaculty.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/accountCreationFaculty.jsp").forward(req, resp);
 		}
 	}
 	
+	//translate parameter to MajorType
 	private MajorType getMajorTypeFromParameter(String s){
 		MajorType majortype = null;
 		if (s == null || s.equals("")){

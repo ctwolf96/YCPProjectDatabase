@@ -26,19 +26,31 @@
 			<option value="false">No</option>
 		</select>
 		<p>Software?</p>
-		<select name="hardware">
+		<select name="software">
 			<option value="true">Yes</option>
 			<option value="false">No</option>
 		</select>
 		
 			<table>
 				<tr>
+					<td class="label">Project Title:</td>
+					<td><input type="text" name="title" size="12" value="${model.title}" /></td>
+				</tr>
+				<tr>
+					<td class="label">Description:</td>
+					<td><input type="text" name="description" value="${model.description}" /></td>
+				</tr>
+				<tr>
 					<td class="label">Duration of Project (# of semesters):</td>
-					<td><input type="text" name="duration" size="12" value="${startTime}" /></td>
+					<td><input type="text" name="duration" size="12" value="${model.duration}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Start Time:</td>
-					<td><input type="text" name="startTime" size="12" value="${startTime}" /></td>
+					<td><input type="text" name="startTime" size="12" value="${model.startTime}" /></td>
+				</tr>
+				<tr>
+					<td class="label">Number of Students:</td>
+					<td><input type="text" name="numStudents" size="12" value="${model.numStudents}" /></td>
 				</tr>
 			</table>
 			<br>
@@ -55,6 +67,7 @@
 			<input type="checkbox" name="sophomore" value="SO">Sophomore<br>
 			<input type="checkbox" name="junior" value="JR">Junior<br>
 			<input type="checkbox" name="senior" value="SR">Senior<br>
+			<br>
 			<br>
 			<input type="Submit" name="submit" value="Find Projects">
 			<br>

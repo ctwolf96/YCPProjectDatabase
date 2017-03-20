@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+
 
 
 public class LoginServlet extends HttpServlet {
@@ -22,18 +24,22 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
-		try {
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
+		AccountCreationModel model = new AccountCreationModel();
+
+		
+		
+
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
 			
-			if (username == null || password == null) {
-				errorMessage = "Please specify username and password";
-			}
-			result = username + password;
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+		model.setUsername(username);
+		model.setPassword(password);
+			
+		if (username == null || password == null) {
+			errorMessage = "Please specify username and password";
 		}
+			
+		
 		
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
@@ -42,7 +48,9 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		req.setAttribute("model", model);
+		
+
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);

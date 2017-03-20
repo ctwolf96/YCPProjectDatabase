@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ProjectSolicitationAjaxServlet extends HttpServlet{
-private static final long serialVersionUID = 1L;
+public class ProjectProposalAjaxServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -26,6 +26,7 @@ private static final long serialVersionUID = 1L;
 		// Get parameters
 		String duration = req.getParameter("duration");
 		String startTime = req.getParameter("startTime");
+		String title = req.getParameter("title");
 		
 		
 		// Check whether parameters are valid
