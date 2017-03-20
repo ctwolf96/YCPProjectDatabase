@@ -9,9 +9,12 @@ public class Proposal extends Project {
 	private ArrayList<MajorType> majors;
 	private ArrayList<ClassType> classes;
 	private String description;
+	
 	private String duration;
-	private String startTime;
+	private String startDate;
+	private String endDate;
 	private String numStudents;
 	private double cost;
+	private boolean isFunded;
 
 }
