@@ -5,11 +5,6 @@ public abstract class User {
 	private String password;
 	private String email;
 	
-	//Constructor
-	public User() {
-		
-	}
-	
 	//Setters
 	public void setUsername(String username) {
 		this.username = username;
