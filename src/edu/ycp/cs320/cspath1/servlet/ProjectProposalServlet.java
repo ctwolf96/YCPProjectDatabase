@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 
 public class ProjectProposalServlet extends HttpServlet {

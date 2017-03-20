@@ -4,6 +4,7 @@
 
 <html>
 	<head>
+
 		<title>Project Proposal</title>
 		<link rel="stylesheet" href="TestCSS.css">
 	</head>
@@ -71,6 +72,7 @@
 			<br>
 			<input type="Submit" name="solicit" value="Project Creation">
 			
+
 		</form>
 		</div>
 	</body>

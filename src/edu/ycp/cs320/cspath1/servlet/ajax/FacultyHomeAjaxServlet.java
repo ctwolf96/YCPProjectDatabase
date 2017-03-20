@@ -7,17 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-public class ProjectProposalAjaxServlet extends HttpServlet {
+public class FacultyHomeAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	//TODO: Add things for the radio parameters
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doRequest(req, resp);
+		//doRequest(req, resp);
 	}
 	
-	@Override
+	/*@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doRequest(req, resp);
@@ -25,22 +24,21 @@ public class ProjectProposalAjaxServlet extends HttpServlet {
 
 	private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// Get parameters
-		String duration = req.getParameter("duration");
-		String startTime = req.getParameter("startTime");
-		String title = req.getParameter("title");
-		
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String email = req.getParameter("email");
 		
 		// Check whether parameters are valid
-		if (duration == null || startTime == null) {
+		if (username == null || password == null || email == null) {
 			badRequest("Bad parameters", resp);
 			return;
 		}
 		
 		// Send back a response
 		resp.setContentType("text/plain");
-		resp.getWriter().println("Username: " + duration);
-		resp.getWriter().println("Password: " + startTime);
-		
+		resp.getWriter().println("Username: " + username);
+		resp.getWriter().println("Password: " + password);
+		resp.getWriter().println("Email: " + email);
 	}
 
 	
@@ -49,6 +47,5 @@ public class ProjectProposalAjaxServlet extends HttpServlet {
 		resp.setContentType("text/plain");
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		resp.getWriter().println(message);
-	}
-
+	}*/
 }
