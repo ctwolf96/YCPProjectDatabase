@@ -4,6 +4,7 @@ public abstract class User {
 	private String username;
 	private String password;
 	private String email;
+	private int userID;
 	
 	//Constructor
 	public User() {
@@ -49,4 +50,12 @@ public abstract class User {
 		
 	}
 	public abstract void proposeProject();
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 }
