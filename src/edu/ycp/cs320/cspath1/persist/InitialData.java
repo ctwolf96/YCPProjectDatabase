@@ -57,11 +57,9 @@ public class InitialData {
 				student.setFirstname(i.next());
 				student.setLastname(i.next());
 				student.setPassword(i.next());
-				String string = i.next();
-				MajorType major = getMajorTypeFromParameter(string);
+				MajorType major = getMajorTypeFromParameter(i.next());
 				student.setMajor(major);
-				string = i.next();
-				ClassType classtype = getClassTypeFromParameter(string);
+				ClassType classtype = getClassTypeFromParameter(i.next());
 				student.setClassLevel(classtype);
 				student.setEmail(i.next());
 				student.setUsername(i.next());
@@ -91,6 +89,12 @@ public class InitialData {
 		else if(s.equals("EE")){
 			majortype = MajorType.EE;
 		}
+		else if (s.equals("UN")) {
+			majortype = MajorType.UN;
+		}
+		else if (s.equals("CIV")){
+			majortype = MajorType.CIV;
+		}
 		return majortype;
 	}
 	
@@ -99,16 +103,16 @@ public class InitialData {
 		if(s == null || s.equals("")){
 			return null;
 		}
-		else if (s == "FRESHMAN"){
+		else if (s.equals("FRESHMAN")){
 			classtype = ClassType.FRESHMAN;
 		}
-		else if (s == "SOPHOMORE"){
+		else if (s.equals("SOPHOMORE")){
 			classtype = ClassType.SOPHOMORE;
 		}
-		else if (s == "JUNIOR"){
+		else if (s.equals("JUNIOR")){
 			classtype = ClassType.JUNIOR;
 		}
-		else if (s == "SENIOR"){
+		else if (s.equals("SENIOR")){
 			classtype = ClassType.SENIOR;
 		}
 		return classtype;
