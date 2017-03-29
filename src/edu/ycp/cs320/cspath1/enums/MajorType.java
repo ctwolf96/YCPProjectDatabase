@@ -4,5 +4,7 @@ public enum MajorType {
 	CE, 
 	EE,
 	ME,
-	CS
+	CS,
+	UN,
+	CIV
 	}

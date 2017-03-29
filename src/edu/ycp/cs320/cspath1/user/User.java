@@ -1,9 +1,13 @@
 package edu.ycp.cs320.cspath1.user;
 
+import edu.ycp.cs320.cspath1.enums.UserType;
+
 public abstract class User {
 	private String username;
 	private String password;
 	private String email;
+	private UserType usertype;
+	private int userID;
 	
 	//Setters
 	public void setUsername(String username) {
@@ -44,4 +48,20 @@ public abstract class User {
 		
 	}
 	public abstract void proposeProject();
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public UserType getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
 }

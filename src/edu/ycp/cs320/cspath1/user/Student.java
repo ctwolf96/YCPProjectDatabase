@@ -7,6 +7,8 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.project.Project;
 
 public class Student extends User {
+	private String firstname;
+	private String lastname;
 	private ClassType classLevel;
 	private MajorType major;
 	private ArrayList<Project> activeProjects;
@@ -45,5 +47,21 @@ public class Student extends User {
 	}
 	public void requestProject() {
 		
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 }

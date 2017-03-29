@@ -39,6 +39,21 @@ public class Proposal extends Project {
 	public void setIsFunded(boolean isFunded) {
 		this.isFunded = isFunded;
 	}
+	public ArrayList<MajorType> getMajors() {
+		return majors;
+	}
+	
+	public void setMajors(ArrayList<MajorType> majors) {
+		this.majors = majors;
+	}
+	
+	public ArrayList<ClassType> getClasses() {
+		return classes;
+	}
+	
+	public void setClasses(ArrayList<ClassType> classes) {
+		this.classes = classes;
+	}
 
 	//Getters
 	public String getDuration() {
