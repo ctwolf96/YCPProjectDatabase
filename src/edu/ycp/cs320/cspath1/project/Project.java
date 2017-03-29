@@ -1,26 +1,14 @@
 package edu.ycp.cs320.cspath1.project;
 
-import edu.ycp.cs320.cspath1.user.User;
-
 public class Project {
-	private User creator;
+	
 	private int UserID;
-	private String title;
-	private String description;
+	private int ProjectID;
+
 	
 	//Constructor
 	public Project() {
 		
-	}
-	
-	//Setters
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
-	
-	//Getters
-	public User getCreator() {
-		return creator;
 	}
 	
 	//Methods
@@ -39,11 +27,11 @@ public class Project {
 		UserID = userID;
 	}
 
-	public String getTitle() {
-		return title;
+	public int getProjectID() {
+		return ProjectID;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setProjectID(int projectID) {
+		ProjectID = projectID;
 	}
 }

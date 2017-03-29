@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 
 public class Solicitation extends Project {
 	private ArrayList<MajorType> majors;
@@ -11,7 +12,7 @@ public class Solicitation extends Project {
 	private String duration;
 	private String startTime;
 	private int numStudents;
-	
+	private SolicitationType solicitationType;
 	
 	public ArrayList<MajorType> getMajors() {
 		return majors;
@@ -50,6 +51,12 @@ public class Solicitation extends Project {
 	
 	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;
+	}
+	public SolicitationType getSolicitationType() {
+		return solicitationType;
+	}
+	public void setSolicitationType(SolicitationType solicitationType) {
+		this.solicitationType = solicitationType;
 	}
 	
 	

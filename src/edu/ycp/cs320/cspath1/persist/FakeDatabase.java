@@ -8,6 +8,7 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
+import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
@@ -15,13 +16,13 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class FakeDatabase implements IDatabase {
 	
-	private List<Project> projectList;
+	private List<Solicitation> solicitationList;
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
 	private List<Guest> guestList;
 	
 	public FakeDatabase(){
-		this.projectList = new ArrayList<Project>();
+		this.solicitationList = new ArrayList<Solicitation>();
 		this.studentList = new ArrayList<Student>();
 		this.facultyList = new ArrayList<Faculty>();
 		this.guestList = new ArrayList<Guest>();
@@ -31,6 +32,7 @@ public class FakeDatabase implements IDatabase {
 		System.out.println(studentList.size() + " students");
 		System.out.println(facultyList.size() + " faculty");
 		System.out.println(guestList.size() + " guests");
+		System.out.println(solicitationList.size() + " solicitations");
 	}
 	
 	
@@ -39,6 +41,7 @@ public class FakeDatabase implements IDatabase {
 			studentList.addAll(InitialData.getStudents());
 			facultyList.addAll(InitialData.getFaculty());
 			guestList.addAll(InitialData.getGuests());
+			solicitationList.addAll(InitialData.getSolicitations());
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
