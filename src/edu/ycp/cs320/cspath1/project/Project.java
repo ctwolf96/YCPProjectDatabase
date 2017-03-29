@@ -36,7 +36,7 @@ public class Project {
 	
 	//Methods
 	// Add to database and check all fields are set
-	public void ProjectCreation() {
+	public void projectCreation() {
 		
 	}
 	public void edit() {
