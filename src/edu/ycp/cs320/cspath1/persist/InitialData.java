@@ -7,7 +7,9 @@ import java.util.List;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.user.Faculty;
+import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 
 public class InitialData {
@@ -32,6 +34,8 @@ public class InitialData {
 				faculty.setMajor(major);
 				faculty.setEmail(i.next());
 				faculty.setUsername(i.next());
+				UserType usertype = getUserTypeFromParameter(i.next());
+				faculty.setUsertype(usertype);
 				facultyList.add(faculty);
 			}
 			return facultyList;
@@ -63,6 +67,10 @@ public class InitialData {
 				student.setClassLevel(classtype);
 				student.setEmail(i.next());
 				student.setUsername(i.next());
+				UserType usertype = getUserTypeFromParameter(i.next());
+				student.setUsertype(usertype);
+				
+				
 				studentList.add(student);
 			}
 			return studentList;
@@ -71,6 +79,32 @@ public class InitialData {
 		}
 	}
 	
+	public static List<Guest> getGuests() throws IOException {
+		List<Guest> guestList = new ArrayList<Guest>();
+		ReadCSV readGuests = new ReadCSV("GuestUsers.CSV");
+		try{
+			Integer userID = 55;
+			while (true) {
+				List<String> tuple = readGuests.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Guest guest = new Guest();
+				guest.setUserID(userID++);
+				guest.setEmail(i.next());
+				guest.setUsername(i.next());
+				guest.setPassword(i.next());
+				UserType usertype = getUserTypeFromParameter(i.next());
+				guest.setUsertype(usertype);
+				guestList.add(guest);
+			}
+			return guestList;
+		} finally {
+			readGuests.close();
+		}
+	}
+ 	
 	private static MajorType getMajorTypeFromParameter(String s){
 		MajorType majortype = null;
 		if (s == null || s.equals("")){
@@ -116,5 +150,24 @@ public class InitialData {
 			classtype = ClassType.SENIOR;
 		}
 		return classtype;
+	}
+	
+	private static UserType getUserTypeFromParameter(String s) {
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("FACULTY")){
+			return UserType.FACULTY;
+		}
+		else if (s.equals("ADMIN")){
+			return UserType.ADMIN;
+		}
+		else if (s.equals("GUEST")){
+			return UserType.GUEST;
+		}
+		else if (s.equals("STUDENT")){
+			return UserType.STUDENT;
+		}
+		return null;
 	}
 }

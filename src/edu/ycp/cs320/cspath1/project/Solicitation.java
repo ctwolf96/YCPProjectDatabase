@@ -11,7 +11,7 @@ public class Solicitation extends Project {
 	private String duration;
 	private String startTime;
 	private int numStudents;
-	private double cost;
+	
 	
 	public ArrayList<MajorType> getMajors() {
 		return majors;
@@ -52,12 +52,5 @@ public class Solicitation extends Project {
 		this.numStudents = numStudents;
 	}
 	
-	public double getCost() {
-		return cost;
-	}
 	
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-
 }

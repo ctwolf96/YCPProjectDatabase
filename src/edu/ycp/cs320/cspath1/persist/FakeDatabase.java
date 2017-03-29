@@ -6,8 +6,10 @@ import java.util.List;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.user.Faculty;
+import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
@@ -16,16 +18,19 @@ public class FakeDatabase implements IDatabase {
 	private List<Project> projectList;
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
+	private List<Guest> guestList;
 	
 	public FakeDatabase(){
 		this.projectList = new ArrayList<Project>();
 		this.studentList = new ArrayList<Student>();
 		this.facultyList = new ArrayList<Faculty>();
+		this.guestList = new ArrayList<Guest>();
 		
 		readInitialData();
 		
-		System.out.println(studentList.size() + "students");
-		System.out.println(facultyList.size() + "faculty");
+		System.out.println(studentList.size() + " students");
+		System.out.println(facultyList.size() + " faculty");
+		System.out.println(guestList.size() + " guests");
 	}
 	
 	
@@ -33,6 +38,7 @@ public class FakeDatabase implements IDatabase {
 		try {
 			studentList.addAll(InitialData.getStudents());
 			facultyList.addAll(InitialData.getFaculty());
+			guestList.addAll(InitialData.getGuests());
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
@@ -189,8 +195,60 @@ public class FakeDatabase implements IDatabase {
 				return student;
 			}
 		}
+		for (Guest guest : guestList){
+			if (guest.getUserID() == UserID){
+				return guest;
+			}
+		}
 		return null;
 	}
+
+
+	@Override
+	public Guest findGuestByUsername(String username) {
+		for (Guest guest : guestList) {
+			if(guest.getUsername().equals(username)){
+				return guest;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Guest findGuestByUsernameAndPassword(String username, String password) {
+		for (Guest guest : guestList) {
+			if (guest.getUsername().equals(username) && guest.getPassword().equals(password)){
+				return guest;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<User> findUserByUserType(UserType usertype) {
+		List<User> userList = new ArrayList<User>();
+		for (Faculty faculty : facultyList){
+			if (faculty.getUsertype().equals(usertype)){
+				userList.add(faculty);
+			}
+		}
+		for (Guest guest : guestList){
+			if (guest.getUsertype().equals(usertype)){
+				userList.add(guest);
+			}
+		}
+		for (Student student : studentList){
+			if (student.getUsertype().equals(usertype)){
+				userList.add(student);
+			}
+		}
+		return userList;
+	}
+
+
+	
 
 
 	

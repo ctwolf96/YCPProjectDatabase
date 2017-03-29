@@ -10,7 +10,9 @@ import org.junit.Test;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.user.Faculty;
+import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
@@ -186,5 +188,38 @@ public class FakeDatabaseTest {
 		assertEquals(user.getUsername(), "dglispy");
 		user = fake.findUserbyUserID(34);
 		assertEquals(user.getUsername(), "dmcclellan");
+		user = fake.findUserbyUserID(55);
+		assertEquals(user.getUsername(), "guest1");
+	}
+	
+	@Test
+	public void testFindUserByUserType(){
+		List <User> users = fake.findUserByUserType(UserType.GUEST);
+		assertEquals(users.size(), 10);
+		users = fake.findUserByUserType(UserType.FACULTY);
+		assertEquals(users.size(), 17);
+		users = fake.findUserByUserType(UserType.STUDENT);
+		assertEquals(users.size(), 37);
+		
+	}
+	@Test
+	public void testFindGuestByUsername(){
+		Guest guest = fake.findGuestByUsername("guest1");
+		assertEquals(guest.getUserID(), 55);
+		guest = fake.findGuestByUsername("guest5");
+		assertEquals(guest.getEmail(), "guest5@gmail.com");
+		guest = fake.findGuestByUsername("guest10");
+		assertEquals(guest.getUsertype(), UserType.GUEST);
+	}
+	
+	@Test
+	public void testFindGuestByUsernameAndPassword() {
+		String password = "password";
+		Guest guest = fake.findGuestByUsernameAndPassword("guest1", password);
+		assertEquals(guest.getEmail(), "guest1@gmail.com");
+		guest = fake.findGuestByUsernameAndPassword("guest10", password);
+		assertEquals(guest.getUsertype(), UserType.GUEST);
+		guest = fake.findGuestByUsernameAndPassword("guest5", password);
+		assertEquals(guest.getUserID(), 59);
 	}
 }
