@@ -109,7 +109,7 @@ public class InitialData {
 	
 	public static List<Solicitation> getSolicitations() throws IOException {
 		List<Solicitation> solicitationList = new ArrayList<Solicitation>();
-		ReadCSV readSolicitations = new ReadCSV("SolicitedProjects.CSV");
+		ReadCSV readSolicitations = new ReadCSV("Solicitations.CSV");
 		try {
 			Integer projectID = 1;
 			while (true) {
@@ -123,7 +123,8 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Solicitation solicitation = new Solicitation();
 				solicitation.setProjectID(projectID++);
-				solicitation.setUserID(Integer.parseInt(i.next()));
+				Integer userID = Integer.parseInt(i.next());
+				solicitation.setUserID(userID);
 				MajorType CS = getMajorTypeFromParameter(i.next());
 				if (CS != null) {
 					majors.add(CS);

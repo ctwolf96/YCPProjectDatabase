@@ -11,19 +11,17 @@ import org.junit.Test;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public class FakeDatabaseTest {
-	private FakeDatabase fake;
+	private FakeDatabase fake = new FakeDatabase();
 	
-	@Before
-	public void setUp(){
-		fake = new FakeDatabase();
-		
-	}
+
+	
 	
 	@Test
 	public void testFindStudentByLastname(){
@@ -222,4 +220,93 @@ public class FakeDatabaseTest {
 		guest = fake.findGuestByUsernameAndPassword("guest5", password);
 		assertEquals(guest.getUserID(), 59);
 	}
+	
+	@Test
+	public void testFindSolicitationsByMajorType() {
+		List<Solicitation> solicitations = fake.findSolicitationsByMajorType(MajorType.CE);
+		assertEquals(solicitations.size(), 5);
+		solicitations = fake.findSolicitationsByMajorType(MajorType.CS);
+		assertEquals(solicitations.size(), 6);
+		solicitations = fake.findSolicitationsByMajorType(MajorType.EE);
+		assertEquals(solicitations.size(), 2);
+		solicitations = fake.findSolicitationsByMajorType(MajorType.ME);
+		assertEquals(solicitations.size(), 3);
+		solicitations = fake.findSolicitationsByMajorType(MajorType.CIV);
+		assertEquals(solicitations.size(), 2);
+		
+	}
+	
+	@Test
+	public void testFindSolicitationsByMajorTypes(){
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		majors.add(MajorType.CE);
+		majors.add(MajorType.CS);
+		List<Solicitation> solicitations = fake.findSolicitationsByMajorTypes(majors);
+		assertEquals(solicitations.size(), 10);
+		majors.remove(MajorType.CE);
+		majors.add(MajorType.EE);
+		solicitations = fake.findSolicitationsByMajorTypes(majors);
+		assertEquals(solicitations.size(), 7);
+	}
+	
+	@Test
+	public void testFindSolicitationsByClassType(){
+		List<Solicitation> solicitations = new ArrayList<Solicitation>();
+		solicitations = fake.findSolicitationsByClassType(ClassType.FRESHMAN);
+		assertEquals(solicitations.size(), 0);
+		solicitations = fake.findSolicitationsByClassType(ClassType.SOPHOMORE);
+		assertEquals(solicitations.size(), 2);
+		solicitations = fake.findSolicitationsByClassType(ClassType.JUNIOR);
+		assertEquals(solicitations.size(), 8);
+		solicitations = fake.findSolicitationsByClassType(ClassType.SENIOR);
+		assertEquals(solicitations.size(), 12);
+	}
+	
+	@Test
+	public void testFindSolicitationsByClassTypes(){
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		classes.add(ClassType.FRESHMAN);
+		classes.add(ClassType.SOPHOMORE);
+		List<Solicitation> solicitations = fake.findSolicitationsByClassTypes(classes);
+		assertEquals(solicitations.size(), 2);
+		classes.add(ClassType.SENIOR);
+		solicitations = fake.findSolicitationsByClassTypes(classes);
+		assertEquals(solicitations.size(), 12);
+	}
+	
+	@Test
+	public void testFindSolicitationsByStartTime(){
+		List<Solicitation> solicitations = new ArrayList<Solicitation>();
+		solicitations = fake.findSolicitationsByStartTime("3/21/17");
+		assertEquals(solicitations.size(), 12);
+		solicitations = fake.findSolicitationsByStartTime("2/22/17");
+		assertEquals(solicitations.size(), 0);
+		
+	}
+	
+	@Test
+	public void testFindSolicitationsByDuration(){
+		List<Solicitation> solicitations = new ArrayList<Solicitation>();
+		solicitations = fake.findSolicitationsByDuration("1 semester");
+		assertEquals(solicitations.size(), 7);
+		solicitations = fake.findSolicitationsByDuration("2 semesters");
+		assertEquals(solicitations.size(), 5);
+	}
+	
+	@Test 
+	public void testFindSolicitationsByNumStudents(){
+		List<Solicitation> solicitations = new ArrayList<Solicitation>();
+		solicitations = fake.findSolicitationsByNumStudents(3);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsByNumStudents(4);
+		assertEquals(solicitations.size(), 5);
+		solicitations = fake.findSolicitationsByNumStudents(1);
+		assertEquals(solicitations.size(), 3);
+		solicitations = fake.findSolicitationsByNumStudents(6);
+		assertEquals(solicitations.size(), 3);
+		
+		
+	}
+	
+
 }

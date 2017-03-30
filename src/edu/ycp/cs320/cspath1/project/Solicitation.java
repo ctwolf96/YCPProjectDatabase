@@ -14,6 +14,10 @@ public class Solicitation extends Project {
 	private int numStudents;
 	private SolicitationType solicitationType;
 	
+	public Solicitation() {
+		
+	}
+	
 	public ArrayList<MajorType> getMajors() {
 		return majors;
 	}

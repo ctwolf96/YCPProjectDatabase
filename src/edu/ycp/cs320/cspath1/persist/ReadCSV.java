@@ -1,6 +1,7 @@
 package edu.ycp.cs320.cspath1.persist;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class ReadCSV {
+public class ReadCSV implements Closeable {
 private BufferedReader reader;
 	
 	public ReadCSV(String resourceName) throws IOException {
@@ -21,12 +22,14 @@ private BufferedReader reader;
 	
 	public List<String> next() throws IOException {
 		String line = reader.readLine();
+		System.out.println(line);
 		if (line == null) {
 			return null;
 		}
 		List<String> tuple = new ArrayList<String>();
 		StringTokenizer tok = new StringTokenizer(line, "|");
 		while (tok.hasMoreTokens()) {
+			
 			tuple.add(tok.nextToken().trim());
 		}
 		return tuple;

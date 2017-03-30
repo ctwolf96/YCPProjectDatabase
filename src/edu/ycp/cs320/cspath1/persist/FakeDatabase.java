@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
@@ -22,10 +23,11 @@ public class FakeDatabase implements IDatabase {
 	private List<Guest> guestList;
 	
 	public FakeDatabase(){
-		this.solicitationList = new ArrayList<Solicitation>();
+		
 		this.studentList = new ArrayList<Student>();
 		this.facultyList = new ArrayList<Faculty>();
 		this.guestList = new ArrayList<Guest>();
+		this.solicitationList = new ArrayList<Solicitation>();
 		
 		readInitialData();
 		
@@ -248,6 +250,121 @@ public class FakeDatabase implements IDatabase {
 			}
 		}
 		return userList;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getMajors().contains(majortype)){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+	//this is probably broken
+	@Override
+	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			for(MajorType major : majors){
+				if (solicitation.getMajors().contains(major)){
+					if(!result.contains(solicitation)){
+						result.add(solicitation);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassType(ClassType classtype) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getClasses().contains(classtype)){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			for(ClassType classtype : classtypes){
+				if (solicitation.getClasses().contains(classtype)){
+					if(!result.contains(solicitation)){
+						result.add(solicitation);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByStartTime(String startTime) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getStartTime().equals(startTime)){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByDuration(String duration) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getDuration().equals(duration)){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsByNumStudents(int numStudents) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getNumStudents() == numStudents){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType) {
+		List<Solicitation> result = new ArrayList<Solicitation>();
+		for (Solicitation solicitation : solicitationList){
+			if(solicitation.getSolicitationType().equals(solicitationType)){
+				result.add(solicitation);
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public Solicitation findSolicitationByProjectID(int projectID) {
+		for (Solicitation solicitation : solicitationList){
+			if (solicitation.getProjectID() == projectID){
+				return solicitation;
+			}
+		}
+		return null;
 	}
 
 
