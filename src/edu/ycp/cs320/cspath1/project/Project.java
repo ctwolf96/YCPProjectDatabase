@@ -23,6 +23,9 @@ public class Project {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public void setUserID(int userID) {
+		UserID = userID;
+	}
 	
 	//Getters
 	public User getCreator() {
@@ -34,6 +37,9 @@ public class Project {
 	public String getDescription() {
 		return description;
 	}
+	public int getUserID() {
+		return UserID;
+	}
 	
 	//Methods
 	// Add to database and check all fields are set
@@ -42,13 +48,5 @@ public class Project {
 	}
 	public void edit() {
 		
-	}
-
-	public int getUserID() {
-		return UserID;
-	}
-
-	public void setUserID(int userID) {
-		UserID = userID;
 	}
 }

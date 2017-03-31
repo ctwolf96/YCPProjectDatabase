@@ -23,22 +23,23 @@ public class Faculty extends User {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	public void setMajor(MajorType major) {
-		this.major = major;
-	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	public void setMajor(MajorType major) {
+		this.major = major;
+	}
+	
 	
 	//Getters
-	public MajorType getMajor() {
-		return major;
-	}
 	public String getFirstname() {
 		return firstname;
 	}
 	public String getLastname() {
 		return lastname;
+	}
+	public MajorType getMajor() {
+		return major;
 	}
 	
 	//Methods
@@ -57,5 +58,4 @@ public class Faculty extends User {
 	public void approveProject() {
 			
 	}
-	
 }

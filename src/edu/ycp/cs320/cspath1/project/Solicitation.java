@@ -35,6 +35,12 @@ public class Solicitation extends Project {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+	public void setMajors(ArrayList<MajorType> majors) {
+		this.majors = majors;
+	}
+	public void setClasses(ArrayList<ClassType> classes) {
+		this.classes = classes;
+	}
 
 	//Getters
 	public String getDuration() {
@@ -52,6 +58,12 @@ public class Solicitation extends Project {
 	public double getCost() {
 		return cost;
 	}
+	public ArrayList<MajorType> getMajors() {
+		return majors;
+	}
+	public ArrayList<ClassType> getClasses() {
+		return classes;
+	}
 	
 	//Methods
 	public void addMajor(MajorType major) {
@@ -67,24 +79,4 @@ public class Solicitation extends Project {
 	public void makeActive() {
 		
 	}
-	
-	
-	
-	public ArrayList<MajorType> getMajors() {
-		return majors;
-	}
-	public void setMajors(ArrayList<MajorType> majors) {
-		this.majors = majors;
-	}
-	
-	public ArrayList<ClassType> getClasses() {
-		return classes;
-	}
-	
-	public void setClasses(ArrayList<ClassType> classes) {
-		this.classes = classes;
-	}
-	
-
-	
 }

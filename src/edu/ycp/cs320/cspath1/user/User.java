@@ -19,6 +19,12 @@ public abstract class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 	
 	//Getters
 	public String getUsername() {
@@ -29,6 +35,12 @@ public abstract class User {
 	}
 	public String getEmail() {
 		return email;
+	}
+	public UserType getUsertype() {
+		return usertype;
+	}
+	public int getUserID() {
+		return userID;
 	}
 	
 	//Methods
@@ -48,20 +60,4 @@ public abstract class User {
 		
 	}
 	public abstract void proposeProject();
-
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	public UserType getUsertype() {
-		return usertype;
-	}
-
-	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
-	}
 }
