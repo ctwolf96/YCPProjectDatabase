@@ -10,11 +10,6 @@ public abstract class User {
 	private UserType usertype;
 	private int userID;
 	
-	//Constructor
-	public User() {
-		
-	}
-	
 	//Setters
 	public void setUsername(String username) {
 		this.username = username;
@@ -24,6 +19,12 @@ public abstract class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	
 	//Getters
@@ -35,6 +36,12 @@ public abstract class User {
 	}
 	public String getEmail() {
 		return email;
+	}
+	public UserType getUsertype() {
+		return usertype;
+	}
+	public int getUserID() {
+		return userID;
 	}
 	
 	//Methods
@@ -55,27 +62,4 @@ public abstract class User {
 	}
 	public abstract void proposeProject();
 
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	public UserType getUsertype() {
-		return usertype;
-	}
-
-	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

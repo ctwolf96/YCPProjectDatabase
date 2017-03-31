@@ -10,55 +10,80 @@ public class Proposal extends Project {
 	private ArrayList<ClassType> classes;
 	private String duration;
 	private String startTime;
+	private String endTime;
 	private int numStudents;
 	private double cost;
+	private boolean isFunded;
 	
-	public ArrayList<MajorType> getMajors() {
-		return majors;
+	//Constructor
+	public Proposal() {
+		
 	}
 	
+	//Setters
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public void setNumStudents(int numStudents) {
+		this.numStudents = numStudents;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public void setIsFunded(boolean isFunded) {
+		this.isFunded = isFunded;
+	}
 	public void setMajors(ArrayList<MajorType> majors) {
 		this.majors = majors;
 	}
-	
+	public void setClasses(ArrayList<ClassType> classes) {
+		this.classes = classes;
+	}
+
+	//Getters
+	public String getDuration() {
+		return duration;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public int getNumStudents() {
+		return numStudents;
+	}
+	public double getCost() {
+		return cost;
+	}
+	public boolean getIsFunded() {
+		return isFunded;
+	}
+	public ArrayList<MajorType> getMajors() {
+		return majors;
+	}
 	public ArrayList<ClassType> getClasses() {
 		return classes;
 	}
 	
-	public void setClasses(ArrayList<ClassType> classes) {
-		this.classes = classes;
+	//Methods
+	public void addMajor(MajorType major) {
+		majors.add(major);
 	}
-	
-	public String getDuration() {
-		return duration;
+	public void addClass(ClassType classtype) {
+		classes.add(classtype);
 	}
-	
-	public void setDuration(String duration) {
-		this.duration = duration;
+	//Match to solicited project
+	public void match() {
+		
 	}
-	
-	public String getStartTime() {
-		return startTime;
+	public void makeActive() {
+		
 	}
-	
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-	
-	public int getNumStudents() {
-		return numStudents;
-	}
-	
-	public void setNumStudents(int numStudents) {
-		this.numStudents = numStudents;
-	}
-	
-	public double getCost() {
-		return cost;
-	}
-	
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-
 }

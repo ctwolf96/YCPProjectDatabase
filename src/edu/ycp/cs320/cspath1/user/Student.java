@@ -20,6 +20,12 @@ public class Student extends User {
 	}
 	
 	//Setters
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 	public void setClassLevel(ClassType classLevel) {
 		this.classLevel = classLevel;
 	}
@@ -28,6 +34,12 @@ public class Student extends User {
 	}
 	
 	//Getters
+	public String getFirstname() {
+		return firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
 	public ClassType getClassLevel() {
 		return classLevel;
 	}
@@ -47,21 +59,5 @@ public class Student extends User {
 	}
 	public void requestProject() {
 		
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 }

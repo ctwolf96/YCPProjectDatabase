@@ -11,20 +11,24 @@ public class Project {
 		
 	}
 	
-	//Methods
-	public void ProjectCreation() {
-		
+	//Setters
+	public void setUserID(int userID) {
+		UserID = userID;
 	}
-	public void edit() {
-		
-	}
-
+	
+	//Getters
+	
 	public int getUserID() {
 		return UserID;
 	}
+	
+	//Methods
+	// Add to database and check all fields are set
+	public void projectCreation() {
+		
+	}
+	public void edit() {
 
-	public void setUserID(int userID) {
-		UserID = userID;
 	}
 
 	public int getProjectID() {
@@ -33,5 +37,6 @@ public class Project {
 
 	public void setProjectID(int projectID) {
 		ProjectID = projectID;
+
 	}
 }
