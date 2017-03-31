@@ -3,6 +3,7 @@ package edu.ycp.cs320.cspath1.user;
 import edu.ycp.cs320.cspath1.enums.UserType;
 
 public abstract class User {
+	private String name;
 	private String username;
 	private String password;
 	private String email;
@@ -68,5 +69,13 @@ public abstract class User {
 
 	public void setUsertype(UserType usertype) {
 		this.usertype = usertype;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

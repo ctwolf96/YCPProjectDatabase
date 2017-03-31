@@ -10,8 +10,10 @@ import org.junit.Test;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
@@ -308,5 +310,88 @@ public class FakeDatabaseTest {
 		
 	}
 	
-
+	@Test 
+	public void testFindSolicitationsBySolicitationType(){
+		List<Solicitation> solicitations = new ArrayList<Solicitation>();
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.CivE_CAPSTONE);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.CLASS_PROJECT);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.CS_INTERNSHIP);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.CS_SENIOR_DESIGN_I);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.CS_SENIOR_DESIGN_II);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.ECE_CAPSTONE);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.ENGINEERING_COOP);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.INDEPENDENT_STUDY);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.ME_CAPSTONE);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.ME_ECE_CAPSTONE);
+		assertEquals(solicitations.size(), 1);
+		solicitations = fake.findSolicitationsBySolicitationType(SolicitationType.SW_ENGINEERING);
+		assertEquals(solicitations.size(), 2);
+		
+		
+	}
+	
+	@Test
+	public void testFindSolicitationByProjectID(){
+		Solicitation solicitation = new Solicitation();
+		solicitation = fake.findSolicitationByProjectID(1);
+		assertEquals(solicitation.getDuration(), "2 semesters");
+		solicitation = fake.findSolicitationByProjectID(4);
+		assertEquals(solicitation.getNumStudents(), 4);
+		solicitation = fake.findSolicitationByProjectID(7);
+		assertEquals(solicitation.getStartTime(), "3/21/17");
+	}
+	
+	@Test
+	public void testFindBusinessByAddress(){
+		Business business = new Business();
+		business = fake.findBusinessByAddress("123 Fake Address Road");
+		assertEquals(business.getName(), "Business1");
+		business = fake.findBusinessByAddress("123 Fake Address Lane");
+		assertEquals(business.getEmail(), "Business5@business5.com");
+		business = fake.findBusinessByAddress("123 Fake Address Court");
+		assertEquals(business.getEmail(), "Business6@business6.com");
+		
+	}
+	
+	@Test
+	public void testFindBusinessByName(){
+		Business business = new Business();
+		business = fake.findBusinessByName("Business1");
+		assertEquals(business.getAddress(), "123 Fake Address Road");
+		business = fake.findBusinessByName("Business4");
+		assertEquals(business.getNumber(), "717-777-7666");
+		business = fake.findBusinessByName("Business9");
+		assertEquals(business.getUserID(), 73);
+	}
+	
+	@Test
+	public void testFindBusinessByUsernameAndPassword(){
+		Business business = new Business();
+		String password = "password";
+		business = fake.findBusinessByUsernameAndPassword("Business3", password);
+		assertEquals(business.getEmail(), "Business3@business3.com");
+		business = fake.findBusinessByUsernameAndPassword("Business5", password);
+		assertEquals(business.getUsertype(), UserType.BUSINESS);
+		
+	}
+	
+	@Test
+	public void testFindBusinessByEmail(){
+		Business business = new Business();
+		business = fake.findBusinessByEmail("Business4@business4.com");
+		assertEquals(business.getPassword(), "password");
+		business = fake.findBusinessByEmail("Business2@business2.com");
+		assertEquals(business.getName(), "Business2");
+		business = fake.findBusinessByEmail("Business6@business6.com");
+		assertEquals(business.getUsertype(), UserType.BUSINESS);
+	}
 }

@@ -8,6 +8,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
@@ -28,15 +29,19 @@ public interface IDatabase {
 	public User findUserbyUserID(int UserID); //tested
 	public Guest findGuestByUsername(String username); //tested
 	public Guest findGuestByUsernameAndPassword(String username, String password); //tested
+	public Business findBusinessByName(String name);
+	public Business findBusinessByAddress(String address); //tested
+	public Business findBusinessByUsernameAndPassword(String username, String password);
+	public Business findBusinessByEmail(String email);
 	public List<User> findUserByUserType(UserType usertype); //tested
-	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype);
-	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors);
-	public List<Solicitation> findSolicitationsByClassType(ClassType classtype);
-	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes);
-	public List<Solicitation> findSolicitationsByStartTime(String startTime);
-	public List<Solicitation> findSolicitationsByDuration(String duration);
-	public List<Solicitation> findSolicitationsByNumStudents(int numStudents);
-	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType);
-	public Solicitation findSolicitationByProjectID(int projectID);
+	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype); //tested
+	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors); //tested
+	public List<Solicitation> findSolicitationsByClassType(ClassType classtype); //tested
+	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes); //tested
+	public List<Solicitation> findSolicitationsByStartTime(String startTime); //tested
+	public List<Solicitation> findSolicitationsByDuration(String duration); //tested
+	public List<Solicitation> findSolicitationsByNumStudents(int numStudents); //tested
+	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType); //tested
+	public Solicitation findSolicitationByProjectID(int projectID); //tested
 	
  }

@@ -10,6 +10,7 @@ import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
@@ -21,6 +22,7 @@ public class FakeDatabase implements IDatabase {
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
 	private List<Guest> guestList;
+	private List<Business> businessList;
 	
 	public FakeDatabase(){
 		
@@ -28,6 +30,8 @@ public class FakeDatabase implements IDatabase {
 		this.facultyList = new ArrayList<Faculty>();
 		this.guestList = new ArrayList<Guest>();
 		this.solicitationList = new ArrayList<Solicitation>();
+		this.businessList = new ArrayList<Business>();
+		
 		
 		readInitialData();
 		
@@ -35,6 +39,7 @@ public class FakeDatabase implements IDatabase {
 		System.out.println(facultyList.size() + " faculty");
 		System.out.println(guestList.size() + " guests");
 		System.out.println(solicitationList.size() + " solicitations");
+		System.out.println(businessList.size() + " businesses");
 	}
 	
 	
@@ -44,6 +49,7 @@ public class FakeDatabase implements IDatabase {
 			facultyList.addAll(InitialData.getFaculty());
 			guestList.addAll(InitialData.getGuests());
 			solicitationList.addAll(InitialData.getSolicitations());
+			businessList.addAll(InitialData.getBusinesses());
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
@@ -205,6 +211,11 @@ public class FakeDatabase implements IDatabase {
 				return guest;
 			}
 		}
+		for (Business business : businessList){
+			if (business.getUserID() == UserID){
+				return business;
+			}
+		}
 		return null;
 	}
 
@@ -247,6 +258,11 @@ public class FakeDatabase implements IDatabase {
 		for (Student student : studentList){
 			if (student.getUsertype().equals(usertype)){
 				userList.add(student);
+			}
+		}
+		for (Business business : businessList){
+			if (business.getUsertype().equals(usertype)){
+				userList.add(business);
 			}
 		}
 		return userList;
@@ -362,6 +378,50 @@ public class FakeDatabase implements IDatabase {
 		for (Solicitation solicitation : solicitationList){
 			if (solicitation.getProjectID() == projectID){
 				return solicitation;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Business findBusinessByName(String name) {
+		for (Business business: businessList){
+			if (business.getName().equals(name)){
+				return business;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Business findBusinessByAddress(String address) {
+		for (Business business : businessList){
+			if (business.getAddress().equals(address)){
+				return business;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Business findBusinessByUsernameAndPassword(String username, String password) {
+		for (Business business : businessList){
+			if (business.getUsername().equals(username) && business.getPassword().equals(password)){
+				return business;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public Business findBusinessByEmail(String email) {
+		for (Business business : businessList){
+			if (business.getEmail().equals(email)){
+				return business;
 			}
 		}
 		return null;
