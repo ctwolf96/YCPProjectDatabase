@@ -4,13 +4,13 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class Project {
 	private User creator;
-	private int UserID;
 	private String title;
 	private String description;
+	private int UserID;
+	private int ProjectID;
 	
 	//Constructor
 	public Project() {
-		
 	}
 	
 	//Setters
@@ -26,6 +26,9 @@ public class Project {
 	public void setUserID(int userID) {
 		UserID = userID;
 	}
+	public void setProjectID(int projectID) {
+		ProjectID = projectID;
+	}
 	
 	//Getters
 	public User getCreator() {
@@ -39,6 +42,9 @@ public class Project {
 	}
 	public int getUserID() {
 		return UserID;
+	}
+	public int getProjectID() {
+		return ProjectID;
 	}
 	
 	//Methods
