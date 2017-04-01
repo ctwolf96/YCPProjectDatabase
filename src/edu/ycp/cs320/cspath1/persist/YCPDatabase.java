@@ -112,9 +112,10 @@ public class YCPDatabase implements IDatabase {
 						"create table project (" +
 						"	project_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +
+						"	user_id integer constraint user_id references user, " +
 						"	creator varchar(30) not null," +
 						"	title varchar(30) not null," +
-						"   description varchar(10) not null" +
+						"   description varchar(10) not null," +
 						")"
 					);
 					stmt2.executeUpdate();

@@ -12,7 +12,6 @@ public class Project {
 	private String title;
 	private String description;
 	private int ProjectID;
-	private ArrayList<Integer> users;
 	
 	//Constructor
 	public Project() {
