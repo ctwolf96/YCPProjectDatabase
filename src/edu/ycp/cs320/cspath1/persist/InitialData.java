@@ -97,7 +97,7 @@ public class InitialData {
 				Solicitation solicitation = new Solicitation();
 				solicitation.setProjectID(projectID++);
 				Integer userID = Integer.parseInt(i.next());
-				solicitation.setUserID(userID);
+//				solicitation.setUserID(userID);
 				MajorType CS = getMajorTypeFromParameter(i.next());
 				if (CS != null) {
 					majors.add(CS);
@@ -206,9 +206,6 @@ public class InitialData {
 		}
 		else if (s.equals("ADMIN")){
 			return UserType.ADMIN;
-		}
-		else if (s.equals("GUEST")){
-			return UserType.GUEST;
 		}
 		else if (s.equals("STUDENT")){
 			return UserType.STUDENT;
