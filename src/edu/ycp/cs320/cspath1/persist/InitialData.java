@@ -12,7 +12,6 @@ import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
-import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 
 public class InitialData {
@@ -79,34 +78,10 @@ public class InitialData {
 			return studentList;
 		} finally {
 			readStudents.close();
+
 		}
 	}
 	
-	public static List<Guest> getGuests() throws IOException {
-		List<Guest> guestList = new ArrayList<Guest>();
-		ReadCSV readGuests = new ReadCSV("GuestUsers.CSV");
-		try{
-			Integer userID = 55;
-			while (true) {
-				List<String> tuple = readGuests.next();
-				if (tuple == null) {
-					break;
-				}
-				Iterator<String> i = tuple.iterator();
-				Guest guest = new Guest();
-				guest.setUserID(userID++);
-				guest.setEmail(i.next());
-				guest.setUsername(i.next());
-				guest.setPassword(i.next());
-				UserType usertype = getUserTypeFromParameter(i.next());
-				guest.setUsertype(usertype);
-				guestList.add(guest);
-			}
-			return guestList;
-		} finally {
-			readGuests.close();
-		}
-	}
 	
 	public static List<Business> getBusinesses() throws IOException {
 		List<Business> businessList = new ArrayList<Business>();
@@ -133,6 +108,7 @@ public class InitialData {
 			return businessList;
 		} finally {
 			readBusiness.close();
+
 		}
 	}
 	
@@ -262,9 +238,6 @@ public class InitialData {
 		}
 		else if (s.equals("ADMIN")){
 			return UserType.ADMIN;
-		}
-		else if (s.equals("GUEST")){
-			return UserType.GUEST;
 		}
 		else if (s.equals("STUDENT")){
 			return UserType.STUDENT;

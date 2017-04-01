@@ -11,10 +11,11 @@ import java.util.List;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
+import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Faculty;
-import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
@@ -93,8 +94,6 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
 				
 				try {
 					stmt1 = conn.prepareStatement(
@@ -110,20 +109,20 @@ public class YCPDatabase implements IDatabase {
 					stmt1.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
-						"create table student (" +
+						"create table project (" +
 						"	student_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +
 						"	user_id integer constraint user_id references user, " +
-						"	firstname varchar(30)," +
-						"	lastname varchar(30)" +
-						"   class varchar(10)" +
-						"   major varchar(10)" +
+						"	creator varchar(30)," +
+						"	title varchar(30)" +
+						"   description varchar(10)" +
+						"   userid varchar(10)" +
 						")"
 					);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(
-							"create table faculty (" +
+							"create table relation (" +
 							"	faculty_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
 							"	user_id integer constraint user_id references user, " +
@@ -134,26 +133,6 @@ public class YCPDatabase implements IDatabase {
 						);
 						stmt3.executeUpdate();
 						
-						stmt4 = conn.prepareStatement(
-								"create table business (" +
-								"	business_id integer primary key " +
-								"		generated always as identity (start with 1, increment by 1), " +
-								"	user_id integer constraint user_id references user, " +
-								"	number varchar(15)," +
-								"	address varchar(40)" +
-								")"
-						);
-						stmt4.executeUpdate();
-							
-						stmt5 = conn.prepareStatement(
-								"create table guest (" +
-								"	guest_id integer primary key " +
-								"		generated always as identity (start with 1, increment by 1), " +
-								"	user_id integer constraint user_id references user, " +
-								")"
-						);
-						stmt5.executeUpdate();
-					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -169,12 +148,10 @@ public class YCPDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				List<Student> studentList;
 				List<Faculty> facultyList;
-				List<Guest> guestList;
 				
 				try {
 					studentList = InitialData.getStudents();
 					facultyList = InitialData.getFaculty();
-					guestList = InitialData.getGuests();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -184,29 +161,21 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement insertGuest = null;
 
 				try {
-					insertStudent = conn.prepareStatement("insert into authors (author_lastname, author_firstname) values (?, ?)");
-					for (Author author : authorList) {
+					insertStudent = conn.prepareStatement(
+							"insert into user (username, password, email, usertype) values (?, ?, ?, ?)");
+					for (Student student : studentList) {
 //						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
-						insertAuthor.setString(1, author.getLastname());
-						insertAuthor.setString(2, author.getFirstname());
-						insertAuthor.addBatch();
+						insertStudent.setString(1, student.getUsername());
+						insertStudent.setString(2, student.getPassword());
+						insertStudent.setString(3, student.getEmail());
+						insertStudent.setString(4, student.getUsertype().toString());
+						insertStudent.addBatch();
 					}
-					insertAuthor.executeBatch();
-					
-					insertBook = conn.prepareStatement("insert into books (author_id, title, isbn) values (?, ?, ?)");
-					for (Book book : bookList) {
-//						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-						insertBook.setInt(1, book.getAuthorId());
-						insertBook.setString(2, book.getTitle());
-						insertBook.setString(3, book.getIsbn());
-						insertBook.addBatch();
-					}
-					insertBook.executeBatch();
+					insertStudent.executeBatch();
 					
 					return true;
 				} finally {
-					DBUtil.closeQuietly(insertBook);
-					DBUtil.closeQuietly(insertAuthor);
+					DBUtil.closeQuietly(insertStudent);
 				}
 			}
 		});
@@ -225,7 +194,31 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public List<Student> findStudentByLastname(String lastname) {
+	public void insertUser(String username, String password, String email, UserType usertype) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User findUserbyUserID(int UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> findUserByUserType(UserType usertype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Student findStudentByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Student findStudentByUsernameAndPassword(String password, String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -237,7 +230,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public Student findStudentByUsername(String username) {
+	public List<Student> findStudentByLastname(String lastname) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -255,31 +248,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public Student findStudentByUsernameAndPassword(String password, String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByLastname(String lastname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByFirstname(String firstname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Faculty findFacultyByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByMajorType(MajorType major) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -291,26 +260,80 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public User findUserbyUserID(int UserID) {
+	public List<Faculty> findFacultyByFirstname(String firstname) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Guest findGuestByUsername(String username) {
+	public List<Faculty> findFacultyByLastname(String lastname) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Guest findGuestByUsernameAndPassword(String username, String password) {
+	public List<Faculty> findFacultyByMajorType(MajorType major) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<User> findUserByUserType(UserType usertype) {
+	public Solicitation findSolicitationByProjectID(int projectID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassType(ClassType classtype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByStartTime(String startTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByDuration(String duration) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByNumStudents(int numStudents) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertProject(User creator, String title, String description, int userid) {
+		// TODO Auto-generated method stub
+		
 	}
 }

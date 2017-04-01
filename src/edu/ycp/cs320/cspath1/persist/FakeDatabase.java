@@ -12,7 +12,6 @@ import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
-import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
@@ -21,14 +20,13 @@ public class FakeDatabase implements IDatabase {
 	private List<Solicitation> solicitationList;
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
-	private List<Guest> guestList;
 	private List<Business> businessList;
+
 	
 	public FakeDatabase(){
 		
 		this.studentList = new ArrayList<Student>();
 		this.facultyList = new ArrayList<Faculty>();
-		this.guestList = new ArrayList<Guest>();
 		this.solicitationList = new ArrayList<Solicitation>();
 		this.businessList = new ArrayList<Business>();
 		
@@ -37,7 +35,6 @@ public class FakeDatabase implements IDatabase {
 		
 		System.out.println(studentList.size() + " students");
 		System.out.println(facultyList.size() + " faculty");
-		System.out.println(guestList.size() + " guests");
 		System.out.println(solicitationList.size() + " solicitations");
 		System.out.println(businessList.size() + " businesses");
 	}
@@ -47,7 +44,6 @@ public class FakeDatabase implements IDatabase {
 		try {
 			studentList.addAll(InitialData.getStudents());
 			facultyList.addAll(InitialData.getFaculty());
-			guestList.addAll(InitialData.getGuests());
 			solicitationList.addAll(InitialData.getSolicitations());
 			businessList.addAll(InitialData.getBusinesses());
 		} catch (IOException e) {
@@ -206,40 +202,9 @@ public class FakeDatabase implements IDatabase {
 				return student;
 			}
 		}
-		for (Guest guest : guestList){
-			if (guest.getUserID() == UserID){
-				return guest;
-			}
-		}
-		for (Business business : businessList){
-			if (business.getUserID() == UserID){
-				return business;
-			}
-		}
 		return null;
 	}
 
-
-	@Override
-	public Guest findGuestByUsername(String username) {
-		for (Guest guest : guestList) {
-			if(guest.getUsername().equals(username)){
-				return guest;
-			}
-		}
-		return null;
-	}
-
-
-	@Override
-	public Guest findGuestByUsernameAndPassword(String username, String password) {
-		for (Guest guest : guestList) {
-			if (guest.getUsername().equals(username) && guest.getPassword().equals(password)){
-				return guest;
-			}
-		}
-		return null;
-	}
 
 
 	@Override
@@ -248,11 +213,6 @@ public class FakeDatabase implements IDatabase {
 		for (Faculty faculty : facultyList){
 			if (faculty.getUsertype().equals(usertype)){
 				userList.add(faculty);
-			}
-		}
-		for (Guest guest : guestList){
-			if (guest.getUsertype().equals(usertype)){
-				userList.add(guest);
 			}
 		}
 		for (Student student : studentList){
@@ -383,7 +343,6 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
-
 	@Override
 	public Business findBusinessByName(String name) {
 		for (Business business: businessList){
@@ -428,8 +387,17 @@ public class FakeDatabase implements IDatabase {
 	}
 
 
-	
 
+	@Override
+	public void insertUser(String username, String password, String email, UserType usertype) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
+	@Override
+	public void insertProject(User creator, String title, String description, int userid) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

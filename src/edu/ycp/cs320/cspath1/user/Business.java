@@ -4,6 +4,7 @@ public class Business extends User {
 	private String number;
 	private String address;
 	
+	
 	//Constructor
 	public Business() {
 		

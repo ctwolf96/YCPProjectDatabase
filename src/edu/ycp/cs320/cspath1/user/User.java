@@ -61,5 +61,11 @@ public abstract class User {
 		
 	}
 	public abstract void proposeProject();
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }
