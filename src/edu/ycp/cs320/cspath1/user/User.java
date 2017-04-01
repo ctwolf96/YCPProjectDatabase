@@ -10,6 +10,9 @@ public abstract class User {
 	private UserType usertype;
 	private int userID;
 	
+	public User(){
+		
+	}
 	//Setters
 	public void setUsername(String username) {
 		this.username = username;

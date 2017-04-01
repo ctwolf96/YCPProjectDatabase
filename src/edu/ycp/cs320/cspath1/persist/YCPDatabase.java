@@ -15,6 +15,7 @@ import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
@@ -87,6 +88,38 @@ public class YCPDatabase implements IDatabase {
 		return conn;
 	}
 	
+	private User loadUser(User user, ResultSet resultSet, int index) throws SQLException {
+		user.setUserID(resultSet.getInt(index++));
+		user.setUsername(resultSet.getString(index++));
+		user.setPassword(resultSet.getString(index++));
+		user.setUsertype(getUserTypeFromParameter(resultSet.getString(index++)));
+		if (user.getUsertype() == UserType.STUDENT) {
+			Student student = new Student();
+			student.setUserID(user.getUserID());
+			student.setUsername(user.getUsername());
+			student.setPassword(user.getPassword());
+			student.setUsertype(user.getUsertype());
+			student.setFirstname(resultSet.getString(index++));
+			student.setLastname(resultSet.getString(index++));
+			student.setMajor(getMajorTypeFromParameter(resultSet.getString(index++)));
+			student.setClassLevel(getClassTypeFromParameter(resultSet.getString(index++)));
+			return student;
+		}
+		else if (user.getUsertype() == UserType.FACULTY){
+			Faculty faculty = new Faculty();
+			faculty.setUserID(user.getUserID());
+			faculty.setUsername(user.getUsername());
+			faculty.setPassword(user.getPassword());
+			faculty.setUsertype(user.getUsertype());
+			faculty.setFirstname(resultSet.getString(index++));
+			faculty.setLastname(resultSet.getString(index++));
+			faculty.setMajor(getMajorTypeFromParameter(resultSet.getString(index++)));
+			return faculty;
+		}
+		return null;
+		
+	}
+	
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -121,8 +154,8 @@ public class YCPDatabase implements IDatabase {
 					
 					stmt3 = conn.prepareStatement(
 							"create table relation (" +
-							"	foreign key (userid) references user(userid)," +
-							"   foreign key (projectid) references project(projectid)" +
+							"	foreign key (user_id) references user(user_id)," +
+							"   foreign key (project_id) references project(project_id)" +
 							")"
 						);
 						stmt3.executeUpdate();
@@ -152,20 +185,38 @@ public class YCPDatabase implements IDatabase {
 
 				PreparedStatement insertStudent = null;
 				PreparedStatement insertFaculty = null;
-				PreparedStatement insertGuest = null;
+				
 
 				try {
 					insertStudent = conn.prepareStatement(
-							"insert into user (username, password, email, usertype) values (?, ?, ?, ?)");
+							"insert into user (username, password, email, usertype, other1, other2, other3, other4) values (?, ?, ?, ?. ?, ?, ?, ?)");
 					for (Student student : studentList) {
 //						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
 						insertStudent.setString(1, student.getUsername());
 						insertStudent.setString(2, student.getPassword());
 						insertStudent.setString(3, student.getEmail());
 						insertStudent.setString(4, student.getUsertype().toString());
+						insertStudent.setString(5, student.getFirstname());
+						insertStudent.setString(6, student.getLastname());
+						insertStudent.setString(7, student.getMajor().toString());
+						insertStudent.setString(8, student.getClassLevel().toString());
 						insertStudent.addBatch();
 					}
 					insertStudent.executeBatch();
+					
+					insertFaculty = conn.prepareStatement(
+							"insert into user (username, password, email, usertype, other1, other2, other3, other4) values (?, ?, ?, ?, ?, ?, ?, ?)");
+					for (Faculty faculty : facultyList) { 
+						insertFaculty.setString(1, faculty.getUsername());
+						insertFaculty.setString(2, faculty.getPassword());
+						insertFaculty.setString(3, faculty.getEmail());
+						insertFaculty.setString(4, faculty.getUsertype().toString());
+						insertFaculty.setString(5, faculty.getFirstname());
+						insertFaculty.setString(6, faculty.getLastname());
+						insertFaculty.setString(7, faculty.getMajor().toString());
+						insertFaculty.setString(8, "");
+					}
+					insertFaculty.executeBatch();
 					
 					return true;
 				} finally {
@@ -189,14 +240,37 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public void insertUser(String username, String password, String email, UserType usertype) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
-	public User findUserbyUserID(int UserID) {
-		// TODO Auto-generated method stub
-		return null;
+	public User findUserbyUserID(int UserID, Connection conn) throws IOException, SQLException{
+		ResultSet resultSet = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		PreparedStatement stmt = conn.prepareStatement(
+				"select user" +
+				"from user" +
+				"where user.user_id = ?"
+				);
+		stmt.setInt(1, UserID);
+		
+		resultSet = stmt.executeQuery();
+		
+		Boolean found = false;
+		
+		while (resultSet.next()){
+			found = true;
+			
+			user = loadUser(user, resultSet, 1);
+		
+		}
+		
+		if(!found){
+			System.out.println("<" + UserID + "> was not found in the user table");
+		}
+		return user;
 	}
 
 	@Override
@@ -327,6 +401,147 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public void insertProject(User creator, String title, String description, int userid) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static MajorType getMajorTypeFromParameter(String s){
+		MajorType majortype = null;
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("ME")){
+			majortype = MajorType.ME;
+			
+		}
+		else if (s.equals("CE")){
+			majortype = MajorType.CE;
+		}
+		else if(s.equals("CS")){
+			majortype = MajorType.CS;
+		}
+		else if(s.equals("EE")){
+			majortype = MajorType.EE;
+		}
+		else if (s.equals("UN")) {
+			majortype = MajorType.UN;
+		}
+		else if (s.equals("CIV")){
+			majortype = MajorType.CIV;
+		}
+		return majortype;
+	}
+	
+	private static ClassType getClassTypeFromParameter(String s){
+		ClassType classtype = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("FRESHMAN")){
+			classtype = ClassType.FRESHMAN;
+		}
+		else if (s.equals("SOPHOMORE")){
+			classtype = ClassType.SOPHOMORE;
+		}
+		else if (s.equals("JUNIOR")){
+			classtype = ClassType.JUNIOR;
+		}
+		else if (s.equals("SENIOR")){
+			classtype = ClassType.SENIOR;
+		}
+		return classtype;
+	}
+	
+	private static UserType getUserTypeFromParameter(String s) {
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("FACULTY")){
+			return UserType.FACULTY;
+		}
+		else if (s.equals("ADMIN")){
+			return UserType.ADMIN;
+		}
+		else if (s.equals("STUDENT")){
+			return UserType.STUDENT;
+		}
+		else if (s.equals("BUSINESS")){
+			return UserType.BUSINESS;
+		}
+		return null;
+	}
+	private static SolicitationType getSolicitationTypeFromParameter(String s){
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("SW_ENGINEERING")){
+			return SolicitationType.SW_ENGINEERING;
+		}
+		else if (s.equals("CivE_CAPSTONE")){
+			return SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s.equals("ME_ECE_CAPSTONE")){
+			return SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s.equals("CS_SENIOR_DESIGN_I")){
+			return SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s.equals("CS_SENIOR_DESIGN_II")){
+			return SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s.equals("ECE_CAPSTONE")){
+			return SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s.equals("ME_CAPSTONE")){
+			return SolicitationType.ME_CAPSTONE;
+		}
+		else if (s.equals("CS_INTERNSHIP")){
+			return SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s.equals("INDEPENDENT_STUDY")){
+			return SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s.equals("ENGINEERING_COOP")){
+			return SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s.equals("CLASS_PROJECT")){
+			return SolicitationType.CLASS_PROJECT;
+		}
+		return null;
+	}
+
+	@Override
+	public User findUserbyUserID(int UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByUsernameAndPassword(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByAddress(String address) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertUser(String username, String password, String email, UserType usertype, Connection conn) {
 		// TODO Auto-generated method stub
 		
 	}

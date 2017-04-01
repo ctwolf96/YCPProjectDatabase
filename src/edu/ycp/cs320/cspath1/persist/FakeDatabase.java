@@ -1,6 +1,7 @@
 package edu.ycp.cs320.cspath1.persist;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -400,4 +401,123 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		
 	}	
+	
+	private static MajorType getMajorTypeFromParameter(String s){
+		MajorType majortype = null;
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("ME")){
+			majortype = MajorType.ME;
+			
+		}
+		else if (s.equals("CE")){
+			majortype = MajorType.CE;
+		}
+		else if(s.equals("CS")){
+			majortype = MajorType.CS;
+		}
+		else if(s.equals("EE")){
+			majortype = MajorType.EE;
+		}
+		else if (s.equals("UN")) {
+			majortype = MajorType.UN;
+		}
+		else if (s.equals("CIV")){
+			majortype = MajorType.CIV;
+		}
+		return majortype;
+	}
+	
+	private static ClassType getClassTypeFromParameter(String s){
+		ClassType classtype = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("FRESHMAN")){
+			classtype = ClassType.FRESHMAN;
+		}
+		else if (s.equals("SOPHOMORE")){
+			classtype = ClassType.SOPHOMORE;
+		}
+		else if (s.equals("JUNIOR")){
+			classtype = ClassType.JUNIOR;
+		}
+		else if (s.equals("SENIOR")){
+			classtype = ClassType.SENIOR;
+		}
+		return classtype;
+	}
+	
+	private static UserType getUserTypeFromParameter(String s) {
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("FACULTY")){
+			return UserType.FACULTY;
+		}
+		else if (s.equals("ADMIN")){
+			return UserType.ADMIN;
+		}
+		else if (s.equals("STUDENT")){
+			return UserType.STUDENT;
+		}
+		else if (s.equals("BUSINESS")){
+			return UserType.BUSINESS;
+		}
+		return null;
+	}
+	private static SolicitationType getSolicitationTypeFromParameter(String s){
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("SW_ENGINEERING")){
+			return SolicitationType.SW_ENGINEERING;
+		}
+		else if (s.equals("CivE_CAPSTONE")){
+			return SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s.equals("ME_ECE_CAPSTONE")){
+			return SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s.equals("CS_SENIOR_DESIGN_I")){
+			return SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s.equals("CS_SENIOR_DESIGN_II")){
+			return SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s.equals("ECE_CAPSTONE")){
+			return SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s.equals("ME_CAPSTONE")){
+			return SolicitationType.ME_CAPSTONE;
+		}
+		else if (s.equals("CS_INTERNSHIP")){
+			return SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s.equals("INDEPENDENT_STUDY")){
+			return SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s.equals("ENGINEERING_COOP")){
+			return SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s.equals("CLASS_PROJECT")){
+			return SolicitationType.CLASS_PROJECT;
+		}
+		return null;
+	}
+
+
+	@Override
+	public void insertUser(String username, String password, String email, UserType usertype, Connection conn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public User findUserbyUserID(int UserID, Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

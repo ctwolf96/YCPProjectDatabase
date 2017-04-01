@@ -1,5 +1,8 @@
 package edu.ycp.cs320.cspath1.persist;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,10 @@ public interface IDatabase {
 	Business findBusinessByName(String name);
 
 	Business findBusinessByEmail(String email);
+
+	void insertUser(String username, String password, String email, UserType usertype, Connection conn);
+
+	User findUserbyUserID(int UserID, Connection conn) throws IOException, SQLException;
 	
 
 	
