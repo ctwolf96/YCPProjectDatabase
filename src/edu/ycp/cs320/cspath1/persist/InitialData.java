@@ -129,7 +129,7 @@ public class InitialData {
 				Solicitation solicitation = new Solicitation();
 				solicitation.setProjectID(projectID++);
 				Integer userID = Integer.parseInt(i.next());
-				solicitation.setUserID(userID);
+//				solicitation.setUserID(userID);
 				MajorType CS = getMajorTypeFromParameter(i.next());
 				if (CS != null) {
 					majors.add(CS);

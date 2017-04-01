@@ -37,7 +37,7 @@ private static final long serialVersionUID = 1L;
 			model.setEmail(email);
 			model.setPassword(password);
 			model.setUsername(username);
-			model.setUsertype(UserType.GUEST);
+			model.setUsertype(UserType.BUSINESS);
 			
 			
 			if (username == null || password == null || email == null) {

@@ -100,35 +100,29 @@ public class YCPDatabase implements IDatabase {
 						"create table user (" +
 						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
-						"	username varchar(40)," +
-						"	password varchar(40)" +
-						"   email varchar(60)" +
-						"   usertype varchar(10)" +	
+						"	username varchar(40) not null," +
+						"	password varchar(40) not null," +
+						"   email varchar(60) not null," +
+						"   usertype varchar(10) not null" +	
 						")"
 					);	
 					stmt1.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
 						"create table project (" +
-						"	student_id integer primary key " +
+						"	project_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +
-						"	user_id integer constraint user_id references user, " +
-						"	creator varchar(30)," +
-						"	title varchar(30)" +
-						"   description varchar(10)" +
-						"   userid varchar(10)" +
+						"	creator varchar(30) not null," +
+						"	title varchar(30) not null," +
+						"   description varchar(10) not null" +
 						")"
 					);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(
 							"create table relation (" +
-							"	faculty_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	user_id integer constraint user_id references user, " +
-							"	firstname varchar(30)," +
-							"	lastname varchar(30)" +
-							"   major varchar(10)" +
+							"	foreign key (userid) references user(userid)," +
+							"   foreign key (projectid) references project(projectid)" +
 							")"
 						);
 						stmt3.executeUpdate();
