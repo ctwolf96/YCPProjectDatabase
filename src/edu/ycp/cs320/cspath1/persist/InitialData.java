@@ -10,6 +10,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Student;
 
@@ -77,6 +78,37 @@ public class InitialData {
 			return studentList;
 		} finally {
 			readStudents.close();
+
+		}
+	}
+	
+	
+	public static List<Business> getBusinesses() throws IOException {
+		List<Business> businessList = new ArrayList<Business>();
+		ReadCSV readBusiness = new ReadCSV("BusinessUsers.CSV");
+		try {
+			int userID = 65;
+			while (true) {
+				List<String> tuple = readBusiness.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Business business = new Business();
+				business.setUserID(userID++);
+				business.setName(i.next());
+				business.setUsername(i.next());
+				business.setEmail(i.next());
+				business.setPassword(i.next());
+				business.setAddress(i.next());
+				business.setNumber(i.next());
+				business.setUsertype(getUserTypeFromParameter(i.next()));
+				businessList.add(business);
+			}
+			return businessList;
+		} finally {
+			readBusiness.close();
+
 		}
 	}
 	
@@ -209,6 +241,9 @@ public class InitialData {
 		}
 		else if (s.equals("STUDENT")){
 			return UserType.STUDENT;
+		}
+		else if (s.equals("BUSINESS")){
+			return UserType.BUSINESS;
 		}
 		return null;
 	}

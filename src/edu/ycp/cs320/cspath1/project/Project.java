@@ -15,9 +15,12 @@ public class Project {
 	
 	//Constructor
 	public Project() {
+		
 	}
 	
 	//Setters
+
+
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
@@ -35,6 +38,7 @@ public class Project {
 	}
 	
 	//Getters
+
 	public User getCreator() {
 		return creator;
 	}
@@ -57,6 +61,6 @@ public class Project {
 		
 	}
 	public void edit() {
-		
 	}
 }
+
