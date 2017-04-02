@@ -19,25 +19,25 @@ import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public interface IDatabase {
-	public void insertUser(String username, String password, String email, UserType usertype, Connection conn) throws IOException, SQLException;
-	public void deleteUser(User user, Connection conn) throws IOException, SQLException;
-	public void editPassword(int UserID, String password, Connection conn) throws IOException, SQLException;
-	public void editEmail(int UserID, String email, Connection conn) throws IOException, SQLException;
-	public User findUserByUserID(int UserID, Connection conn) throws IOException, SQLException;
-	public User findUserByUsername(String username, Connection conn) throws IOException, SQLException;
-	public User findUserByUsernameAndPassword(String username, String password, Connection conn) throws IOException, SQLException;
-	public User findUserByEmail(String email, Connection conn) throws IOException, SQLException;
-	public List<User> findUserByUserType(UserType usertype, Connection conn) throws IOException, SQLException; //tested
-	public List<User> findUserByFirstname(String firstname, Connection conn) throws IOException, SQLException;
-	public List<User> findUserByLastname(String lastname, Connection conn) throws IOException, SQLException; 
-	public List<User> findUserByMajorType(MajorType major, Connection conn) throws IOException, SQLException; 
-	public List<User> findUserByClassType(ClassType classtype, Connection conn) throws IOException, SQLException;
-	public User findUserByName(String name, Connection conn) throws IOException, SQLException;
-	public User findUserByAddress(String address, Connection conn) throws IOException, SQLException;
-	public User findUserByNumber(String number, Connection conn) throws IOException, SQLException;
+	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
+	public void deleteUser(User user) throws IOException, SQLException;
+	public void editPassword(int UserID, String password) throws IOException, SQLException;
+	public void editEmail(int UserID, String email) throws IOException, SQLException;
+	public User findUserByUserID(int UserID) throws IOException, SQLException;
+	public User findUserByUsername(String username) throws IOException, SQLException;
+	public User findUserByUsernameAndPassword(String username, String password) throws IOException, SQLException;
+	public User findUserByEmail(String email) throws IOException, SQLException;
+	public List<User> findUserByUserType(UserType usertype) throws IOException, SQLException; //tested
+	public List<User> findUserByFirstname(String firstname) throws IOException, SQLException;
+	public List<User> findUserByLastname(String lastname) throws IOException, SQLException; 
+	public List<User> findUserByMajorType(MajorType major) throws IOException, SQLException; 
+	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException;
+	public User findUserByName(String name) throws IOException, SQLException;
+	public User findUserByAddress(String address) throws IOException, SQLException;
+	public User findUserByNumber(String number) throws IOException, SQLException;
 	
-	public void insertProject(int UserID, String title, String description, String start, String duration, ProjectType type, Connection conn) throws IOException, SQLException;
-	public void deleteProject(Project project, Connection conn) throws IOException, SQLException;
+	public void insertProject(int UserID, String title, String description, String start, String duration, ProjectType type) throws IOException, SQLException;
+	public void deleteProject(Project project) throws IOException, SQLException;
 	
 	public Solicitation findSolicitationByProjectID(int projectID);
 	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype);
