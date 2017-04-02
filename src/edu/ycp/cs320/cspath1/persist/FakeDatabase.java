@@ -387,7 +387,7 @@ public class FakeDatabase implements IDatabase {
 	@Override
 	public Business findBusinessByName(String name) {
 		for (Business business: businessList){
-			if (business.getName().equals(name)){
+			if (business.getUsername().equals(name)){
 				return business;
 			}
 		}

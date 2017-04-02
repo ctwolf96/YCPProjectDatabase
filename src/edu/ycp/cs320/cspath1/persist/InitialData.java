@@ -121,7 +121,7 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Business business = new Business();
 				business.setUserID(userID++);
-				business.setName(i.next());
+				business.setUsername(i.next());
 				business.setUsername(i.next());
 				business.setEmail(i.next());
 				business.setPassword(i.next());

@@ -11,8 +11,11 @@ import java.util.List;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
+import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
@@ -185,8 +188,8 @@ public class YCPDatabase implements IDatabase {
 
 				try {
 					insertStudent = conn.prepareStatement("insert into authors (author_lastname, author_firstname) values (?, ?)");
-					for (Author author : authorList) {
-//						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
+					for (Student student : StudentUsers) {
+						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
 						insertAuthor.setString(1, author.getLastname());
 						insertAuthor.setString(2, author.getFirstname());
 						insertAuthor.addBatch();
@@ -310,6 +313,84 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public List<User> findUserByUserType(UserType usertype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByAddress(String address) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByUsernameAndPassword(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Business findBusinessByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassType(ClassType classtype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByStartTime(String startTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByDuration(String duration) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsByNumStudents(int numStudents) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Solicitation findSolicitationByProjectID(int projectID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

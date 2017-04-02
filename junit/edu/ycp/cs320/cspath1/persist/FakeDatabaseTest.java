@@ -354,7 +354,7 @@ public class FakeDatabaseTest {
 	public void testFindBusinessByAddress(){
 		Business business = new Business();
 		business = fake.findBusinessByAddress("123 Fake Address Road");
-		assertEquals(business.getName(), "Business1");
+		assertEquals(business.getUsername(), "Business1");
 		business = fake.findBusinessByAddress("123 Fake Address Lane");
 		assertEquals(business.getEmail(), "Business5@business5.com");
 		business = fake.findBusinessByAddress("123 Fake Address Court");
@@ -390,7 +390,7 @@ public class FakeDatabaseTest {
 		business = fake.findBusinessByEmail("Business4@business4.com");
 		assertEquals(business.getPassword(), "password");
 		business = fake.findBusinessByEmail("Business2@business2.com");
-		assertEquals(business.getName(), "Business2");
+		assertEquals(business.getUsername(), "Business2");
 		business = fake.findBusinessByEmail("Business6@business6.com");
 		assertEquals(business.getUsertype(), UserType.BUSINESS);
 	}
