@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
-
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
@@ -535,7 +533,8 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public void insertUser(String username, String password, String email, UserType usertype, Connection conn) throws IOException, SQLException {
+	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement  stmt = null;
 		try {
@@ -568,11 +567,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public void deleteUser(User user, Connection conn) throws IOException, SQLException {
+	public void deleteUser(User user) throws IOException, SQLException {
+		Connection conn = connect();
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
@@ -585,11 +586,13 @@ public class YCPDatabase implements IDatabase {
 			stmt.executeQuery();
 		} finally {
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 	
 	@Override
-	public void editPassword(int UserID, String password, Connection conn) throws IOException, SQLException {
+	public void editPassword(int UserID, String password) throws IOException, SQLException {
+		Connection conn = connect();
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
@@ -604,11 +607,13 @@ public class YCPDatabase implements IDatabase {
 			stmt.executeQuery();
 		} finally {
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 	
 	@Override
-	public void editEmail(int UserID, String email, Connection conn) throws IOException, SQLException {
+	public void editEmail(int UserID, String email) throws IOException, SQLException {
+		Connection conn = connect();
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
@@ -623,11 +628,13 @@ public class YCPDatabase implements IDatabase {
 			stmt.executeQuery();
 		} finally {
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 	
 	@Override
-	public User findUserByUserID(int UserID, Connection conn) throws IOException, SQLException{
+	public User findUserByUserID(int UserID) throws IOException, SQLException{
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement  stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -658,11 +665,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByUsername(String username, Connection conn) throws IOException, SQLException {
+	public User findUserByUsername(String username) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -693,11 +702,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByUsernameAndPassword(String username, String password, Connection conn) throws IOException, SQLException {
+	public User findUserByUsernameAndPassword(String username, String password) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -729,11 +740,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByEmail(String email, Connection conn) throws IOException, SQLException {
+	public User findUserByEmail(String email) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -764,11 +777,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public List<User> findUserByUserType(UserType usertype, Connection conn) throws IOException, SQLException {
+	public List<User> findUserByUserType(UserType usertype) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -801,11 +816,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public List<User> findUserByFirstname(String firstname, Connection conn) throws IOException, SQLException {
+	public List<User> findUserByFirstname(String firstname) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -838,11 +855,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public List<User> findUserByLastname(String lastname, Connection conn) throws IOException, SQLException {
+	public List<User> findUserByLastname(String lastname) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -875,11 +894,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public List<User> findUserByMajorType(MajorType major, Connection conn) throws IOException, SQLException {
+	public List<User> findUserByMajorType(MajorType major) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -912,11 +933,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public List<User> findUserByClassType(ClassType classtype, Connection conn) throws IOException, SQLException {
+	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -949,11 +972,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByName(String name, Connection conn) throws IOException, SQLException {
+	public User findUserByName(String name) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -984,11 +1009,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByAddress(String address, Connection conn) throws IOException, SQLException {
+	public User findUserByAddress(String address) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -1019,11 +1046,13 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
-	public User findUserByNumber(String number, Connection conn) throws IOException, SQLException {
+	public User findUserByNumber(String number) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement stmt = null;
 		//Placeholder since we can't instantiate the super
@@ -1054,12 +1083,14 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 	}
 
 	@Override
 	public void insertProject(int UserID, String title, String description, String start, String duration,
-			ProjectType type, Connection conn) throws IOException, SQLException {
+			ProjectType type) throws IOException, SQLException {
+		Connection conn = connect();
 		ResultSet resultSet = null;
 		PreparedStatement  stmt = null;
 		try {
@@ -1094,12 +1125,14 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 		
 	}
 
 	@Override
-	public void deleteProject(Project project, Connection conn) throws IOException, SQLException {
+	public void deleteProject(Project project) throws IOException, SQLException {
+		Connection conn = connect();
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
@@ -1112,6 +1145,7 @@ public class YCPDatabase implements IDatabase {
 			stmt.executeQuery();
 		} finally {
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 		
 	}
