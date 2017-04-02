@@ -12,6 +12,7 @@ public class ActiveProject extends Project {
 	private double budget;
 	private ArrayList<Project> prevVersions;
 	private Project original;
+	private int numStudents;
 	
 	//Constructor
 	public ActiveProject() {
@@ -28,6 +29,9 @@ public class ActiveProject extends Project {
 	public void setBudget(double budget) {
 		this.budget = budget;
 	}
+	public void setNumStudents(int numStudents) {
+		this.numStudents = numStudents;
+	}
 	
 	//Getters
 	public String getDeadline() {
@@ -38,6 +42,9 @@ public class ActiveProject extends Project {
 	}
 	public double getBudget() {
 		return budget;
+	}
+	public int getNumStudents() {
+		return numStudents;
 	}
 	
 	//Methods

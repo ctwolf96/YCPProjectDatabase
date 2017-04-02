@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
@@ -15,7 +16,10 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.project.ActiveProject;
+import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
+import edu.ycp.cs320.cspath1.project.Proposal;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
@@ -272,19 +276,125 @@ public class YCPDatabase implements IDatabase {
 		project.setStart(resultSet.getString(5));
 		project.setDuration(resultSet.getString(6));
 		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(7)));
+		if (project.getProjectType() == ProjectType.SOLICITATION) {
+			Solicitation solicitation = new Solicitation();
+			solicitation.setProjectID(project.getProjectID());
+			solicitation.setUserID(project.getUserID());
+			solicitation.setTitle(project.getTitle());
+			solicitation.setDescription(project.getDescription());
+			solicitation.setStart(project.getStart());
+			solicitation.setDuration(project.getDuration());
+			solicitation.setProjectType(project.getProjectType());
+			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(7)));
+			solicitation.setMajors(getMajorListFromString(resultSet.getString(8)));
+			solicitation.setClasses(getClassListFromString(resultSet.getString(9)));
+			solicitation.setNumStudents(resultSet.getInt(10));
+			solicitation.setCost(resultSet.getInt(11));
+			return solicitation;
+		}
+		else if (project.getProjectType() == ProjectType.PROPOSAL) {
+			Proposal proposal = new Proposal();
+			proposal.setProjectID(project.getProjectID());
+			proposal.setUserID(project.getUserID());
+			proposal.setTitle(project.getTitle());
+			proposal.setDescription(project.getDescription());
+			proposal.setStart(project.getStart());
+			proposal.setDuration(project.getDuration());
+			proposal.setProjectType(project.getProjectType());
+			proposal.setMajors(getMajorListFromString(resultSet.getString(9)));
+			proposal.setClasses(getClassListFromString(resultSet.getString(10)));
+			proposal.setNumStudents(resultSet.getInt(11));
+			proposal.setCost(resultSet.getInt(12));
+			proposal.setIsFunded(getBoolFromString(resultSet.getString(13)));
+			proposal.setDeadline(resultSet.getString(14));
+			return proposal;
+		}
+		else if (project.getProjectType() == ProjectType.ACTIVE) {
+			ActiveProject active = new ActiveProject();
+			active.setProjectID(project.getProjectID());
+			active.setUserID(project.getUserID());
+			active.setTitle(project.getTitle());
+			active.setDescription(project.getDescription());
+			active.setStart(project.getStart());
+			active.setDuration(project.getDuration());
+			active.setProjectType(project.getProjectType());
+			active.setNumStudents(resultSet.getInt(11));
+			active.setCost(resultSet.getInt(12));
+			active.setDeadline(resultSet.getString(14));
+			active.setBudget(resultSet.getInt(15));
+			return active;
+		}
+		else if (project.getProjectType() == ProjectType.PAST) {
+			PastProject past = new PastProject();
+			past.setProjectID(project.getProjectID());
+			past.setUserID(project.getUserID());
+			past.setTitle(project.getTitle());
+			past.setDescription(project.getDescription());
+			past.setStart(project.getStart());
+			past.setDuration(project.getDuration());
+			past.setProjectType(project.getProjectType());
+			return past;
+		}
 		return null;
 	}
 	
+	//Methods to convert to and from strings when dealing with the database
 	private String getStringFromMajorList(List<MajorType> list) {
-		String majors = list.stream().map(Object::toString)
-                .collect(Collectors.joining(", "));
+		String majors = null;
+		int index = 0;
+		for (MajorType major: list) {
+			major = list.get(index);
+			majors = "" + major.toString() + ", ";
+			index++;
+		}
 		return majors;
 	}
 	
+	private ArrayList<MajorType> getMajorListFromString(String s) {
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		StringTokenizer st = new StringTokenizer(s);
+	     while (st.hasMoreTokens()) {
+	         majors.add(getMajorTypeFromParameter(st.nextToken()));
+	     }
+	     return majors;
+	}
+	
 	private String getStringFromClassList(List<ClassType> list) {
-		String classes = list.stream().map(Object::toString)
-                .collect(Collectors.joining(", "));
+		String classes = null;
+		int index = 0;
+		for (ClassType classtype: list) {
+			classtype = list.get(index);
+			classes = "" + classtype.toString() + " ";
+			index++;
+		}
 		return classes;
+	}
+	
+	private ArrayList<ClassType> getClassListFromString(String s) {
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		StringTokenizer st = new StringTokenizer(s);
+	     while (st.hasMoreTokens()) {
+	         classes.add(getClassTypeFromParameter(st.nextToken()));
+	     }
+	     return classes;
+	}
+	
+	private String getStringFromBool(Boolean bool) {
+		String s = null;
+		if (bool.TRUE) {
+			s = "true";
+		} else if (bool.FALSE) {
+			s = "false";
+		}
+		return s;
+	}
+	
+	private Boolean getBoolFromString(String s) {
+		if (s.equals("true")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void createTables() {
