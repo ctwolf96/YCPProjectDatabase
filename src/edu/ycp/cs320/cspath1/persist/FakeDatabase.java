@@ -22,6 +22,7 @@ public class FakeDatabase implements IDatabase {
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
 	private List<Business> businessList;
+	private List<User> userList;
 
 	
 	public FakeDatabase(){
@@ -30,6 +31,7 @@ public class FakeDatabase implements IDatabase {
 		this.facultyList = new ArrayList<Faculty>();
 		this.solicitationList = new ArrayList<Solicitation>();
 		this.businessList = new ArrayList<Business>();
+		this.userList = new ArrayList<User>();
 		
 		
 		readInitialData();
@@ -47,6 +49,7 @@ public class FakeDatabase implements IDatabase {
 			facultyList.addAll(InitialData.getFaculty());
 			solicitationList.addAll(InitialData.getSolicitations());
 			businessList.addAll(InitialData.getBusinesses());
+			userList.addAll(InitialData)
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}

@@ -8,9 +8,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 public class Proposal extends Project {
 	private ArrayList<MajorType> majors;
 	private ArrayList<ClassType> classes;
-	private String duration;
-	private String startTime;
-	private String endTime;
+	private String deadline;
 	private int numStudents;
 	private double cost;
 	private boolean isFunded;
@@ -21,14 +19,8 @@ public class Proposal extends Project {
 	}
 	
 	//Setters
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;
@@ -47,14 +39,8 @@ public class Proposal extends Project {
 	}
 
 	//Getters
-	public String getDuration() {
-		return duration;
-	}
-	public String getStartTime() {
-		return startTime;
-	}
-	public String getEndTime() {
-		return endTime;
+	public String getDeadline() {
+		return deadline;
 	}
 	public int getNumStudents() {
 		return numStudents;
