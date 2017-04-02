@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
 		else if (req.getParameter("guestCreation") != null){
-			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("login") != null){
 			resp.sendRedirect(req.getContextPath() + "/login");

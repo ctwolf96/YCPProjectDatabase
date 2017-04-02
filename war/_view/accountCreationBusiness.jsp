@@ -21,7 +21,7 @@
 	
 	
 
-		<form action="${pageContext.servletContext.contextPath}/accountCreationGuest" method="post">
+		<form action="${pageContext.servletContext.contextPath}/accountCreationBusiness" method="post">
 		<div class="container">
 		<h1>Account Creation (Business)</h1>
 			<table>

@@ -12,13 +12,13 @@ import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 
 
 
-public class AccountCreationGuestServlet extends HttpServlet {
+public class AccountCreationBusinessServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/accountCreationGuest.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/accountCreationBusiness.jsp").forward(req, resp);
 	}
 	
 	@Override
