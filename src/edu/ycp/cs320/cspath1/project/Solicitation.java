@@ -12,10 +12,10 @@ public class Solicitation extends Project {
 	private String duration;
 	private String startTime;
 	private int numStudents;
+
+	private double cost;
+
 	private SolicitationType solicitationType;
-
-
-	//Constructor
 
 	public Solicitation() {
 		
@@ -37,6 +37,9 @@ public class Solicitation extends Project {
 	public void setClasses(ArrayList<ClassType> classes) {
 		this.classes = classes;
 	}
+	public void setSolicitationType(SolicitationType solicitationType) {
+		this.solicitationType = solicitationType;
+	}
 
 	//Getters
 	public String getDuration() {
@@ -55,6 +58,9 @@ public class Solicitation extends Project {
 	public ArrayList<ClassType> getClasses() {
 		return classes;
 	}
+	public SolicitationType getSolicitationType() {
+		return solicitationType;
+	}
 	
 	//Methods
 	public void addMajor(MajorType major) {
@@ -71,12 +77,12 @@ public class Solicitation extends Project {
 		
 	}
 
-	public SolicitationType getSolicitationType() {
-		return solicitationType;
+	public double getCost() {
+		return cost;
 	}
 
-	public void setSolicitationType(SolicitationType solicitationType) {
-		this.solicitationType = solicitationType;
+	public void setCost(double cost) {
+		this.cost = cost;
 	}
 
 }

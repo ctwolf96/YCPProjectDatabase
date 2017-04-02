@@ -1,25 +1,55 @@
 package edu.ycp.cs320.cspath1.project;
 
-public class Project {
-	
-	private int UserID;
-	private int ProjectID;
+import edu.ycp.cs320.cspath1.user.User;
+import java.util.ArrayList;
 
+public class Project {
+	// How are we linking a project with a user? At first I was thinking of using an arraylist of user id's but that only applies
+	// to active projects who have members. A proposal/solicitation will only have one user (creator) to link a project and user together
+	// I guess what I'm getting at is should we link a project and user by creator and then worry about linking the members of an active
+	// project later
+	private User creator;
+	private String title;
+	private String description;
+	private int ProjectID;
+	private ArrayList<Integer> users;
 	
 	//Constructor
 	public Project() {
-		
+
 	}
 	
 	//Setters
-	public void setUserID(int userID) {
-		UserID = userID;
+
+
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+
+	}
+	public void setProjectID(int projectID) {
+		ProjectID = projectID;
 	}
 	
 	//Getters
+
+	public User getCreator() {
+		return creator;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getDescription() {
+		return description;
+	}
 	
-	public int getUserID() {
-		return UserID;
+	public int getProjectID() {
+		return ProjectID;
 	}
 	
 	//Methods
@@ -29,14 +59,17 @@ public class Project {
 	}
 	public void edit() {
 
-	}
-
-	public int getProjectID() {
-		return ProjectID;
-	}
-
-	public void setProjectID(int projectID) {
-		ProjectID = projectID;
 
 	}
-}
+
+	public ArrayList<Integer> getUsers() {
+		return users;
+	}
+
+	public void setUsers(ArrayList<Integer> users) {
+		this.users = users;
+	}
+
+	
+	}
+

@@ -10,6 +10,9 @@ public abstract class User {
 	private UserType usertype;
 	private int userID;
 	
+	public User(){
+		
+	}
 	//Setters
 	public void setUsername(String username) {
 		this.username = username;
@@ -61,5 +64,11 @@ public abstract class User {
 		
 	}
 	public abstract void proposeProject();
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

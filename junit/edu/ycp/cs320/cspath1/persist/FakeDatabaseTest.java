@@ -18,7 +18,6 @@ import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
-
 public class FakeDatabaseTest {
 	private FakeDatabase fake = new FakeDatabase();
 	
@@ -360,7 +359,7 @@ public class FakeDatabaseTest {
 		business = fake.findBusinessByAddress("123 Fake Address Court");
 		assertEquals(business.getEmail(), "Business6@business6.com");
 		
-	}
+		}
 	
 	@Test
 	public void testFindBusinessByName(){
