@@ -6,7 +6,6 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class ActiveProject extends Project {
 	private ArrayList<User> members;
-	private User mentor;
 	private String deadline;
 	private ArrayList<String> tasks;
 	private double cost;
@@ -20,9 +19,6 @@ public class ActiveProject extends Project {
 	}
 	
 	//Setters
-	public void setMentor(User mentor) {
-		this.mentor = mentor;
-	}
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
@@ -34,9 +30,6 @@ public class ActiveProject extends Project {
 	}
 	
 	//Getters
-	public User getMentor() {
-		return mentor;
-	}
 	public String getDeadline() {
 		return deadline;
 	}

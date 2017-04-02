@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Project;
@@ -195,6 +197,25 @@ public class YCPDatabase implements IDatabase {
 		return null;
 	}
 	
+	private static ProjectType getProjectTypeFromParameter(String s){
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("PROPOSAL")) {
+			return ProjectType.PROPOSAL;
+		}
+		else if (s.equals("SOLICITATION")) {
+			return ProjectType.SOLICITATION;
+		}
+		else if (s.equals("ACTIVE")) {
+			return ProjectType.ACTIVE;
+		}
+		else if (s.equals("PAST")) {
+			return ProjectType.PAST;
+		}
+		return null;
+	}
+	
 	//Method to create a user from database
 	private User loadUser(User user, ResultSet resultSet) throws SQLException {
 		user.setUserID(resultSet.getInt(1));
@@ -243,8 +264,27 @@ public class YCPDatabase implements IDatabase {
 	}
 	
 	//Method to create a project from database
-	private Project loadProject(Project project, ResultSet resultSet, int index) throws SQLException {
+	private Project loadProject(Project project, ResultSet resultSet) throws SQLException {
+		project.setProjectID(resultSet.getInt(1));
+		project.setUserID(resultSet.getInt(2));
+		project.setTitle(resultSet.getString(3));
+		project.setDescription(resultSet.getString(4));
+		project.setStart(resultSet.getString(5));
+		project.setDuration(resultSet.getString(6));
+		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(7)));
 		return null;
+	}
+	
+	private String getStringFromMajorList(List<MajorType> list) {
+		String majors = list.stream().map(Object::toString)
+                .collect(Collectors.joining(", "));
+		return majors;
+	}
+	
+	private String getStringFromClassList(List<ClassType> list) {
+		String classes = list.stream().map(Object::toString)
+                .collect(Collectors.joining(", "));
+		return classes;
 	}
 	
 	public void createTables() {
@@ -277,20 +317,32 @@ public class YCPDatabase implements IDatabase {
 					
 					stmt2 = conn.prepareStatement(
 						"create table project (" +
-						"	project_id integer primary key " +
-						"		generated always as identity (start with 1, increment by 1), " +
-						"	user_id integer constraint user_id references user, " +
-						"	creator varchar(30) not null," +
-						"	title varchar(30) not null," +
-						"   description varchar(10) not null," +
+						"project_id integer primary key " +
+						"generated always as identity (start with 1, increment by 1), " +
+						"user_id integer constraint user_id references user, " +
+						"title varchar(30) not null," +
+						"description varchar(200) not null," +
+						"start varchar(20) not null," +
+						"duration varchar(20) not null," +
+						"projectType varchar(20) not null," +
+						"solicitationType varchar(20)" +
+						"majors varchar(20)" +
+						"classes varchar(30)" +
+						"numStudents integer" +
+						"cost integer" +
+						"isFunded varchar(5)" +
+						"deadline varchar(20)" +
+						"budget integer" +
+						"members varchar(1000)" +
+						"tasks varchar(1000)" +
 						")"
 					);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(
 							"create table relation (" +
-							"	foreign key (user_id) references user(user_id)," +
-							"   foreign key (project_id) references project(project_id)" +
+							"foreign key (user_id) references user(user_id)," +
+							"foreign key (project_id) references project(project_id)" +
 							")"
 						);
 						stmt3.executeUpdate();
@@ -373,41 +425,6 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public User findUserByUserID(int UserID, Connection conn) throws IOException, SQLException{
-		ResultSet resultSet = null;
-		PreparedStatement  stmt = null;
-		//Placeholder since we can't instantiate the super
-		User user = new Student();
-		try {
-			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where user_id = ?"
-					);
-			stmt.setInt(1, UserID);
-			
-			resultSet = stmt.executeQuery();
-			
-			Boolean found = false;
-			
-			while (resultSet.next()){
-				found = true;
-				
-				user = loadUser(user, resultSet);
-			
-			}
-			
-			if(!found){
-				System.out.println("<" + UserID + "> was not found in the user table");
-			}
-			return user;
-		} finally {
-			DBUtil.closeQuietly(resultSet);
-			DBUtil.closeQuietly(stmt);
-		}
-	}
-
-	@Override
 	public void insertUser(String username, String password, String email, UserType usertype, Connection conn) throws IOException, SQLException {
 		ResultSet resultSet = null;
 		PreparedStatement  stmt = null;
@@ -459,7 +476,79 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(stmt);
 		}
-		
+	}
+	
+	@Override
+	public void editPassword(int UserID, String password, Connection conn) throws IOException, SQLException {
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update user" +
+					"set password = ?" +
+					"where user_id = ?"
+					);
+			
+			stmt.setString(1, password);
+			stmt.setInt(2, UserID);
+			
+			stmt.executeQuery();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+	
+	@Override
+	public void editEmail(int UserID, String email, Connection conn) throws IOException, SQLException {
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update user" +
+					"set email = ?" +
+					"where user_id = ?"
+					);
+			
+			stmt.setString(1, email);
+			stmt.setInt(2, UserID);
+			
+			stmt.executeQuery();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+	
+	@Override
+	public User findUserByUserID(int UserID, Connection conn) throws IOException, SQLException{
+		ResultSet resultSet = null;
+		PreparedStatement  stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where user_id = ?"
+					);
+			stmt.setInt(1, UserID);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+			
+			}
+			
+			if(!found){
+				System.out.println("user_id <" + UserID + "> was not found in the user table");
+			}
+			return user;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
 	}
 
 	@Override
@@ -606,111 +695,315 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public void insertProject(User creator, String title, String description, int userid) {
-		// TODO Auto-generated method stub
+	public List<User> findUserByFirstname(String firstname, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		ArrayList<User> users = new ArrayList<User>();
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where firstname = ?"
+					);
+			stmt.setString(1, firstname);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+				users.add(user);
+			
+			}
+			
+			if(!found){
+				System.out.println("No user with the firstname <" + firstname + "> was found in the user table");
+			}
+			return users;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public List<User> findUserByLastname(String lastname, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		ArrayList<User> users = new ArrayList<User>();
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where lastname = ?"
+					);
+			stmt.setString(1, lastname);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+				users.add(user);
+			
+			}
+			
+			if(!found){
+				System.out.println("No user with the lastname <" + lastname + "> was found in the user table");
+			}
+			return users;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public List<User> findUserByMajorType(MajorType major, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		ArrayList<User> users = new ArrayList<User>();
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where major = ?"
+					);
+			stmt.setString(1, major.toString());
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+				users.add(user);
+			
+			}
+			
+			if(!found){
+				System.out.println("No user with the major <" + major + "> was found in the user table");
+			}
+			return users;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public List<User> findUserByClassType(ClassType classtype, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		ArrayList<User> users = new ArrayList<User>();
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where classe = ?"
+					);
+			stmt.setString(1, classtype.toString());
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+				users.add(user);
+			
+			}
+			
+			if(!found){
+				System.out.println("No user with the class <" + classtype + "> was found in the user table");
+			}
+			return users;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public User findUserByName(String name, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where name = ?"
+					);
+			stmt.setString(1, name);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+			
+			}
+			
+			if(!found){
+				System.out.println("No business with the name <" + name + "> was found in the user table");
+			}
+			return user;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public User findUserByAddress(String address, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where address = ?"
+					);
+			stmt.setString(1, address);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+			
+			}
+			
+			if(!found){
+				System.out.println("No business with the address <" + address + "> was found in the user table");
+			}
+			return user;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public User findUserByNumber(String number, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		try {
+			stmt = conn.prepareStatement(
+					"select user" +
+					"from user" +
+					"where number = ?"
+					);
+			stmt.setString(1, number);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				
+				user = loadUser(user, resultSet);
+			
+			}
+			
+			if(!found){
+				System.out.println("No business with the number <" + number + "> was found in the user table");
+			}
+			return user;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
+	}
+
+	@Override
+	public void insertProject(int UserID, String title, String description, String start, String duration,
+			ProjectType type, Connection conn) throws IOException, SQLException {
+		ResultSet resultSet = null;
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"select project_id" +
+					"from user" +
+					"where user_id = ? and " +
+					"title = ?"
+					);
+			stmt.setInt(1, UserID);
+			stmt.setString(2, title);
+			
+			resultSet = stmt.executeQuery();
+			
+			if(!resultSet.next()) {
+				DBUtil.closeQuietly(stmt);
+				
+				stmt = conn.prepareStatement(
+						"insert into project " +
+						"(user_id, title, description, start, duration, projectType)" +
+						" values (?, ?, ?, ?, ?, ?)"
+						);
+				stmt.setInt(1, UserID);
+				stmt.setString(2, title);
+				stmt.setString(3, description);
+				stmt.setString(4, start);
+				stmt.setString(5, duration);
+				stmt.setString(6, type.toString());
+				
+				stmt.execute();
+			}
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+		}
 		
 	}
 
 	@Override
-	public void deleteProject(Project project, Connection conn) {
-		// TODO Auto-generated method stub
+	public void deleteProject(Project project, Connection conn) throws IOException, SQLException {
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"delete from project" +
+					"where project_id = ?"
+					);
+			
+			stmt.setInt(1, project.getProjectID());
+			
+			stmt.executeQuery();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+		}
 		
-	}
-
-	@Override
-	public Student findStudentByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Student findStudentByUsernameAndPassword(String password, String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> findStudentByFirstname(String firstname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> findStudentByLastname(String lastname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> findStudentByMajorType(MajorType major) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> findStudentByClassType(ClassType classtype) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Faculty findFacultyByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Faculty findFacultybyUsernameAndPassword(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByFirstname(String firstname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByLastname(String lastname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Faculty> findFacultyByMajorType(MajorType major) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Business findBusinessByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Business findBusinessByUsernameAndPassword(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Business findBusinessByAddress(String address) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Business findBusinessByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Business findBusinessByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -766,6 +1059,5 @@ public class YCPDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 }
