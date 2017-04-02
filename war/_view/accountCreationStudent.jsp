@@ -5,19 +5,26 @@
 <html>
 	<head>
 		<title>Account Creation</title>
-		<link rel="stylesheet" href="TestCSS.css">
+		<link rel="stylesheet" href="StyleLogin.css">
+		<meta name = "viewport" content = "width = device-width initial-scale =1">
 	</head>
 	
 	<body>
+		<div id="header">
+			<div id="logo">
+				<img src="Logo.png"/>			
+			</div>
+		</div>
 	<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1 id="webpageTitle">Account Creation (Student)</h1>
 	
-	<div id="loginPart">
-	<h3 id="webpageSubtitle">Please fill out the following information</h3>
+	
+
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
+	<div class=container>
+	<h1>Account Creation (Student)</h1>
 			<table>
 				<tr>
 					<td class="label">Email:</td>
@@ -46,11 +53,13 @@
 			<input type="radio" name="classtype" value="JUNIOR">Junior<br>
 			<input type="radio" name="classtype" value="SENIOR">Senior<br>
 			
+			<div id="newLogin">
 			<input type="Submit" name="submit" value="Create Account">
 			<p></p>
 			<input type="Submit" name="faculty" value="Faculty Account Link">
 			<input type="Submit" name="guest" value="Guest Account Link">
+			</div>
+			</div>
 		</form>
-		</div>
 	</body>
 </html>
