@@ -7,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class FacultyHomeServlet extends HttpServlet {
+
+
+public class BusinessHomeServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/facultyHome.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//See if the user clicked either of the other account types, redirect accordingly
 		if (req.getParameter("projectSolicitation")!= null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
@@ -27,7 +28,4 @@ private static final long serialVersionUID = 1L;
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
 		}
 	}
-	
-	
-
 }

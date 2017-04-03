@@ -15,9 +15,9 @@ import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
+//import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
-import edu.ycp.cs320.cspath1.user.User;
-
+//import edu.ycp.cs320.cspath1.user.User;
 public class FakeDatabaseTest {
 	private FakeDatabase fake = new FakeDatabase();
 	
@@ -173,7 +173,7 @@ public class FakeDatabaseTest {
 		assertEquals(faculty.getLastname(), "Wilkerson");
 	}
 	
-	@Test
+	/*@Test
 	public void testFindUserByUserID(){
 		User user = fake.findUserbyUserID(3);
 		assertEquals(user.getUsername(), "ecelik");
@@ -193,12 +193,34 @@ public class FakeDatabaseTest {
 	
 	@Test
 	public void testFindUserByUserType(){
-		List <User> users = fake.findUserByUserType(UserType.FACULTY);
+		List <User> users = fake.findUserByUserType(UserType.GUEST);
+		assertEquals(users.size(), 10);
+		users = fake.findUserByUserType(UserType.FACULTY);
 		assertEquals(users.size(), 17);
 		users = fake.findUserByUserType(UserType.STUDENT);
 		assertEquals(users.size(), 37);
 		
 	}
+	@Test
+	public void testFindGuestByUsername(){
+		Guest guest = fake.findGuestByUsername("guest1");
+		assertEquals(guest.getUserID(), 55);
+		guest = fake.findGuestByUsername("guest5");
+		assertEquals(guest.getEmail(), "guest5@gmail.com");
+		guest = fake.findGuestByUsername("guest10");
+		assertEquals(guest.getUsertype(), UserType.GUEST);
+	}
+	
+	@Test
+	public void testFindGuestByUsernameAndPassword() {
+		String password = "password";
+		Guest guest = fake.findGuestByUsernameAndPassword("guest1", password);
+		assertEquals(guest.getEmail(), "guest1@gmail.com");
+		guest = fake.findGuestByUsernameAndPassword("guest10", password);
+		assertEquals(guest.getUsertype(), UserType.GUEST);
+		guest = fake.findGuestByUsernameAndPassword("guest5", password);
+		assertEquals(guest.getUserID(), 59);
+	}*/
 	
 	@Test
 	public void testFindSolicitationsByMajorType() {
@@ -331,13 +353,13 @@ public class FakeDatabaseTest {
 	public void testFindBusinessByAddress(){
 		Business business = new Business();
 		business = fake.findBusinessByAddress("123 Fake Address Road");
-		assertEquals(business.getName(), "Business1");
+		assertEquals(business.getUsername(), "Business1");
 		business = fake.findBusinessByAddress("123 Fake Address Lane");
 		assertEquals(business.getEmail(), "Business5@business5.com");
 		business = fake.findBusinessByAddress("123 Fake Address Court");
 		assertEquals(business.getEmail(), "Business6@business6.com");
 		
-	}
+		}
 	
 	@Test
 	public void testFindBusinessByName(){
@@ -367,7 +389,7 @@ public class FakeDatabaseTest {
 		business = fake.findBusinessByEmail("Business4@business4.com");
 		assertEquals(business.getPassword(), "password");
 		business = fake.findBusinessByEmail("Business2@business2.com");
-		assertEquals(business.getName(), "Business2");
+		assertEquals(business.getUsername(), "Business2");
 		business = fake.findBusinessByEmail("Business6@business6.com");
 		assertEquals(business.getUsertype(), UserType.BUSINESS);
 	}
