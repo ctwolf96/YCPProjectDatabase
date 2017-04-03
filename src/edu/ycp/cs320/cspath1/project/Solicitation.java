@@ -12,9 +12,7 @@ public class Solicitation extends Project {
 	private String duration;
 	private String startTime;
 	private int numStudents;
-
 	private double cost;
-
 	private SolicitationType solicitationType;
 
 	public Solicitation() {

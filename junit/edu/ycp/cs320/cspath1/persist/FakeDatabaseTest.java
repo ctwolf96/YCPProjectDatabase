@@ -15,9 +15,9 @@ import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
-import edu.ycp.cs320.cspath1.user.Guest;
+//import edu.ycp.cs320.cspath1.user.Guest;
 import edu.ycp.cs320.cspath1.user.Student;
-import edu.ycp.cs320.cspath1.user.User;
+//import edu.ycp.cs320.cspath1.user.User;
 public class FakeDatabaseTest {
 	private FakeDatabase fake = new FakeDatabase();
 	
@@ -173,7 +173,7 @@ public class FakeDatabaseTest {
 		assertEquals(faculty.getLastname(), "Wilkerson");
 	}
 	
-	@Test
+	/*@Test
 	public void testFindUserByUserID(){
 		User user = fake.findUserbyUserID(3);
 		assertEquals(user.getUsername(), "ecelik");
@@ -220,7 +220,7 @@ public class FakeDatabaseTest {
 		assertEquals(guest.getUsertype(), UserType.GUEST);
 		guest = fake.findGuestByUsernameAndPassword("guest5", password);
 		assertEquals(guest.getUserID(), 59);
-	}
+	}*/
 	
 	@Test
 	public void testFindSolicitationsByMajorType() {

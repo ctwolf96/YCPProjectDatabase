@@ -13,39 +13,5 @@ public class FacultyHomeAjaxServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//doRequest(req, resp);
 	}
-	
-	/*@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		doRequest(req, resp);
-	}
-
-	private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Get parameters
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		String email = req.getParameter("email");
-		
-		// Check whether parameters are valid
-		if (username == null || password == null || email == null) {
-			badRequest("Bad parameters", resp);
-			return;
-		}
-		
-		// Send back a response
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Username: " + username);
-		resp.getWriter().println("Password: " + password);
-		resp.getWriter().println("Email: " + email);
-	}
-
-	
-
-	private void badRequest(String message, HttpServletResponse resp) throws IOException {
-		resp.setContentType("text/plain");
-		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		resp.getWriter().println(message);
-	}*/
 }

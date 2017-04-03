@@ -18,14 +18,16 @@
 	<div id="Context">
 		<div class= "info"> 
 			<h4 id="Info">
-			<form action="${pageContext.servletContext.contextPath}/facultyHome" method="post">
 			<p>Discipline/Disciplines</p>
 				<p>email</p>
 			</h4>
-			</form>
 		</div>
 		<div class= "sections">
 		<h3 id="sectionSubtitle">Projects</h3>
+		<form action= "${pageContext.servletContext.contextPath}/studentHome" method="post">
+			<input name = "projectSolicitation" type= "submit" value="Project Search"/>
+			<input name="projectProposal" type="submit" value="Project Proposal" />
+		</form>
 			<ul>
 				<li>Project 1</li>
 				<li>Project 2</li>

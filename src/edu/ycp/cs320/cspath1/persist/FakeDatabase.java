@@ -2,6 +2,7 @@ package edu.ycp.cs320.cspath1.persist;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class FakeDatabase implements IDatabase {
 	private List<Student> studentList;
 	private List<Faculty> facultyList;
 	private List<Business> businessList;
+	//private List<User> userList;
 
 	
 	public FakeDatabase(){
@@ -30,6 +32,7 @@ public class FakeDatabase implements IDatabase {
 		this.facultyList = new ArrayList<Faculty>();
 		this.solicitationList = new ArrayList<Solicitation>();
 		this.businessList = new ArrayList<Business>();
+		//this.userList = new ArrayList<User>();
 		
 		
 		readInitialData();
@@ -47,6 +50,7 @@ public class FakeDatabase implements IDatabase {
 			facultyList.addAll(InitialData.getFaculty());
 			solicitationList.addAll(InitialData.getSolicitations());
 			businessList.addAll(InitialData.getBusinesses());
+		//	userList.addAll(InitialData.);
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
@@ -177,7 +181,6 @@ public class FakeDatabase implements IDatabase {
 		return result;
 	}
 
-
 	@Override
 	public Faculty findFacultybyUsernameAndPassword(String username, String password) {
 		Faculty result = new Faculty();
@@ -188,47 +191,6 @@ public class FakeDatabase implements IDatabase {
 		}
 		return result;
 	}
-
-
-	@Override
-	public User findUserbyUserID(int UserID) {
-		
-		for (Faculty faculty : facultyList) {
-			if (faculty.getUserID() == UserID){
-				return faculty;
-			}
-		}
-		for (Student student : studentList) {
-			if (student.getUserID() == UserID){
-				return student;
-			}
-		}
-		return null;
-	}
-
-
-
-	@Override
-	public List<User> findUserByUserType(UserType usertype) {
-		List<User> userList = new ArrayList<User>();
-		for (Faculty faculty : facultyList){
-			if (faculty.getUsertype().equals(usertype)){
-				userList.add(faculty);
-			}
-		}
-		for (Student student : studentList){
-			if (student.getUsertype().equals(usertype)){
-				userList.add(student);
-			}
-		}
-		for (Business business : businessList){
-			if (business.getUsertype().equals(usertype)){
-				userList.add(business);
-			}
-		}
-		return userList;
-	}
-
 
 	@Override
 	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype) {
@@ -241,7 +203,6 @@ public class FakeDatabase implements IDatabase {
 		return result;
 	}
 
-	//this is probably broken
 	@Override
 	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors) {
 		List<Solicitation> result = new ArrayList<Solicitation>();
@@ -256,7 +217,6 @@ public class FakeDatabase implements IDatabase {
 		}
 		return result;
 	}
-
 
 	@Override
 	public List<Solicitation> findSolicitationsByClassType(ClassType classtype) {
@@ -389,11 +349,11 @@ public class FakeDatabase implements IDatabase {
 
 
 
-	@Override
+	/*@Override
 	public void insertUser(String username, String password, String email, UserType usertype) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 	
 	@Override
@@ -515,8 +475,65 @@ public class FakeDatabase implements IDatabase {
 	}
 
 
-	@Override
+	/*@Override
 	public User findUserbyUserID(int UserID, Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+
+
+	@Override
+	public void deleteUser(User user, Connection conn) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public User findUserByUserID(int UserID, Connection conn) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User findUserByUsername(String username, Connection conn) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User findUserByUsernameAndPassword(String username, String password, Connection conn)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User findUserByEmail(String email, Connection conn) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<User> findUserByUserType(UserType usertype, Connection conn) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void deleteProject(Project project, Connection conn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Business findBusinessByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
