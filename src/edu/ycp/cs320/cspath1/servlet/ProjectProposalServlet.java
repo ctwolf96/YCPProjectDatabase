@@ -78,8 +78,8 @@ private static final long serialVersionUID = 1L;
 		
 		// Forward to view to render the result HTML document
 		
-		if (req.getParameter("solicit")!= null){
-			resp.sendRedirect(req.getContextPath() + "/sampleProject");
+		if (req.getParameter("solicit") != null){
+			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
 		else {
 		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
