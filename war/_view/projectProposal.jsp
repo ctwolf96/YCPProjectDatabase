@@ -6,71 +6,85 @@
 	<head>
 
 		<title>Project Proposal</title>
-		<link rel="stylesheet" href="TestCSS.css">
+		<link rel="stylesheet" href="ProposalStyle.css">
+		<meta name = "viewport" content = "width = device-width initial-scale =1">
+		
 	</head>
 	
 	<body>
+	<div id="header">
+		<div id="logo">
+			<img src="Logo.png">
+		</div>
+	</div>
 	<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1 id="webpageTitle">Project Proposal</h1>
+	<h1>Project Proposal</h1>
 	
 	
-	<div id="loginPart">
-	<h3 id="webpageSubtitle">Please fill out the following information</h3>
+	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
-	
-		<p>Hardware?</p>
-		<select name="hardware">
-			<option value="true">Yes</option>
-			<option value="false">No</option>
+		<label><a>Project Title</a></label><br>
+		<input type="text" name="title"><br>
+		<label><a>Description</a></label>
+		<textarea name="message" class="description" rows="10" cols="30">
+		</textarea><br><br>
+		<label><a>Duration (Semesters)</a></label><br>
+		<select name="duration">
+				<option value="1"selected>1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
 		</select>
-		<p>Software?</p>
-		<select name="software">
-			<option value="true">Yes</option>
-			<option value="false">No</option>
-		</select>
-		<p>Is this proposal funded?</p>
-		<select name="isfunded">
-			<option value="true">Yes</option>	
-			<option value="false">No</option>
-		</select>
+		<br>
+		<label><a>Start Date (mm/dd/yyyy)</a></label><br>
+		<input type="text" name="startTime"><br><br>
 		
-			<table>
-				<tr>
-					<td class="label">Duration of Project (# of semesters):</td>
-					<td><input type="text" name="duration" size="12" value="${model.duration}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Start Time:</td>
-					<td><input type="text" name="startTime" size="12" value="${model.startTime}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Project Title:</td>
-					<td><input type="text" name="startTime" size="12" value="${model.title}" /></td>
-				</tr>
-			</table>
-			<br>
+		<label><a>Funding</a></label><br>
+		<select name="isFunded">
+			<option value="true"selected>Yes</option>	
+			<option value="false">No</option>
+		</select><br>
+		<labeL><a>Number of Students</a></labeL><br>
+		<select name="numStudents">
+			<option value="1"selected>1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>	
+		</select><br><br>
 			
-			<p>Majors/Disciplines: </p>
-			<input type="checkbox" name="CE" value="CE">Computer Engineering<br>
-			<input type="checkbox" name="CS" value="CS">Computer Science<br>
-			<input type="checkbox" name="EE" value="EE">Electrical Engineering<br>
-			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br>
-			<br>
+			<labeL><a>Majors Involved</a></labeL><br>
+			<input type="checkbox" name="CE" value="CE">Computer Engineering
+			<input type="checkbox" name="CS" value="CS">Computer Science
+			<input type="checkbox" name="EE" value="EE">Electrical Engineering
+			<input type="checkbox" name="CivE" value="CivE">Civil Engineering
+			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br><br>
 			
-			<p>Student Class</p>
+			<label><a>Student Year(s)</a></label><br>
 			<input type="checkbox" name="freshman" value="FR">Freshman<br>
 			<input type="checkbox" name="sophomore" value="SO">Sophomore<br>
 			<input type="checkbox" name="junior" value="JR">Junior<br>
 			<input type="checkbox" name="senior" value="SR">Senior<br>
 			<br>
 			<br>
-			<input type="Submit" name="submit" value="Find Projects">
+			<input type="Submit" name="submit" value="Create Project">
 			<br>
 			<br>
-			<input type="Submit" name="solicit" value="Project Creation">
+			<input type="Submit" name="solicit" value="Solicit Project Form">
 			
 
 		</form>

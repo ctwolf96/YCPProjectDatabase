@@ -40,16 +40,12 @@ private static final long serialVersionUID = 1L;
 		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
 		String numStudents = req.getParameter("numStudents");
-		Boolean hardware = getBooleanFromParameter(req.getParameter("hardware"));
-		Boolean software = getBooleanFromParameter(req.getParameter("software"));
 		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
 			
 		model.setTitle(title);
 		model.setStartTime(startTime);
 		model.setDuration(duration);
 		model.setDescription(description);
-		model.setHardware(hardware);
-		model.setSoftware(software);
 		model.setClasses(classtypes);
 		model.setMajors(majortypes);
 		model.setFunded(isFunded);

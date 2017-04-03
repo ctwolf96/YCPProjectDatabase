@@ -41,8 +41,7 @@ private static final long serialVersionUID = 1L;
 		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
 			
-		Boolean hardware = getBooleanFromParameter(req.getParameter("hardware"));
-		Boolean software = getBooleanFromParameter(req.getParameter("hardware"));
+		
 		
 		model.setClasses(classtypes);
 		model.setMajors(majortypes);
@@ -50,8 +49,7 @@ private static final long serialVersionUID = 1L;
 		model.setDescription(description);
 		model.setDuration(duration);
 		model.setStartTime(startTime);
-		model.setHardware(hardware);
-		model.setSoftware(software);
+		
 		//Placeholder until I get all fields down
 		if (duration == null) {
 				errorMessage = "Please specify at least one field";
