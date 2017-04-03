@@ -19,7 +19,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//See if the user clicked either of the other account types, redirect accordingly
+		//See if the user clicked either of the other account types, redirect
 		if (req.getParameter("projectSolicitation")!= null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}

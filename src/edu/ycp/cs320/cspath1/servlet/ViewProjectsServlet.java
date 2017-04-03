@@ -7,26 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-public class BusinessHomeServlet extends HttpServlet {
+public class ViewProjectsServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/viewProjects.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		//moving around the page
-		if (req.getParameter("projectSolicitation")!= null){
-			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
-		}
-		else if (req.getParameter("projectProposal") != null){
-			resp.sendRedirect(req.getContextPath() + "/projectProposal");
+			throws ServletException, IOException{
+		//if this project is selected 
+		if (req.getParameter("ycpProject")!= null){
+			resp.sendRedirect(req.getContextPath() + "/sampleProject");
 		}
 	}
 }
