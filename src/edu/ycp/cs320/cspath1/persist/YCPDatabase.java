@@ -468,53 +468,38 @@ public class YCPDatabase implements IDatabase {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				List<Student> studentList;
-				List<Faculty> facultyList;
+				List<User> userList;
 				
 				try {
-					studentList = InitialData.getStudents();
-					facultyList = InitialData.getFaculty();
+					userList = InitialData.getUsers();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
-
-				PreparedStatement insertStudent = null;
-				PreparedStatement insertFaculty = null;
-				
-
+				PreparedStatement insertUser = null;
 				try {
-					insertStudent = conn.prepareStatement(
-							"insert into user (username, password, email, usertype, other1, other2, other3, other4) values (?, ?, ?, ?. ?, ?, ?, ?)");
-					for (Student student : studentList) {
-						insertStudent.setString(1, student.getUsername());
-						insertStudent.setString(2, student.getPassword());
-						insertStudent.setString(3, student.getEmail());
-						insertStudent.setString(4, student.getUsertype().toString());
-						insertStudent.setString(5, student.getFirstname());
-						insertStudent.setString(6, student.getLastname());
-						insertStudent.setString(7, student.getMajor().toString());
-						insertStudent.setString(8, student.getClassLevel().toString());
-						insertStudent.addBatch();
+					insertUser = conn.prepareStatement(
+							"insert into user" +
+							"(username, password, email, usertype, firstname, lastname, major, class, name, address, number)" +
+							"values (?, ?, ?, ?. ?, ?, ?, ?, ?, ?, ?)" 
+							);
+					for (User user : userList) {
+						insertUser.setString(1, user.getUsername());
+						insertUser.setString(2, user.getPassword());
+						insertUser.setString(3, user.getEmail());
+						insertUser.setString(4, user.getUsertype().toString());
+						insertUser.setString(5, ((Student) user).getFirstname());
+						insertUser.setString(6, ((Student) user).getLastname());
+						insertUser.setString(7, ((Student) user).getMajor().toString());
+						insertUser.setString(8, ((Student) user).getClassLevel().toString());
+						insertUser.setString(9, ((Business) user).getName());
+						insertUser.setString(10, ((Business) user).getAddress());
+						insertUser.setString(11, ((Business) user).getNumber());
+						insertUser.addBatch();
 					}
-					insertStudent.executeBatch();
-					
-					insertFaculty = conn.prepareStatement(
-							"insert into user (username, password, email, usertype, other1, other2, other3, other4) values (?, ?, ?, ?, ?, ?, ?, ?)");
-					for (Faculty faculty : facultyList) { 
-						insertFaculty.setString(1, faculty.getUsername());
-						insertFaculty.setString(2, faculty.getPassword());
-						insertFaculty.setString(3, faculty.getEmail());
-						insertFaculty.setString(4, faculty.getUsertype().toString());
-						insertFaculty.setString(5, faculty.getFirstname());
-						insertFaculty.setString(6, faculty.getLastname());
-						insertFaculty.setString(7, faculty.getMajor().toString());
-						insertFaculty.setString(8, "");
-					}
-					insertFaculty.executeBatch();
-					
+					insertUser.executeBatch();
 					return true;
 				} finally {
-					DBUtil.closeQuietly(insertStudent);
+					DBUtil.closeQuietly(insertUser);
 				}
 			}
 		});

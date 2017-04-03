@@ -13,8 +13,56 @@ import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
 import edu.ycp.cs320.cspath1.user.Student;
+import edu.ycp.cs320.cspath1.user.User;
 
 public class InitialData {
+	public static List<User> getUsers() throws IOException {
+		List<User> userList = new ArrayList<User>();
+		ReadCSV readUser = new ReadCSV("Users.CSV");
+		try {
+			Integer userID = 0;
+			while (true) {
+				List<String> tuple = readUser.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Student user = new Student();
+				user.setUserID(userID++);
+				user.setUsername(i.next());
+				user.setPassword(i.next());
+				user.setEmail(i.next());
+				user.setUsertype(getUserTypeFromParameter(i.next()));
+				if (user.getUsertype().equals(UserType.STUDENT)) {
+					user.setFirstname(i.next());
+					user.setLastname(i.next());
+					user.setMajor(getMajorTypeFromParameter(i.next()));
+					user.setClassLevel(getClassTypeFromParameter(i.next()));
+					userList.add(user);
+				} else if (user.getUsertype().equals(UserType.FACULTY)) {
+					user.setFirstname(i.next());
+					user.setLastname(i.next());
+					user.setMajor(getMajorTypeFromParameter(i.next()));
+					userList.add(user);
+				} else if (user.getUsertype().equals(UserType.BUSINESS)) {
+					Business business = new Business();
+					business.setUserID(user.getUserID());
+					business.setUsername(user.getUsername());
+					business.setPassword(user.getPassword());
+					business.setEmail(user.getPassword());
+					business.setUsertype(user.getUsertype());
+					business.setName(i.next());
+					business.setAddress(i.next());
+					business.setNumber(i.next());
+					userList.add(business);
+				}
+			} 
+			return userList;
+		} finally {
+				readUser.close();
+		}
+	}
+	
 	public static List<Faculty> getFaculty() throws IOException {
 		List<Faculty> facultyList = new ArrayList<Faculty>();
 		ReadCSV readFaculty = new ReadCSV("FacultyUser.CSV");
@@ -169,7 +217,6 @@ public class InitialData {
 				}
 				solicitation.setClasses(classes);
 				solicitation.setDuration(i.next());
-				solicitation.setStartTime(i.next());
 				solicitation.setNumStudents(Integer.parseInt(i.next()));
 				SolicitationType solicitationType = getSolicitationTypeFromParameter(i.next());
 				solicitation.setSolicitationType(solicitationType);

@@ -84,5 +84,17 @@ public class BusinessTest {
 		business.setAddress("15 John Street, Railroad, PA");
 		assertEquals("15 John Street, Railroad, PA", business.getAddress());
 	}
+	
+	@Test
+	public void testSetName() {
+		business.setName("Red Lion Controls");
+		assertEquals("Red Lion Controls", business.getName());
+		business.setName("Dataforma");
+		assertEquals("Dataforma", business.getName());
+		business.setName("Johnson Controls");
+		assertEquals("Johnson Controls", business.getName());
+		business.setName("Becton Dickinson");
+		assertEquals("Becton Dickinson", business.getName());
+	}
 
 }
