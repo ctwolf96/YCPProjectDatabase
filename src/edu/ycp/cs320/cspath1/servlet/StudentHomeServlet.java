@@ -19,6 +19,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		//moving around the webpage
 		if (req.getParameter("projectSolicitation")!= null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}

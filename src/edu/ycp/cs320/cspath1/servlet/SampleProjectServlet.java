@@ -15,15 +15,4 @@ private static final long serialVersionUID = 1L;
 			throws ServletException, IOException {
 		req.getRequestDispatcher("/_view/sampleProject.jsp").forward(req, resp);
 	}
-	
-	/*@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		if (req.getParameter("projectSolicitation")!= null){
-			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
-		}
-		else if (req.getParameter("projectProposal") != null){
-			resp.sendRedirect(req.getContextPath() + "/projectProposal");
-		}
-	}*/
 }

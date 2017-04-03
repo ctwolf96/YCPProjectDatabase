@@ -19,6 +19,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException{
+		//if this project is selected 
 		if (req.getParameter("ycpProject")!= null){
 			resp.sendRedirect(req.getContextPath() + "/sampleProject");
 		}

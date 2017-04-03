@@ -23,7 +23,7 @@
 		<form action="${pageContext.servletContext.contextPath}/viewProjects" method="post">
 			<li><input value= "YCP Project Database" type="submit" name= "ycpProject">
 			</li></form>
-			<li>York County Bridge Design</li>
+			<li>York City Bridge Design</li>
 			<li>"Ted Talks" Video & Speech Review</li>
 		</ul>
 	</div>

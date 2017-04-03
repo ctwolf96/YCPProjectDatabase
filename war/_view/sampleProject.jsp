@@ -30,7 +30,7 @@
 		<p>No</p>
 	<h3 id="sectionSubtitle">Duration</h3>
 		<p>1 Semester</p>
-	<h3 id="sectionSubtitle">Majors/Disciplines</h3>
+	<h3 id="sectionSubtitle">Major/Disciplines</h3>
 		<ul>
 			<li>Computer Engineering</li>
 			<li>Computer Science</li>
