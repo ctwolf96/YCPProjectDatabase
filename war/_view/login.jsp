@@ -5,27 +5,33 @@
 <html>
 	<head>
 		<title>Login</title>
-		<link rel="stylesheet" href="TestCSS.css">
+		<link rel="stylesheet" href="Login.css">
+		<meta name = "viewport" content = "width = device-width initial-scale =1">
 	</head>
 
 	<body>
+		<div id="header">
+			<div id="logo">
+				<img src="Logo.png"/>
+			</div>
+		</div>
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-		<h1 id="webpageTitle">Login</h1>
 		
-		<div id="loginPart">
-		<h3 id="webpageSubtitle">Please fill out the following information</h3>
+		<div class="container">
+		<h1 style = "text-align: center">Login Page</h1>
+		
 		<form action="${pageContext.servletContext.contextPath}/login" method="post">
-			<table>
+			<table style = "margin: 10px">
 				<tr>
 					<td class="label">Username:</td>
-					<td><input type="text" name="username" size="12" value="${model.username}" /></td>
+					<td><input type="text" placeholder="Enter Username" name="username" size="12" value="${model.username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="password" name="password" size="12" value="${model.password}" /></td>
+					<td><input type="password" placeholder="Enter Password" name="password" size="12" value="${model.password}" /></td>
 				</tr>
 			</table>
 			<input type="Submit" name="submit" value="Login">
