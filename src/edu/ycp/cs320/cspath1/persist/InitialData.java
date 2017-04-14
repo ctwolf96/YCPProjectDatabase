@@ -169,7 +169,6 @@ public class InitialData {
 				}
 				solicitation.setClasses(classes);
 				solicitation.setDuration(i.next());
-				solicitation.setStartTime(i.next());
 				solicitation.setNumStudents(Integer.parseInt(i.next()));
 				SolicitationType solicitationType = getSolicitationTypeFromParameter(i.next());
 				solicitation.setSolicitationType(solicitationType);
