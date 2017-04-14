@@ -105,6 +105,7 @@ public class AccountCreationModelTest {
 		UserType admin = model.getUsertype();
 		model.setUsertype(UserType.FACULTY);
 		UserType faculty = model.getUsertype();
+		UserType guest = model.getUsertype();
 		model.setUsertype(UserType.STUDENT);
 		UserType student = model.getUsertype();
 		assertEquals(admin, UserType.ADMIN);
@@ -135,6 +136,9 @@ public class AccountCreationModelTest {
 		model.setUsertype(UserType.FACULTY);
 		bool = model.allFieldsMet();
 		assertEquals(bool, true);
+		//Guest User Test
+		bool = model.allFieldsMet();
+		assertEquals(bool, true);
 		//Admin User Test
 		model.setUsertype(UserType.ADMIN);
 		assertEquals(bool, true);
@@ -145,6 +149,8 @@ public class AccountCreationModelTest {
 		bool = model.allFieldsMet();
 		assertEquals(bool, false);
 		model.setUsertype(UserType.STUDENT);
+		bool = model.allFieldsMet();
+		assertEquals(bool, false);
 		bool = model.allFieldsMet();
 		assertEquals(bool, false);
 		

@@ -20,25 +20,25 @@ public class FakeDatabase implements IDatabase {
 	public void insertUser(String username, String password, String email, UserType usertype)
 			throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void deleteUser(User user) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void editPassword(int UserID, String password) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void editEmail(int UserID, String email) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -117,13 +117,13 @@ public class FakeDatabase implements IDatabase {
 	public void insertProject(int UserID, String title, String description, String start, String duration,
 			ProjectType type) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void deleteProject(Project project) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GuestHomeAjaxServlet extends HttpServlet {
+public class BusinessHomeAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//TODO: Add things for the radio parameters
 	@Override

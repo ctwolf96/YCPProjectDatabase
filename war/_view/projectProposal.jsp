@@ -6,7 +6,7 @@
 	<head>
 
 		<title>Project Proposal</title>
-		<link rel="stylesheet" href="ProposalStyle.css">
+		<link rel="stylesheet" href="ProposalPage.css">
 		<meta name = "viewport" content = "width = device-width initial-scale =1">
 		
 	</head>
@@ -75,17 +75,17 @@
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br><br>
 			
 			<label><a>Student Year(s)</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman<br>
-			<input type="checkbox" name="sophomore" value="SO">Sophomore<br>
-			<input type="checkbox" name="junior" value="JR">Junior<br>
-			<input type="checkbox" name="senior" value="SR">Senior<br>
+			<input type="checkbox" name="freshman" value="FR">Freshman
+			<input type="checkbox" name="sophomore" value="SO">Sophomore
+			<input type="checkbox" name="junior" value="JR">Junior
+			<input type="checkbox" name="senior" value="SR">Senior
 			<br>
 			<br>
-			<input type="Submit" name="submit" value="Create Project">
-			<br>
-			<br>
-			<input type="Submit" name="solicit" value="Solicit Project Form">
+			<div>
+			<input type="Submit" name="submit" value="Create Project" class = "button button5">
 			
+			<input type="Submit" name="solicit" value="Solicit Project Form" class = "button button5">
+			</div>
 
 		</form>
 		</div>

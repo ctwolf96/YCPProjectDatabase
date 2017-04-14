@@ -1,3 +1,4 @@
+
 package edu.ycp.cs320.cspath1.persist;
 
 import java.io.IOException;
@@ -84,11 +85,11 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:test.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:YCP.db;create=true");
 		
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
-		conn.setAutoCommit(false);
+		conn.setAutoCommit(true);
 		
 		return conn;
 	}

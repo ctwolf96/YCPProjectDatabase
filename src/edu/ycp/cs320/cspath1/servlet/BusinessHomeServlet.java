@@ -7,19 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class StudentHomeServlet extends HttpServlet {
+
+
+public class BusinessHomeServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//moving around the webpage
+		//moving around the page
 		if (req.getParameter("projectSolicitation")!= null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}

@@ -10,7 +10,6 @@ public class Faculty extends User {
 	private String firstname;
 	private String lastname;
 	private MajorType major;
-	private ArrayList<String> disciplines;
 	private ArrayList<Project> activeProjects;
 	private ArrayList<Project> pastProjects;
 
@@ -43,9 +42,6 @@ public class Faculty extends User {
 	}
 	
 	//Methods
-	public void addDiscipline(String discipline) {
-		disciplines.add(discipline);
-	}
 	public void addActiveProject(Project project) {
 		activeProjects.add(project);
 	}

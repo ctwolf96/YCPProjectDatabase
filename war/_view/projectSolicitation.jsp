@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="ProposalStyle.css">
+		<link rel="stylesheet" href="Solicitation.css">
 		<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
@@ -19,13 +19,17 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1>Project Solicitation</h1>
+	
 	
 	
 	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
+	<h1 style = "text-align: center">Project Solicitation</h1>
 		<label><a>Project Title</a></label><br>
 		<input type="text" name="title"><br>
+		<label><a>Description</a></label>
+		<textarea name="message" class="description" rows="10" cols="30">
+		</textarea><br><br>
 		<label><a>Duration (Semesters)</a></label><br>
 		<select name="duration">
 				<option value="1"selected>1</option>
@@ -55,11 +59,10 @@
 			<input type="checkbox" name="junior" value="JR">Junior<br>
 			<input type="checkbox" name="senior" value="SR">Senior<br>
 			<br>
-			<br>
-			<input type="Submit" name="submit" value="Find Projects">
-			<br>
-			<br>
-			<input type="Submit" name="project" value="Project Creation">
+			
+			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
+			
+			<input type="Submit" name="project" value="Project Creation Link" class = "button button5">
 			
 		</form>
 		</div>

@@ -4,5 +4,5 @@ public enum UserType {
 	STUDENT,
 	FACULTY,
 	ADMIN, 
-	BUSINESS
+	BUSINESS,
 }
