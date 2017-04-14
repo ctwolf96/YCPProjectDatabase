@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import edu.ycp.cs320.cspath1.user.User;
 
 public class ActiveProject extends Project {
-	private ArrayList<User> members;
 	private String deadline;
 	private ArrayList<String> tasks;
 	private double cost;
@@ -20,6 +19,8 @@ public class ActiveProject extends Project {
 	}
 	
 	//Setters
+	
+	
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
@@ -34,6 +35,7 @@ public class ActiveProject extends Project {
 	}
 	
 	//Getters
+	
 	public String getDeadline() {
 		return deadline;
 	}
@@ -48,13 +50,27 @@ public class ActiveProject extends Project {
 	}
 	
 	//Methods
-	public void addMember(User user) {
-		members.add(user);
-	}
+	
 	public void addTask(String task) {
 		tasks.add(task);
 	}
 	public void markComplete() {
 		//move to past project
+	}
+
+	public ArrayList<Project> getPrevVersions() {
+		return prevVersions;
+	}
+
+	public void setPrevVersions(ArrayList<Project> prevVersions) {
+		this.prevVersions = prevVersions;
+	}
+
+	public Project getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(Project original) {
+		this.original = original;
 	}
 }
