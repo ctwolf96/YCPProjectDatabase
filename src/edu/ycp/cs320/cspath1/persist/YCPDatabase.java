@@ -537,6 +537,7 @@ public class YCPDatabase implements IDatabase {
 		System.out.println("Success!");
 	}
 
+	//IN PROGRESS
 	@Override
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
 		Connection conn = connect();
@@ -601,21 +602,75 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 
+	//IN PROGRESS
 	@Override
-	public void deleteUser(User user) throws IOException, SQLException {
+	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
 		Connection conn = connect();
-		PreparedStatement  stmt = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement  stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		PreparedStatement stmt5 = null;
+		
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		
 		try {
-			stmt = conn.prepareStatement(
-					"delete from users" +
+			//Find the user by userID
+			stmt1 = conn.prepareStatement( 
+					"select users.*" +
+					"	from users" + 
+					"	where user_id = ?"
+					);
+			stmt1.setInt(1, user_id);
+			resultSet1 = stmt1.executeQuery();
+			List<User> users = new ArrayList<User>();
+			List<Project> projects = new ArrayList<Project>();
+			//Load user into a list
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			//SHOULDN'T HAPPEN
+			if (users.size() == 0){
+				System.out.println("Ya done goofed somehow...");
+			}
+			//Find projectID's for the user
+			stmt3 = conn.prepareStatement(
+					"select project_id" + 
+					"	from projectUsers" +
 					"	where user_id = ?"
 					);
 			
-			stmt.setInt(1, user.getUserID());
+			resultSet2 = stmt3.executeQuery();
 			
-			stmt.executeUpdate();
+			while(resultSet2.next()) {
+				Project project = new Project();
+				loadProject(project, resultSet2);
+				projects.add((Project) projects);
+			}
+			//Delete entries in relation table for the user
+			stmt4 = conn.prepareStatement(
+					"delete from projectUsers" +
+					"	where user_id = ?"
+					);
+			
+			stmt4.setInt(1, user_id);
+			
+			stmt4.executeUpdate();
+			//NOW I AM CONFUSED
+			for (int i = 0; i < users.size(); i++){
+				stmt5 = conn.prepareStatement(
+						"select projects.project_id from projects, projectUsers" +
+						"	where projectUsers.user_id = ?"
+						);
+				stmt5.setInt(1, projects.get(i));
+			}
+			
 		} finally {
-			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(conn);
 		}
 	}
@@ -640,7 +695,7 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
-	
+	//IN PROGRESS
 	@Override
 	public void editEmail(int UserID, String email) throws IOException, SQLException {
 		Connection conn = connect();
