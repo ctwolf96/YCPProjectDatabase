@@ -19,7 +19,7 @@ import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public interface IDatabase {
-	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
+	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
 	public void deleteUser(User user) throws IOException, SQLException;
 	public void editPassword(int UserID, String password) throws IOException, SQLException;
 	public void editEmail(int UserID, String email) throws IOException, SQLException;

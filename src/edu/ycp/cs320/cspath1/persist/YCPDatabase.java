@@ -538,10 +538,13 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
+	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
 		Connection conn = connect();
 		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
 		PreparedStatement  stmt = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
 		try {
 			stmt = conn.prepareStatement(
 					"select user_id" +
@@ -552,25 +555,47 @@ public class YCPDatabase implements IDatabase {
 			stmt.setString(1, username);
 			stmt.setString(2, password);
 			
+			Integer user_id = -1;
+			
 			resultSet = stmt.executeQuery();
 			
-			if(!resultSet.next()) {
-				DBUtil.closeQuietly(stmt);
-				
-				stmt = conn.prepareStatement(
+			if(resultSet.next()) {
+				user_id = resultSet.getInt(1);
+			}
+			else {
+				stmt2 = conn.prepareStatement(
 						"insert into users " +
 						"	(username, password, email, usertype)" +
 						"	values (?, ?, ?, ?)"
 						);
-				stmt.setString(1, username);
-				stmt.setString(2, password);
-				stmt.setString(3, email);
-				stmt.setString(4, usertype.toString());
+				stmt2.setString(1, username);
+				stmt2.setString(2, password);
+				stmt2.setString(3, email);
+				stmt2.setString(4, usertype.toString());
 				
-				stmt.execute();
+				stmt2.executeUpdate();
+				
+				stmt3 = conn.prepareStatement( 
+						"select user_id from users" + 
+						"	where username = ? and " +
+						"	password = ?"
+						);
+				
+				stmt3.setString(1, username);
+				stmt3.setString(2, password);
+				resultSet2 = stmt3.executeQuery();
+				
+				if(resultSet2.next()){
+					user_id = resultSet2.getInt(1);
+				}
+				
 			}
+			return user_id;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}

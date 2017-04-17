@@ -184,23 +184,30 @@ public class YCPDatabaseTests {
 		
 	}*/
 	
-	/*@Test
+	@Test
 	public void testInsertUser() throws IOException, SQLException {
 		System.out.println("\n*** Testing insertUser***");
 		
-		db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
+		Integer user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
 		
-		user = db.findUserByEmail("cspath2@ycp.edu");
-		
-		if(user.getPassword() == null){
+		if(user_id > 0){
+			user = db.findUserByUserID(user_id);
+			
+			if(user.getEmail() == null){
+				System.out.println("Something has gone horribly wrong...");
+				fail("No users returned from DB");
+			}
+			else {
+				System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getPassword());
+			}
+			
+				
+		}
+		else {
 			System.out.println("Something has gone horribly wrong...");
 			fail("No users returned from DB");
 		}
-		
-		else {
-			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
-		}
-	}*/
+	}
 	
 	
 	
