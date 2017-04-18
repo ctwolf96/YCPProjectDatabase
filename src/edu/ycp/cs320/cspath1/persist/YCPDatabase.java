@@ -761,7 +761,7 @@ public class YCPDatabase implements IDatabase {
 			while (resultSet.next()){
 				found = true;
 				
-				user = (User) loadUser(user, resultSet);
+				user = loadUser(user, resultSet);
 			
 			}
 			
