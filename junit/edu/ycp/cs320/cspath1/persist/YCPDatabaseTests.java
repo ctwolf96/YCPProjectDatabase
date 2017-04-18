@@ -77,6 +77,7 @@ public class YCPDatabaseTests {
 		
 		users = db.findUserByClassType(classtype);
 		
+		
 		if (users.isEmpty()) {
 			System.out.println("Something has gone horribly wrong...");
 			fail("No users returned from DB");
@@ -190,6 +191,8 @@ public class YCPDatabaseTests {
 		
 		Integer user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
 		
+		System.out.println(user_id);
+		
 		if(user_id > 0){
 			user = db.findUserByUserID(user_id);
 			
@@ -199,6 +202,7 @@ public class YCPDatabaseTests {
 			}
 			else {
 				System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getPassword());
+				db.deleteUserAndProjects(user.getUserID());
 			}
 			
 				
@@ -209,6 +213,25 @@ public class YCPDatabaseTests {
 		}
 	}
 	
+	@Test
+	public void testFindAllUsers() throws IOException, SQLException {
+		System.out.println("\n*** Testing findAllUsers");
+		
+		List<User> userList = db.findAllUsers();
+		
+		if (userList.isEmpty()) {
+			System.out.println("No users found in DB");
+			fail("No users returned from DB");
+			
+		}
+		else {
+			users = new ArrayList<User>();
+			for (User user : userList){
+				users.add(user);
+				System.out.println(user.getUsername() + ", " + user.getUserID());
+			}
+		}
+	}
 	
 	
 }

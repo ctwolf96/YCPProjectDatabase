@@ -418,7 +418,7 @@ public class YCPDatabase implements IDatabase {
 						"usertype varchar(10) not null," +
 						"firstname varchar(25)," +
 						"lastname varchar(25)," +
-						"major varchar(2)," +
+						"major varchar(3)," +
 						"class varchar(10)," +
 						"name varchar(40)," +
 						"address varchar(100)," +
@@ -513,13 +513,14 @@ public class YCPDatabase implements IDatabase {
 						insertFaculty.setString(5, faculty.getFirstname());
 						insertFaculty.setString(6, faculty.getLastname());
 						insertFaculty.setString(7, faculty.getMajor().toString());
-					
+						insertFaculty.addBatch();
 					}
 					insertFaculty.executeBatch();
 					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertStudent);
+					DBUtil.closeQuietly(insertFaculty);
 				}
 			}
 		});
@@ -611,9 +612,11 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement stmt3 = null;
 		PreparedStatement stmt4 = null;
 		PreparedStatement stmt5 = null;
+		PreparedStatement stmt6 = null;
 		
 		ResultSet resultSet1 = null;
 		ResultSet resultSet2 = null;
+		ResultSet resultSet3 = null;
 		
 		try {
 			//Find the user by userID
@@ -665,13 +668,31 @@ public class YCPDatabase implements IDatabase {
 						"select projects.project_id from projects, projectUsers" +
 						"	where projectUsers.user_id = ?"
 						);
-				stmt5.setInt(1, projects.get(i));
+				stmt5.setInt(1, projects.get(i).getUserID());
+				resultSet3 = stmt5.executeQuery();
+				
+				if(!resultSet3.next()){
+					stmt6 = conn.prepareStatement(
+							"delete from users " +
+							"	where user_id = ?"
+						);
+					
+					stmt6.setInt(1, users.get(i).getUserID());
+					stmt6.executeUpdate();
+					
+					DBUtil.closeQuietly(stmt6);
+				}
+				DBUtil.closeQuietly(resultSet3);
+				DBUtil.closeQuietly(stmt5);
 			}
 			
 		} finally {
 			DBUtil.closeQuietly(stmt1);
 			DBUtil.closeQuietly(stmt2);
-			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(resultSet1);
 		}
 	}
 	
@@ -740,7 +761,7 @@ public class YCPDatabase implements IDatabase {
 			while (resultSet.next()){
 				found = true;
 				
-				user = loadUser(user, resultSet);
+				user = (User) loadUser(user, resultSet);
 			
 			}
 			
@@ -1176,6 +1197,45 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+	
+	@Override
+	public List<User> findAllUsers() throws IOException, SQLException{
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		
+		try { 
+			stmt = conn.prepareStatement(
+					"select * from users " + 
+					"	order by username asc"
+				);
+			
+			List<User> result = new ArrayList<User>();
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()) {
+				found = true;
+				
+				User user = new Student();
+				loadUser(user, resultSet);
+				
+				result.add(user);
+			}
+			
+			if(!found) {
+				System.out.println("No users were found in the database");
+			}
+			
+			return result;
+ 		} finally {
+ 			DBUtil.closeQuietly(resultSet);
+ 			DBUtil.closeQuietly(stmt);
+ 			
+ 		}
 	}
 
 	@Override
