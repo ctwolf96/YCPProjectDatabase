@@ -1,5 +1,6 @@
 package edu.ycp.cs320.cspath1.project;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
@@ -19,8 +20,8 @@ public class Proposal extends Project {
 	}
 	
 	//Setters
-	public void setDeadline(String deadline) {
-		this.deadline = deadline;
+	public void setDeadline(String string) {
+		this.deadline = string;
 	}
 	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;

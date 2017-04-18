@@ -105,13 +105,11 @@ public class AccountCreationModelTest {
 		UserType admin = model.getUsertype();
 		model.setUsertype(UserType.FACULTY);
 		UserType faculty = model.getUsertype();
-		model.setUsertype(UserType.GUEST);
 		UserType guest = model.getUsertype();
 		model.setUsertype(UserType.STUDENT);
 		UserType student = model.getUsertype();
 		assertEquals(admin, UserType.ADMIN);
 		assertEquals(faculty, UserType.FACULTY);
-		assertEquals(guest, UserType.GUEST);
 		assertEquals(student, UserType.STUDENT);
 	}
 	
@@ -139,7 +137,6 @@ public class AccountCreationModelTest {
 		bool = model.allFieldsMet();
 		assertEquals(bool, true);
 		//Guest User Test
-		model.setUsertype(UserType.GUEST);
 		bool = model.allFieldsMet();
 		assertEquals(bool, true);
 		//Admin User Test
@@ -154,7 +151,6 @@ public class AccountCreationModelTest {
 		model.setUsertype(UserType.STUDENT);
 		bool = model.allFieldsMet();
 		assertEquals(bool, false);
-		model.setUsertype(UserType.GUEST);
 		bool = model.allFieldsMet();
 		assertEquals(bool, false);
 		

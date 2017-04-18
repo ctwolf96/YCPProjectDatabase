@@ -19,8 +19,6 @@ public class ActiveProject extends Project {
 	}
 	
 	//Setters
-	
-	
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}

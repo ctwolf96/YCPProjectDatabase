@@ -186,7 +186,7 @@ private static final long serialVersionUID = 1L;
 		FakeDatabase fb = new FakeDatabase();
 		//result.addAll(fb.findSolicitationsByMajorType(majortype));
 		//result.addAll(fb.findSolicitationsByMajorTypes(majors));
-		result.addAll(fb.findSolicitationsByClassType(classtype));
+		//result.addAll(fb.findSolicitationsByClassType(classtype));
 		//result.addAll(fb.findSolicitationsByClassTypes(classtypes));
 		//result.addAll(fb.findSolicitationsByStartTime(startTime));
 		//result.addAll(fb.findSolicitationsByDuration(duration));
