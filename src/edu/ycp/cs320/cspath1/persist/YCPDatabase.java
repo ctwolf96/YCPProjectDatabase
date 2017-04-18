@@ -87,7 +87,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/library.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
 		
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -233,6 +233,7 @@ public class YCPDatabase implements IDatabase {
 			student.setUserID(user.getUserID());
 			student.setUsername(user.getUsername());
 			student.setPassword(user.getPassword());
+			student.setEmail(user.getEmail());
 			student.setUsertype(user.getUsertype());
 			student.setFirstname(resultSet.getString(6));
 			student.setLastname(resultSet.getString(7));
@@ -275,7 +276,7 @@ public class YCPDatabase implements IDatabase {
 		project.setTitle(resultSet.getString(3));
 		project.setDescription(resultSet.getString(4));
 		project.setStart(resultSet.getString(5));
-		project.setDuration(resultSet.getString(6));
+		project.setDuration(resultSet.getInt(6));
 		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(7)));
 		if (project.getProjectType() == ProjectType.SOLICITATION) {
 			Solicitation solicitation = new Solicitation();
@@ -408,7 +409,7 @@ public class YCPDatabase implements IDatabase {
 				
 				try {
 					stmt1 = conn.prepareStatement(
-						"create table user (" +
+						"create table users (" +
 						"user_id integer primary key " +
 						"generated always as identity (start with 1, increment by 1), " +									
 						"username varchar(40) not null," +
@@ -420,48 +421,49 @@ public class YCPDatabase implements IDatabase {
 						"major varchar(2)," +
 						"class varchar(10)," +
 						"name varchar(40)," +
-						"address varchar(100)" +
-						"number varchar(20)" +
+						"address varchar(100)," +
+						"contactNum varchar(20)" +
 						")"
 					);	
 					stmt1.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
-						"create table project (" +
+						"create table projects (" +
 						"project_id integer primary key " +
 						"generated always as identity (start with 1, increment by 1), " +
-						"user_id integer constraint user_id references user, " +
 						"title varchar(30) not null," +
 						"description varchar(200) not null," +
 						"start varchar(20) not null," +
 						"duration varchar(20) not null," +
 						"projectType varchar(20) not null," +
-						"solicitationType varchar(20)" +
-						"majors varchar(20)" +
-						"classes varchar(30)" +
-						"numStudents integer" +
-						"cost integer" +
-						"isFunded varchar(5)" +
-						"deadline varchar(20)" +
-						"budget integer" +
-						"members varchar(1000)" +
+						"solicitationType varchar(20)," +
+						"majors varchar(20)," +
+						"classes varchar(30)," +
+						"numStudents integer," +
+						"cost integer," +
+						"isFunded varchar(5)," +
+						"deadline varchar(20)," +
+						"budget integer," +
+						"members varchar(1000)," +
 						"tasks varchar(1000)" +
 						")"
 					);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(
-							"create table relation (" +
-							"foreign key (user_id) references user(user_id)," +
-							"foreign key (project_id) references project(project_id)" +
-							")"
+						"create table projectUsers (" +
+						"	user_id    integer constraint user_id references users," +
+						"	project_id integer constraint project_id references projects" +
+						")"
 						);
+					
 						stmt3.executeUpdate();
 						
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					
 				}
 			}
 		});
@@ -499,7 +501,6 @@ public class YCPDatabase implements IDatabase {
 						insertUser.setString(11, ((Business) user).getNumber());
 						insertUser.addBatch();
 					}
-					insertUser.executeBatch();
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);
@@ -520,60 +521,140 @@ public class YCPDatabase implements IDatabase {
 		System.out.println("Success!");
 	}
 
+	//IN PROGRESS
 	@Override
-	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
+	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
 		Connection conn = connect();
 		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
 		PreparedStatement  stmt = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
 		try {
 			stmt = conn.prepareStatement(
 					"select user_id" +
-					"from user" +
-					"where username = ? and " +
-					"password = ?"
+					"	from users" +
+					"	where username = ? and " +
+					"	password = ?"
 					);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
 			
+			Integer user_id = -1;
+			
 			resultSet = stmt.executeQuery();
 			
-			if(!resultSet.next()) {
-				DBUtil.closeQuietly(stmt);
-				
-				stmt = conn.prepareStatement(
-						"insert into user " +
-						"(username, password, email, usertype)" +
-						" values (?, ?, ?, ?"
-						);
-				stmt.setString(1, username);
-				stmt.setString(2, password);
-				stmt.setString(3, email);
-				stmt.setString(4, usertype.toString());
-				
-				stmt.execute();
+			if(resultSet.next()) {
+				user_id = resultSet.getInt(1);
 			}
+			else {
+				stmt2 = conn.prepareStatement(
+						"insert into users " +
+						"	(username, password, email, usertype)" +
+						"	values (?, ?, ?, ?)"
+						);
+				stmt2.setString(1, username);
+				stmt2.setString(2, password);
+				stmt2.setString(3, email);
+				stmt2.setString(4, usertype.toString());
+				
+				stmt2.executeUpdate();
+				
+				stmt3 = conn.prepareStatement( 
+						"select user_id from users" + 
+						"	where username = ? and " +
+						"	password = ?"
+						);
+				
+				stmt3.setString(1, username);
+				stmt3.setString(2, password);
+				resultSet2 = stmt3.executeQuery();
+				
+				if(resultSet2.next()){
+					user_id = resultSet2.getInt(1);
+				}
+				
+			}
+			return user_id;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
 	}
 
+	//IN PROGRESS
 	@Override
-	public void deleteUser(User user) throws IOException, SQLException {
+	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
 		Connection conn = connect();
-		PreparedStatement  stmt = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement  stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		PreparedStatement stmt5 = null;
+		
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		
 		try {
-			stmt = conn.prepareStatement(
-					"delete from user" +
-					"where user_id = ?"
+			//Find the user by userID
+			stmt1 = conn.prepareStatement( 
+					"select users.*" +
+					"	from users" + 
+					"	where user_id = ?"
+					);
+			stmt1.setInt(1, user_id);
+			resultSet1 = stmt1.executeQuery();
+			List<User> users = new ArrayList<User>();
+			List<Project> projects = new ArrayList<Project>();
+			//Load user into a list
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			//SHOULDN'T HAPPEN
+			if (users.size() == 0){
+				System.out.println("Ya done goofed somehow...");
+			}
+			//Find projectID's for the user
+			stmt3 = conn.prepareStatement(
+					"select project_id" + 
+					"	from projectUsers" +
+					"	where user_id = ?"
 					);
 			
-			stmt.setInt(1, user.getUserID());
+			resultSet2 = stmt3.executeQuery();
 			
-			stmt.executeQuery();
+			while(resultSet2.next()) {
+				Project project = new Project();
+				loadProject(project, resultSet2);
+				projects.add((Project) projects);
+			}
+			//Delete entries in relation table for the user
+			stmt4 = conn.prepareStatement(
+					"delete from projectUsers" +
+					"	where user_id = ?"
+					);
+			
+			stmt4.setInt(1, user_id);
+			
+			stmt4.executeUpdate();
+			//NOW I AM CONFUSED
+			for (int i = 0; i < users.size(); i++){
+				stmt5 = conn.prepareStatement(
+						"select projects.project_id from projects, projectUsers" +
+						"	where projectUsers.user_id = ?"
+						);
+				stmt5.setInt(1, projects.get(i));
+			}
+			
 		} finally {
-			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(conn);
 		}
 	}
@@ -584,42 +665,43 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
-					"update user" +
-					"set password = ?" +
-					"where user_id = ?"
+					"update users" +
+					"	set password = ?" +
+					"	where user_id = ?"
 					);
 			
 			stmt.setString(1, password);
 			stmt.setInt(2, UserID);
 			
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} finally {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
 	}
-	
+	//IN PROGRESS
 	@Override
 	public void editEmail(int UserID, String email) throws IOException, SQLException {
 		Connection conn = connect();
 		PreparedStatement  stmt = null;
 		try {
 			stmt = conn.prepareStatement(
-					"update user" +
-					"set email = ?" +
-					"where user_id = ?"
+					"update users" +
+					"	set email = ?" +
+					"	where user_id = ?"
 					);
 			
 			stmt.setString(1, email);
 			stmt.setInt(2, UserID);
 			
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} finally {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
 	}
 	
+	//TESTED
 	@Override
 	public User findUserByUserID(int UserID) throws IOException, SQLException{
 		Connection conn = connect();
@@ -629,9 +711,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where user_id = ?"
+					"select users.*" +
+					"	from users" +
+					"	where user_id = ?"
 					);
 			stmt.setInt(1, UserID);
 			
@@ -657,6 +739,7 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 
+	//TESTED
 	@Override
 	public User findUserByUsername(String username) throws IOException, SQLException {
 		Connection conn = connect();
@@ -666,9 +749,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where username = ?"
+					"select users.*" +
+					"	from users" +
+					"	where username = ?"
 					);
 			stmt.setString(1, username);
 			
@@ -694,6 +777,7 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 
+	//TESTED
 	@Override
 	public User findUserByUsernameAndPassword(String username, String password) throws IOException, SQLException {
 		Connection conn = connect();
@@ -703,9 +787,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where username = ? and password = ?"
+					"select users.*" +
+					"	from users" +
+					"	where username = ? and password = ?"
 					);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -732,6 +816,7 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 
+	//TESTED
 	@Override
 	public User findUserByEmail(String email) throws IOException, SQLException {
 		Connection conn = connect();
@@ -741,9 +826,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where email = ?"
+					"select users.*" +
+					"	from users" +
+					"	where email = ?"
 					);
 			stmt.setString(1, email);
 			
@@ -768,7 +853,8 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
-
+	
+	//TESTED
 	@Override
 	public List<User> findUserByUserType(UserType usertype) throws IOException, SQLException {
 		Connection conn = connect();
@@ -779,9 +865,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where usertype = ?"
+					"select users.*" +
+					"	from users" +
+					"	where usertype = ?"
 					);
 			stmt.setString(1, usertype.toString());
 			
@@ -818,9 +904,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where firstname = ?"
+					"select users.*" +
+					"	from users" +
+					"	where firstname = ?"
 					);
 			stmt.setString(1, firstname);
 			
@@ -857,9 +943,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where lastname = ?"
+					"select users.*" +
+					"	from users" +
+					"	where lastname = ?"
 					);
 			stmt.setString(1, lastname);
 			
@@ -896,8 +982,8 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
+					"select users.*" +
+					"from users" +
 					"where major = ?"
 					);
 			stmt.setString(1, major.toString());
@@ -925,6 +1011,7 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 
+	//TESTED
 	@Override
 	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException {
 		Connection conn = connect();
@@ -935,9 +1022,9 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
-					"where classe = ?"
+					"select users.*" +
+					"	from users" +
+					"	where class = ?"
 					);
 			stmt.setString(1, classtype.toString());
 			
@@ -973,8 +1060,8 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
+					"select users.*" +
+					"from users" +
 					"where name = ?"
 					);
 			stmt.setString(1, name);
@@ -1010,8 +1097,8 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
+					"select users.*" +
+					"from users" +
 					"where address = ?"
 					);
 			stmt.setString(1, address);
@@ -1047,8 +1134,8 @@ public class YCPDatabase implements IDatabase {
 		User user = new Student();
 		try {
 			stmt = conn.prepareStatement(
-					"select user" +
-					"from user" +
+					"select users.*" +
+					"from users" +
 					"where number = ?"
 					);
 			stmt.setString(1, number);

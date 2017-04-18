@@ -9,7 +9,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 public class Proposal extends Project {
 	private ArrayList<MajorType> majors;
 	private ArrayList<ClassType> classes;
-	private Date deadline;
+	private String deadline;
 	private int numStudents;
 	private double cost;
 	private boolean isFunded;
@@ -20,8 +20,8 @@ public class Proposal extends Project {
 	}
 	
 	//Setters
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
+	public void setDeadline(String string) {
+		this.deadline = string;
 	}
 	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;
@@ -40,7 +40,7 @@ public class Proposal extends Project {
 	}
 
 	//Getters
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 	public int getNumStudents() {

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.cspath1.enums.ProjectType;
+
 public class ProjectTest {
 	Project project;
 	
@@ -45,21 +47,37 @@ public class ProjectTest {
 	
 	@Test
 	public void testSetDescription() {
-		
+		project.setDescription("This project allows for businesses to propose projects as well the solicitation of projects by students");
+		assertEquals("This project allows for businesses to propose projects as well the solicitation of projects by students", project.getDescription());
 	}
 	
 	@Test
 	public void testSetStart() {
-		
+		project.setStart("June 5, 2017");
+		assertEquals("June 5, 2017", project.getStart());
 	}
 	
 	@Test
 	public void testSetDuration() {
-		
+		project.setDuration(1);
+		assertEquals(project.getDuration(), 1);
+		project.setDuration(2);
+		assertEquals(project.getDuration(), 2);
+		project.setDuration(3);
+		assertEquals(project.getDuration(), 3);
+		project.setDuration(4);
+		assertEquals(project.getDuration(), 4);
 	}
 	
 	@Test
 	public void testSetProjectType() {
-		
+		project.setProjectType(ProjectType.PROPOSAL);
+		assertEquals(ProjectType.PROPOSAL, project.getProjectType());
+		project.setProjectType(ProjectType.SOLICITATION);
+		assertEquals(ProjectType.SOLICITATION, project.getProjectType());
+		project.setProjectType(ProjectType.ACTIVE);
+		assertEquals(ProjectType.ACTIVE, project.getProjectType());
+		project.setProjectType(ProjectType.PAST);
+		assertEquals(ProjectType.PAST, project.getProjectType());
 	}
 }

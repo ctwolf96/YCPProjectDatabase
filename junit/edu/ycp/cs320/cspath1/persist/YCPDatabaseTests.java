@@ -13,7 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
+import edu.ycp.cs320.cspath1.enums.ClassType;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.project.Project;
@@ -24,6 +25,7 @@ public class YCPDatabaseTests {
 	
 	User user = null;
 	ArrayList<Project> projects = null;
+	List<User> users = null;
 	List<Pair<User, Project>> userProjectList = null;
 	List<Pair<User, Project>> projectUserList = null;
 	
@@ -63,8 +65,150 @@ public class YCPDatabaseTests {
 		}
 		
 		else {
-			System.out.println(user.getEmail() + "," + user.getUsername() + "," + user.getPassword() + "," + user.getUsertype());
+			System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getPassword() + ", " + user.getUsertype());
 		}
 	}
+	
+	@Test
+	public void testFindUserByClassType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByClassType ***");
+		
+		ClassType classtype = ClassType.SOPHOMORE;
+		
+		users = db.findUserByClassType(classtype);
+		
+		if (users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+				
+		}
+		
+		else {
+			for (User user : users){
+				System.out.println(user.getUsername() + ", " + user.getEmail() + ", " + user.getPassword() + ", " + user.getUsertype());;
+			}
+		}
+		
+	}
+	
+	@Test
+	public void testFindUserByUserID() throws IOException, SQLException{
+		System.out.println("\n*** Testing findUserByUserID***");
+		
+		int userID = 4;
+		
+		user = db.findUserByUserID(userID);
+		
+		if (user.getEmail() == null){
+			System.out.println("No users found in database");
+			fail("No users returned from DB");
+		}
+		else {
+			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
+		}
+		
+	}
+	
+	@Test
+	public void testFindUserByUsername() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByUsername***");
+		
+		String username = "jhopkins1";
+		
+		user = db.findUserByUsername(username);
+		
+		if (user.getPassword() == null) {
+			System.out.println("No users found in database");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
+		}
+	}
+	
+	@Test
+	public void testFindUserByEmail() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByEmail***");
+		
+		String email = "jhopkins1@ycp.edu";
+		
+		user = db.findUserByEmail(email);
+		
+		if (user.getUsername() == null){
+			System.out.println("No users found in database");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
+		}
+	}
+	
+	@Test
+	public void testFindUserByUsertype() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByUsertype");
+		
+		UserType usertype = UserType.STUDENT;
+		
+		users = db.findUserByUserType(usertype);
+		
+		if (users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
+			}
+		}
+	}
+	
+	/*@Test
+	public void testEditEmail() throws IOException, SQLException { 
+		System.out.println("\n*** Testing editEmail***");
+		
+		db.editEmail(17, "cspath@ycp.edu");
+		
+		user = db.findUserByEmail("cspath@ycp.edu");
+		
+		if(user.getPassword() == null){
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
+		}
+		
+	}*/
+	
+	@Test
+	public void testInsertUser() throws IOException, SQLException {
+		System.out.println("\n*** Testing insertUser***");
+		
+		Integer user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
+		
+		if(user_id > 0){
+			user = db.findUserByUserID(user_id);
+			
+			if(user.getEmail() == null){
+				System.out.println("Something has gone horribly wrong...");
+				fail("No users returned from DB");
+			}
+			else {
+				System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getPassword());
+			}
+			
+				
+		}
+		else {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+	}
+	
+	
 	
 }
