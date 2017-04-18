@@ -1,5 +1,6 @@
 package edu.ycp.cs320.cspath1.project;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
@@ -8,7 +9,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 public class Proposal extends Project {
 	private ArrayList<MajorType> majors;
 	private ArrayList<ClassType> classes;
-	private String deadline;
+	private Date deadline;
 	private int numStudents;
 	private double cost;
 	private boolean isFunded;
@@ -19,7 +20,7 @@ public class Proposal extends Project {
 	}
 	
 	//Setters
-	public void setDeadline(String deadline) {
+	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 	public void setNumStudents(int numStudents) {
@@ -39,7 +40,7 @@ public class Proposal extends Project {
 	}
 
 	//Getters
-	public String getDeadline() {
+	public Date getDeadline() {
 		return deadline;
 	}
 	public int getNumStudents() {

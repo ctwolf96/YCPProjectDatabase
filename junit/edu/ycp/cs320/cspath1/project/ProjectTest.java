@@ -42,4 +42,24 @@ public class ProjectTest {
 		project.setTitle("YCP Project Database");
 		assertEquals("YCP Project Database", project.getTitle());
 	}
+	
+	@Test
+	public void testSetDescription() {
+		
+	}
+	
+	@Test
+	public void testSetStart() {
+		
+	}
+	
+	@Test
+	public void testSetDuration() {
+		
+	}
+	
+	@Test
+	public void testSetProjectType() {
+		
+	}
 }

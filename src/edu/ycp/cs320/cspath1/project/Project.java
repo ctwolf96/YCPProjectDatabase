@@ -1,5 +1,7 @@
 package edu.ycp.cs320.cspath1.project;
 
+import java.sql.Date;
+
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 
 public class Project {
@@ -9,8 +11,8 @@ public class Project {
 		// project later
 	private String title;
 	private String description;
-	private String start;
-	private String duration;
+	private Date start;
+	private int duration; //units have yet to be determined (semesters, months, days
 	private int userID; //Creator as well as mentor
 	private int projectID;
 	private ProjectType projectType;
@@ -22,10 +24,10 @@ public class Project {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 	public void setUserID(int userID) {
@@ -45,10 +47,10 @@ public class Project {
 	public String getDescription() {
 		return description;
 	}
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 	public int getUserID() {
