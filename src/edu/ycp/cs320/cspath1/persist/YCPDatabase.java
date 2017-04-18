@@ -410,42 +410,42 @@ public class YCPDatabase implements IDatabase {
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table users (" +
-						"user_id integer primary key " +
-						"generated always as identity (start with 1, increment by 1), " +									
-						"username varchar(40) not null," +
-						"password varchar(40) not null," +
-						"email varchar(60) not null," +
-						"usertype varchar(10) not null," +
-						"firstname varchar(25)," +
-						"lastname varchar(25)," +
-						"major varchar(3)," +
-						"class varchar(10)," +
-						"name varchar(40)," +
-						"address varchar(100)," +
-						"contactNum varchar(20)" +
+						"	user_id integer primary key " +
+						"	generated always as identity (start with 1, increment by 1), " +									
+						"	username varchar(40) not null," +
+						"	password varchar(40) not null," +
+						"	email varchar(60) not null," +
+						"	usertype varchar(10) not null," +
+						"	firstname varchar(25)," +
+						"	lastname varchar(25)," +
+						"	major varchar(3)," +
+						"	class varchar(10)," +
+						"	name varchar(40)," +
+						"	address varchar(100)," +
+						"	contactNum varchar(20)" +
 						")"
 					);	
 					stmt1.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
 						"create table projects (" +
-						"project_id integer primary key " +
-						"generated always as identity (start with 1, increment by 1), " +
-						"title varchar(30) not null," +
-						"description varchar(200) not null," +
-						"start varchar(20) not null," +
-						"duration varchar(20) not null," +
-						"projectType varchar(20) not null," +
-						"solicitationType varchar(20)," +
-						"majors varchar(20)," +
-						"classes varchar(30)," +
-						"numStudents integer," +
-						"cost integer," +
-						"isFunded varchar(5)," +
-						"deadline varchar(20)," +
-						"budget integer," +
-						"members varchar(1000)," +
-						"tasks varchar(1000)" +
+						"	project_id integer primary key " +
+						"	generated always as identity (start with 1, increment by 1), " +
+						"	title varchar(30) not null," +
+						"	description varchar(200) not null," +
+						"	start varchar(20) not null," +
+						"	duration varchar(20) not null," +
+						"	projectType varchar(20) not null," +
+						"	solicitationType varchar(20)," +
+						"	majors varchar(20)," +
+						"	classes varchar(30)," +
+						"	numStudents integer," +
+						"	cost integer," +
+						"	isFunded varchar(5)," +
+						"	deadline varchar(20)," +
+						"	budget integer," +
+						"	members varchar(1000)," +
+						"	tasks varchar(1000)" +
 						")"
 					);
 					stmt2.executeUpdate();
@@ -492,37 +492,24 @@ public class YCPDatabase implements IDatabase {
 						insertUser.setString(2, user.getPassword());
 						insertUser.setString(3, user.getEmail());
 						insertUser.setString(4, user.getUsertype().toString());
-						if(user.getUsertype() == UserType.STUDENT){
+						if (user.getUsertype().equals(UserType.STUDENT)) {
 							insertUser.setString(5, ((Student) user).getFirstname());
 							insertUser.setString(6, ((Student) user).getLastname());
 							insertUser.setString(7, ((Student) user).getMajor().toString());
 							insertUser.setString(8, ((Student) user).getClassLevel().toString());
-							insertUser.setString(9, "");
-							insertUser.setString(10, "");
-							insertUser.setString(11, "");
-						}
-						else if (user.getUsertype() == UserType.FACULTY){
-							insertUser.setString(5, ((Faculty) user).getFirstname());
-							insertUser.setString(6, ((Faculty) user).getLastname());
-							insertUser.setString(7, ((Faculty) user).getMajor().toString());
-							insertUser.setString(8, "");
-							insertUser.setString(9, "");
-							insertUser.setString(10, "");
-							insertUser.setString(11, "");
-						}
-						else if (user.getUsertype() == UserType.BUSINESS){
-							insertUser.setString(5, "");
-							insertUser.setString(6, "");
-							insertUser.setString(7, "");
-							insertUser.setString(8, "");
+						} else if (user.getUsertype().equals(UserType.FACULTY)) {
+							insertUser.setString(5, ((Student) user).getFirstname());
+							insertUser.setString(6, ((Student) user).getLastname());
+							insertUser.setString(7, ((Student) user).getMajor().toString());
+						} else if (user.getUsertype().equals(UserType.BUSINESS)) {
 							insertUser.setString(9, ((Business) user).getName());
 							insertUser.setString(10, ((Business) user).getAddress());
 							insertUser.setString(11, ((Business) user).getNumber());
 						}
-						
 						insertUser.addBatch();
-					}
 
+					}
+					insertUser.executeBatch();
 					return true;
 				} finally {
 
@@ -652,6 +639,7 @@ public class YCPDatabase implements IDatabase {
 					"	from projectUsers" +
 					"	where user_id = ?"
 					);
+			stmt3.setInt(1, user_id);
 			
 			resultSet2 = stmt3.executeQuery();
 			
@@ -670,7 +658,7 @@ public class YCPDatabase implements IDatabase {
 			
 			stmt4.executeUpdate();
 			//NOW I AM CONFUSED
-			for (int i = 0; i < users.size(); i++){
+			/*for (int i = 0; i < users.size(); i++){
 				stmt5 = conn.prepareStatement(
 						"select projects.project_id from projects, projectUsers" +
 						"	where projectUsers.user_id = ?"
@@ -688,10 +676,10 @@ public class YCPDatabase implements IDatabase {
 					stmt6.executeUpdate();
 					
 					DBUtil.closeQuietly(stmt6);
-				}
+				} 
 				DBUtil.closeQuietly(resultSet3);
 				DBUtil.closeQuietly(stmt5);
-			}
+			}*/
 			
 		} finally {
 			DBUtil.closeQuietly(stmt1);
