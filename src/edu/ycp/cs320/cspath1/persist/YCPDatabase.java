@@ -87,7 +87,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/radio shack/workspace/project_database.db;create=true");
 		
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -410,42 +410,42 @@ public class YCPDatabase implements IDatabase {
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table users (" +
-						"user_id integer primary key " +
-						"generated always as identity (start with 1, increment by 1), " +									
-						"username varchar(40) not null," +
-						"password varchar(40) not null," +
-						"email varchar(60) not null," +
-						"usertype varchar(10) not null," +
-						"firstname varchar(25)," +
-						"lastname varchar(25)," +
-						"major varchar(2)," +
-						"class varchar(10)," +
-						"name varchar(40)," +
-						"address varchar(100)," +
-						"contactNum varchar(20)" +
+						"	user_id integer primary key " +
+						"	generated always as identity (start with 1, increment by 1), " +									
+						"	username varchar(40) not null," +
+						"	password varchar(40) not null," +
+						"	email varchar(60) not null," +
+						"	usertype varchar(10) not null," +
+						"	firstname varchar(25)," +
+						"	lastname varchar(25)," +
+						"	major varchar(3)," +
+						"	class varchar(10)," +
+						"	name varchar(40)," +
+						"	address varchar(100)," +
+						"	contactNum varchar(20)" +
 						")"
 					);	
 					stmt1.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
 						"create table projects (" +
-						"project_id integer primary key " +
-						"generated always as identity (start with 1, increment by 1), " +
-						"title varchar(30) not null," +
-						"description varchar(200) not null," +
-						"start varchar(20) not null," +
-						"duration varchar(20) not null," +
-						"projectType varchar(20) not null," +
-						"solicitationType varchar(20)," +
-						"majors varchar(20)," +
-						"classes varchar(30)," +
-						"numStudents integer," +
-						"cost integer," +
-						"isFunded varchar(5)," +
-						"deadline varchar(20)," +
-						"budget integer," +
-						"members varchar(1000)," +
-						"tasks varchar(1000)" +
+						"	project_id integer primary key " +
+						"	generated always as identity (start with 1, increment by 1), " +
+						"	title varchar(30) not null," +
+						"	description varchar(200) not null," +
+						"	start varchar(20) not null," +
+						"	duration varchar(20) not null," +
+						"	projectType varchar(20) not null," +
+						"	solicitationType varchar(20)," +
+						"	majors varchar(20)," +
+						"	classes varchar(30)," +
+						"	numStudents integer," +
+						"	cost integer," +
+						"	isFunded varchar(5)," +
+						"	deadline varchar(20)," +
+						"	budget integer," +
+						"	members varchar(1000)," +
+						"	tasks varchar(1000)" +
 						")"
 					);
 					stmt2.executeUpdate();
@@ -483,23 +483,30 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement insertUser = null;
 				try {
 					insertUser = conn.prepareStatement(
-							"insert into user" +
-							"(username, password, email, usertype, firstname, lastname, major, class, name, address, number)" +
-							"values (?, ?, ?, ?. ?, ?, ?, ?, ?, ?, ?)" 
+							"insert into users" +
+							"	(username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" 
 							);
 					for (User user : userList) {
 						insertUser.setString(1, user.getUsername());
 						insertUser.setString(2, user.getPassword());
 						insertUser.setString(3, user.getEmail());
 						insertUser.setString(4, user.getUsertype().toString());
-						insertUser.setString(5, ((Student) user).getFirstname());
-						insertUser.setString(6, ((Student) user).getLastname());
-						insertUser.setString(7, ((Student) user).getMajor().toString());
-						insertUser.setString(8, ((Student) user).getClassLevel().toString());
-						insertUser.setString(9, ((Business) user).getName());
-						insertUser.setString(10, ((Business) user).getAddress());
-						insertUser.setString(11, ((Business) user).getNumber());
-						insertUser.addBatch();
+						if (user.getUsertype().equals(UserType.STUDENT)) {
+							insertUser.setString(5, ((Student) user).getFirstname());
+							insertUser.setString(6, ((Student) user).getLastname());
+							insertUser.setString(7, ((Student) user).getMajor().toString());
+							insertUser.setString(8, ((Student) user).getClassLevel().toString());
+						} else if (user.getUsertype().equals(UserType.FACULTY)) {
+							insertUser.setString(5, ((Student) user).getFirstname());
+							insertUser.setString(6, ((Student) user).getLastname());
+							insertUser.setString(7, ((Student) user).getMajor().toString());
+						} else if (user.getUsertype().equals(UserType.BUSINESS)) {
+							insertUser.setString(9, ((Business) user).getName());
+							insertUser.setString(10, ((Business) user).getAddress());
+							insertUser.setString(11, ((Business) user).getNumber());
+						}
+						
 					}
 					return true;
 				} finally {
@@ -595,9 +602,11 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement stmt3 = null;
 		PreparedStatement stmt4 = null;
 		PreparedStatement stmt5 = null;
+		PreparedStatement stmt6 = null;
 		
 		ResultSet resultSet1 = null;
 		ResultSet resultSet2 = null;
+		ResultSet resultSet3 = null;
 		
 		try {
 			//Find the user by userID
@@ -649,13 +658,31 @@ public class YCPDatabase implements IDatabase {
 						"select projects.project_id from projects, projectUsers" +
 						"	where projectUsers.user_id = ?"
 						);
-				stmt5.setInt(1, projects.get(i));
+				stmt5.setInt(1, projects.get(i).getUserID());
+				resultSet3 = stmt5.executeQuery();
+				
+				if(!resultSet3.next()){
+					stmt6 = conn.prepareStatement(
+							"delete from users " +
+							"	where user_id = ?"
+						);
+					
+					stmt6.setInt(1, users.get(i).getUserID());
+					stmt6.executeUpdate();
+					
+					DBUtil.closeQuietly(stmt6);
+				}
+				DBUtil.closeQuietly(resultSet3);
+				DBUtil.closeQuietly(stmt5);
 			}
 			
 		} finally {
 			DBUtil.closeQuietly(stmt1);
 			DBUtil.closeQuietly(stmt2);
-			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(resultSet1);
 		}
 	}
 	
@@ -724,7 +751,7 @@ public class YCPDatabase implements IDatabase {
 			while (resultSet.next()){
 				found = true;
 				
-				user = loadUser(user, resultSet);
+				user = (User) loadUser(user, resultSet);
 			
 			}
 			
@@ -1160,6 +1187,45 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+	
+	@Override
+	public List<User> findAllUsers() throws IOException, SQLException{
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		
+		try { 
+			stmt = conn.prepareStatement(
+					"select * from users " + 
+					"	order by username asc"
+				);
+			
+			List<User> result = new ArrayList<User>();
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()) {
+				found = true;
+				
+				User user = new Student();
+				loadUser(user, resultSet);
+				
+				result.add(user);
+			}
+			
+			if(!found) {
+				System.out.println("No users were found in the database");
+			}
+			
+			return result;
+ 		} finally {
+ 			DBUtil.closeQuietly(resultSet);
+ 			DBUtil.closeQuietly(stmt);
+ 			
+ 		}
 	}
 
 	@Override

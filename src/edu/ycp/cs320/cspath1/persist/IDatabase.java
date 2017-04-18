@@ -45,6 +45,9 @@ public interface IDatabase {
 	public List<User> findUserByMajorType(MajorType major) throws IOException, SQLException; 
 	//tested
 	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException;
+	
+	public List<User> findAllUsers() throws IOException, SQLException;
+	
 	public User findUserByName(String name) throws IOException, SQLException;
 	public User findUserByAddress(String address) throws IOException, SQLException;
 	public User findUserByNumber(String number) throws IOException, SQLException;
