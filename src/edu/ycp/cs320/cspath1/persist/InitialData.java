@@ -81,11 +81,11 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Proposal project = new Proposal();
 				project.setProjectID(projectID++);
-				project.setUserID(i.next());
+				project.setUserID(Integer.parseInt(i.next()));
 				project.setTitle(i.next());
 				project.setDescription(i.next());
 				project.setStart(i.next());
-				project.setDuration(i.next());
+				project.setDuration(Integer.parseInt(i.next()));
 				project.setProjectType(getProjectTypeFromParameter(i.next()));
 				if (project.getProjectType().equals(ProjectType.PROPOSAL)) {
 					Proposal proposal = new Proposal();
@@ -98,8 +98,8 @@ public class InitialData {
 					proposal.setProjectType(project.getProjectType());
 					proposal.setMajors(getMajorListFromString(i.next()));
 					proposal.setClasses(getClassListFromString(i.next()));
-					proposal.setNumStudents(i.next());
-					proposal.setCost(i.next());
+					proposal.setNumStudents(Integer.parseInt(i.next()));
+					proposal.setCost((double) Integer.parseInt(i.next()));
 					proposal.setIsFunded(getBoolFromString(i.next()));
 					proposal.setDeadline(i.next());
 					projectList.add(proposal);
@@ -115,8 +115,8 @@ public class InitialData {
 					solicitation.setSolicitationType(getSolicitationTypeFromParameter(i.next()));
 					solicitation.setMajors(getMajorListFromString(i.next()));
 					solicitation.setClasses(getClassListFromString(i.next()));
-					solicitation.setNumStudents(i.next());
-					solicitation.setCost(i.next());
+					solicitation.setNumStudents(Integer.parseInt(i.next()));
+					solicitation.setCost((double) Integer.parseInt(i.next()));
 					projectList.add(solicitation);
 				} else {
 					ActiveProject active = new ActiveProject();
@@ -127,10 +127,10 @@ public class InitialData {
 					active.setStart(project.getStart());
 					active.setDuration(project.getDuration());
 					active.setProjectType(project.getProjectType());
-					active.setNumStudents(i.next());
-					active.setCost(i.next());
+					active.setNumStudents(Integer.parseInt(i.next()));
+					active.setCost((double) Integer.parseInt(i.next()));
 					active.setDeadline(i.next());
-					active.setBudget(i.next());
+					active.setBudget((double) Integer.parseInt(i.next()));
 					projectList.add(project);
 				}
 			} 
