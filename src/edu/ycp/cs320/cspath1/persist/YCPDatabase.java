@@ -465,7 +465,7 @@ public class YCPDatabase implements IDatabase {
 		});
 	}
 	
-	public void loadInitialData() {
+	/*public void loadInitialData() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -519,10 +519,10 @@ public class YCPDatabase implements IDatabase {
 				}
 			}
 		});
-	}
+	}*/
 	
 	// The main method creates the database tables and loads the initial data.
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		System.out.println("Creating tables...");
 		YCPDatabase db = new YCPDatabase();
 		db.createTables();
@@ -531,7 +531,7 @@ public class YCPDatabase implements IDatabase {
 		db.loadInitialData();
 		
 		System.out.println("Success!");
-	}
+	}*/
 
 	@Override
 	public void insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {

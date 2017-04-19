@@ -60,7 +60,7 @@
 			<input type="checkbox" name="senior" value="SR">Senior<br>
 			<br>
 			
-			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
+			<input type="Submit" name="submit" value="Search Projects" class = "button button5">
 			
 			<input type="Submit" name="project" value="Project Creation Link" class = "button button5">
 			

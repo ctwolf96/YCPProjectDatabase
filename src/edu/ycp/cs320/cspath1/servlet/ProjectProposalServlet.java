@@ -81,6 +81,9 @@ private static final long serialVersionUID = 1L;
 		if (req.getParameter("solicit") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
+		else if(req.getParameter("submit") != null){
+			resp.sendRedirect(req.getContextPath() + "/sampleProject");
+		}
 		else {
 		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 		}
