@@ -506,8 +506,9 @@ public class YCPDatabase implements IDatabase {
 							insertUser.setString(10, ((Business) user).getAddress());
 							insertUser.setString(11, ((Business) user).getNumber());
 						}
-						
+						insertUser.addBatch();
 					}
+					insertUser.executeBatch();
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);

@@ -17,19 +17,6 @@ import edu.ycp.cs320.cspath1.user.User;
 public class FakeDatabase implements IDatabase {
 
 	@Override
-	public void insertUser(String username, String password, String email, UserType usertype)
-			throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteUser(User user) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void editPassword(int UserID, String password) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
@@ -176,6 +163,25 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer insertUser(String username, String password, String email, UserType usertype)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<User> findAllUsers() throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -9,6 +9,7 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
@@ -63,100 +64,50 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Faculty> getFaculty() throws IOException {
-		List<Faculty> facultyList = new ArrayList<Faculty>();
-		ReadCSV readFaculty = new ReadCSV("FacultyUser.CSV");
+	public static List<User> getProjects() throws IOException {
+		List<Project> projectList = new ArrayList<Project>();
+		ReadCSV readUser = new ReadCSV("Projects.CSV");
 		try {
-			Integer userID = 1;
+			Integer projectID = 0;
 			while (true) {
-				List<String> tuple = readFaculty.next();
+				List<String> tuple = readUser.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Faculty faculty = new Faculty();
-				faculty.setUserID(userID++);
-				faculty.setFirstname(i.next());
-				faculty.setLastname(i.next());
-				faculty.setPassword(i.next());
-				String string = i.next();
-				MajorType major = getMajorTypeFromParameter(string);
-				faculty.setMajor(major);
-				faculty.setEmail(i.next());
-				faculty.setUsername(i.next());
-				UserType usertype = getUserTypeFromParameter(i.next());
-				faculty.setUsertype(usertype);
-				facultyList.add(faculty);
-			}
-			return facultyList;
-		} finally {
-			readFaculty.close();
-		}
-		
-	}
-	
-	public static List<Student> getStudents() throws IOException {
-		List<Student> studentList = new ArrayList<Student>();
-		ReadCSV readStudents = new ReadCSV("StudentUsers.CSV");
-		try {
-			Integer userID = 18;
-			while (true) {
-				List<String> tuple = readStudents.next();
-				if (tuple == null){
-					break;
+				Student user = new Student();
+				user.setUserID(userID++);
+				user.setUsername(i.next());
+				user.setPassword(i.next());
+				user.setEmail(i.next());
+				user.setUsertype(getUserTypeFromParameter(i.next()));
+				if (user.getUsertype().equals(UserType.STUDENT)) {
+					user.setFirstname(i.next());
+					user.setLastname(i.next());
+					user.setMajor(getMajorTypeFromParameter(i.next()));
+					user.setClassLevel(getClassTypeFromParameter(i.next()));
+					userList.add(user);
+				} else if (user.getUsertype().equals(UserType.FACULTY)) {
+					user.setFirstname(i.next());
+					user.setLastname(i.next());
+					user.setMajor(getMajorTypeFromParameter(i.next()));
+					userList.add(user);
+				} else if (user.getUsertype().equals(UserType.BUSINESS)) {
+					Business business = new Business();
+					business.setUserID(user.getUserID());
+					business.setUsername(user.getUsername());
+					business.setPassword(user.getPassword());
+					business.setEmail(user.getPassword());
+					business.setUsertype(user.getUsertype());
+					business.setName(i.next());
+					business.setAddress(i.next());
+					business.setNumber(i.next());
+					userList.add(business);
 				}
-				Iterator<String> i = tuple.iterator();
-				Student student = new Student();
-				student.setUserID(userID++);
-				student.setFirstname(i.next());
-				student.setLastname(i.next());
-				student.setPassword(i.next());
-				MajorType major = getMajorTypeFromParameter(i.next());
-				student.setMajor(major);
-				ClassType classtype = getClassTypeFromParameter(i.next());
-				student.setClassLevel(classtype);
-				student.setEmail(i.next());
-				student.setUsername(i.next());
-				UserType usertype = getUserTypeFromParameter(i.next());
-				student.setUsertype(usertype);
-				
-				
-				studentList.add(student);
-			}
-			return studentList;
+			} 
+			return userList;
 		} finally {
-			readStudents.close();
-
-		}
-	}
-	
-	
-	public static List<Business> getBusinesses() throws IOException {
-		List<Business> businessList = new ArrayList<Business>();
-		ReadCSV readBusiness = new ReadCSV("BusinessUsers.CSV");
-		try {
-			int userID = 65;
-			while (true) {
-				List<String> tuple = readBusiness.next();
-				if (tuple == null) {
-					break;
-				}
-				Iterator<String> i = tuple.iterator();
-				Business business = new Business();
-				business.setUserID(userID++);
-				business.setUsername(i.next());
-				business.setUsername(i.next());
-				business.setEmail(i.next());
-				business.setPassword(i.next());
-				business.setAddress(i.next());
-				business.setNumber(i.next());
-				business.setUsertype(getUserTypeFromParameter(i.next()));
-				businessList.add(business);
-			}
-			return businessList;
-		} finally {
-			readBusiness.close();
-
+				readUser.close();
 		}
 	}
 	
