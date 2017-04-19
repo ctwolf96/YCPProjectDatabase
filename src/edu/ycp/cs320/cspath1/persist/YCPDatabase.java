@@ -335,6 +335,10 @@ public class YCPDatabase implements IDatabase {
 			past.setStart(project.getStart());
 			past.setDuration(project.getDuration());
 			past.setProjectType(project.getProjectType());
+			past.setNumStudents(resultSet.getInt(11));
+			past.setCost(resultSet.getInt(12));
+			past.setDeadline(resultSet.getString(14));
+			past.setBudget(resultSet.getInt(15));
 			return past;
 		}
 		return null;
@@ -474,13 +478,15 @@ public class YCPDatabase implements IDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				List<User> userList;
-				
+				List<Project> projectList;
 				try {
 					userList = InitialData.getUsers();
+					projectList = InitialData.getProjects();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				PreparedStatement insertUser = null;
+				PreparedStatement insertProject = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -508,6 +514,14 @@ public class YCPDatabase implements IDatabase {
 						}
 						insertUser.addBatch();
 					}
+					
+					insertProject = conn.prepareStatement(
+							""
+							+ ""
+							+ ""
+							);
+							
+				
 					insertUser.executeBatch();
 					return true;
 				} finally {
