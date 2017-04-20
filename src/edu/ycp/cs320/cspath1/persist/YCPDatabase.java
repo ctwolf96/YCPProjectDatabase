@@ -511,6 +511,8 @@ public class YCPDatabase implements IDatabase {
 						}
 						insertUser.addBatch();
 					}
+					insertUser.executeBatch();
+
 					insertProject = conn.prepareStatement(
 							"insert into projects" +
 							"	(title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
@@ -759,6 +761,27 @@ public class YCPDatabase implements IDatabase {
 					);
 			
 			stmt.setString(1, email);
+			stmt.setInt(2, UserID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+	
+	@Override
+	public void editUsername(int UserID, String username) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update users" +
+					"	set username = ?" +
+					"	where user_id = ?"
+					);
+			
+			stmt.setString(1, username);
 			stmt.setInt(2, UserID);
 			
 			stmt.executeUpdate();
@@ -1050,8 +1073,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where major = ?"
+					"	from users" +
+					"	where major = ?"
 					);
 			stmt.setString(1, major.toString());
 			
@@ -1128,8 +1151,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where name = ?"
+					"	from users" +
+					"	where name = ?"
 					);
 			stmt.setString(1, name);
 			
@@ -1165,8 +1188,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where address = ?"
+					"	from users" +
+					"	where address = ?"
 					);
 			stmt.setString(1, address);
 			
@@ -1202,8 +1225,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where number = ?"
+					"	from users" +
+					"	where contactNum = ?"
 					);
 			stmt.setString(1, number);
 			
@@ -1420,7 +1443,7 @@ public class YCPDatabase implements IDatabase {
 		Connection conn = connect();
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
-		Project project = null;
+		Project project = new Proposal();
 		try {
 			stmt = conn.prepareStatement(
 					"select projects.*" +
@@ -1430,7 +1453,9 @@ public class YCPDatabase implements IDatabase {
 			stmt.setInt(1, ProjectID);
 			
 			resultSet = stmt.executeQuery();
-			loadProject(project, resultSet);
+			if (resultSet.next()) {
+				loadProject(project, resultSet);
+			}
 			return project;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
