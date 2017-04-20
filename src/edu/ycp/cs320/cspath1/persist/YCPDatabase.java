@@ -102,25 +102,73 @@ public class YCPDatabase implements IDatabase {
 		if (s == null || s.equals("")){
 			return null;
 		}
-		else if (s.equals("ME")){
+		else if (s.contains("ME")){
 			majortype = MajorType.ME;
 		}
-		else if (s.equals("CE")){
+		else if (s.contains("CE")){
 			majortype = MajorType.CE;
 		}
-		else if(s.equals("CS")){
+		else if(s.contains("CS")){
 			majortype = MajorType.CS;
 		}
-		else if(s.equals("EE")){
+		else if(s.contains("EE")){
 			majortype = MajorType.EE;
 		}
-		else if (s.equals("UN")) {
+		else if (s.contains("UN")) {
 			majortype = MajorType.UN;
 		}
-		else if (s.equals("CIV")){
+		else if (s.contains("CIV")){
 			majortype = MajorType.CIV;
 		}
 		return majortype;
+	}
+	
+	private static ArrayList<MajorType> getMajorListFromParameters(String s) {
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		if (s == null || s.equals("")){
+			return null;
+		}
+		if(s.contains("CE")){
+			majors.add(MajorType.CE);
+		}
+		if(s.contains("CS")){
+			majors.add(MajorType.CS);
+		}
+		if(s.contains("EE")){
+			majors.add(MajorType.EE);
+			
+		}
+		if(s.contains("ME")) {
+			majors.add(MajorType.ME);
+		}
+		if (s.contains("UN")) {
+			majors.add(MajorType.UN);
+		}
+		if (s.contains("CIV")){
+			majors.add(MajorType.CIV);
+		}
+		return majors;
+	}
+	
+	private static ArrayList<ClassType> getClassListFromParameter(String s){
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		if (s == null || s.equals("")){
+			return null;
+		}
+		if (s.contains("FRESHMAN")){
+			classes.add(ClassType.FRESHMAN);
+		}
+		if (s.contains("SOPHOMORE")){
+			classes.add(ClassType.SOPHOMORE);
+		}
+		if (s.contains("JUNIOR")){
+			classes.add(ClassType.JUNIOR);
+		}
+		if (s.contains("SENIOR")){
+			classes.add(ClassType.SENIOR);
+			
+		}
+		return classes;
 	}
 	
 	private static ClassType getClassTypeFromParameter(String s){
@@ -287,8 +335,8 @@ public class YCPDatabase implements IDatabase {
 			solicitation.setDuration(project.getDuration());
 			solicitation.setProjectType(project.getProjectType());
 			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(7)));
-			solicitation.setMajors(getMajorListFromString(resultSet.getString(8)));
-			solicitation.setClasses(getClassListFromString(resultSet.getString(9)));
+			solicitation.setMajors(getMajorListFromParameters(resultSet.getString(8)));
+			solicitation.setClasses(getClassListFromParameter(resultSet.getString(9)));
 			solicitation.setNumStudents(resultSet.getInt(10));
 			solicitation.setCost(resultSet.getInt(11));
 			return solicitation;
@@ -302,11 +350,11 @@ public class YCPDatabase implements IDatabase {
 			proposal.setStart(project.getStart());
 			proposal.setDuration(project.getDuration());
 			proposal.setProjectType(project.getProjectType());
-			proposal.setMajors(getMajorListFromString(resultSet.getString(8)));
-			proposal.setClasses(getClassListFromString(resultSet.getString(9)));
+			proposal.setMajors(getMajorListFromParameters(resultSet.getString(8)));
+			proposal.setClasses(getClassListFromParameter(resultSet.getString(9)));
 			proposal.setNumStudents(resultSet.getInt(10));
 			proposal.setCost(resultSet.getInt(11));
-			proposal.setIsFunded(getBoolFromString(resultSet.getString(12)));
+			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(12)));
 			proposal.setDeadline(resultSet.getString(13));
 			return proposal;
 		}
@@ -1358,18 +1406,81 @@ public class YCPDatabase implements IDatabase {
 	@Override
 	public void deleteProject(int project_id) throws IOException, SQLException {
 		Connection conn = connect();
-		PreparedStatement  stmt = null;
+		PreparedStatement  stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		
+		
 		try {
-			stmt = conn.prepareStatement(
-					"delete from projects" +
+			stmt1 = conn.prepareStatement(
+					"select users.* " +
+					"	from users, projects, projectUsers " +
+					"	where projects.project_id = projectUsers.project_id " +
+					"		and users.user_id = projectUsers.user_id" +
+					"		and projects.project_id = ?"
+					);
+			stmt1.setInt(1, project_id);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			
+			if (users.size() == 0) {
+				System.out.println("This should not have happened...");
+			}
+			
+			stmt2 = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where projects.project_id = ?"
+					);
+			
+			stmt2.setInt(1, project_id);
+			
+			resultSet2 = stmt2.executeQuery(); 
+			
+			List<Project> projects = new ArrayList<Project>();
+			
+			while(resultSet2.next()) {
+				Project project = new Proposal();
+				loadProject(project, resultSet2);
+				projects.add(project);
+			}
+			
+			stmt3 = conn.prepareStatement(
+					"delete from projectUsers " +
 					"	where project_id = ?"
 					);
 			
-			stmt.setInt(1, project_id);
+			stmt3.setInt(1, projects.get(0).getProjectID());
+			stmt3.executeUpdate();
 			
-			stmt.execute();
+			stmt4 = conn.prepareStatement(
+					"delete from projects" + 
+					"	where project_id = ?"
+					);
+			
+			stmt4.setInt(1, project_id);
+			
+			stmt4.executeUpdate();
+			
 		} finally {
-			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
 			DBUtil.closeQuietly(conn);
 		}
 		
