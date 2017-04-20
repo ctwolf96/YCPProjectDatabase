@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
@@ -25,6 +26,7 @@ public class YCPDatabaseTests {
 	private IDatabase db = null;
 	
 	User user = null;
+	Project project = null;
 	ArrayList<Project> projects = null;
 	List<User> users = null;
 	List<Pair<User, Project>> userProjectList = null;
@@ -296,7 +298,8 @@ public class YCPDatabaseTests {
 	public void testInsertUser() throws IOException, SQLException {
 		System.out.println("\n*** Testing insertUser***");
 		
-		Integer user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
+		Integer user_id = 0;
+		user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
 		
 		System.out.println(user_id);
 		
@@ -310,9 +313,7 @@ public class YCPDatabaseTests {
 			else {
 				System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getPassword());
 				db.deleteUserAndProjects(user.getUserID());
-			}
-			
-				
+			}	
 		}
 		else {
 			System.out.println("Something has gone horribly wrong...");
@@ -322,7 +323,7 @@ public class YCPDatabaseTests {
 	
 	@Test
 	public void testFindAllUsers() throws IOException, SQLException {
-		System.out.println("\n*** Testing findAllUsers");
+		System.out.println("\n*** Testing findAllUsers***");
 		
 		List<User> userList = db.findAllUsers();
 		
@@ -338,8 +339,84 @@ public class YCPDatabaseTests {
 				System.out.println(user.getUsername() + ", " + user.getUserID());
 			}
 		}
+	}	
+	
+	@Test
+	public void testInsertProject() throws IOException, SQLException {
+		System.out.println("\n*** Testing insertProject ***");
+		
+		int project_id = 0;
+		project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.PROPOSAL);
+		
+		System.out.println(project_id);
+		
+		if(project_id > 0) {
+			project = db.findProjectByProjectID(project_id);
+			
+			if(project.getTitle() == null){
+				System.out.println("Project was not inserted correctly");
+				fail("Project does not match specified project");
+			}
+			else {
+				System.out.println(project.getTitle() + ", " + project.getDescription());
+				db.deleteProject(project_id);
+			}	
+		} else {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		}
 	}
 	
 
+	@Test
+	public void testDeleteProject() throws IOException, SQLException {
+		System.out.println("\n*** Testing deleteProject ***");
+		
+		int project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.PROPOSAL);
+		db.deleteProject(project_id);
+		project = db.findProjectByProjectID(project_id);
+		
+		if(project == null) {
+			System.out.println("Project was deleted successfully!");
+		} else {
+			System.out.println("Project was not deleted");
+			fail("DB did not successfully delete the project");
+		}
+	}
+
 	
+	@Test
+	public void testFindAllProjects() throws IOException, SQLException {
+		System.out.println("\n*** Testing findAllProjects ***");
+		
+		List<Project> projectList = db.findAllProjects();
+		
+		if (projectList.isEmpty()) {
+			System.out.println("No projectss found in DB");
+			fail("No projectss returned from DB");
+			
+		}
+		else {
+			for (Project project : projectList){
+				projects.add(project);
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByProjectID() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByProjectID ***");
+		
+		int ProjectID = 1;
+		
+		project = db.findProjectByProjectID(ProjectID);
+		
+		if (project == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		} else {
+			System.out.println(project.getProjectID() + ", " + project.getTitle());
+		}
+	}
 }

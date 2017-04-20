@@ -19,6 +19,7 @@ import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public interface IDatabase {
+	//USERS
 	//tested
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
 	//tested
@@ -53,19 +54,31 @@ public interface IDatabase {
 	public User findUserByName(String name) throws IOException, SQLException;
 	//tested
 	public User findUserByAddress(String address) throws IOException, SQLException;
-	
+	//tested
 	public User findUserByNumber(String number) throws IOException, SQLException;
 	
-	public void insertProject(int UserID, String title, String description, String start, String duration, ProjectType type) throws IOException, SQLException;
-	public void deleteProject(Project project) throws IOException, SQLException;
 	
-	public Solicitation findSolicitationByProjectID(int projectID);
-	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype);
-	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors);
-	public List<Solicitation> findSolicitationsByClassType(ClassType classtype);
-	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes);
-	public List<Solicitation> findSolicitationsByStartTime(String startTime);
-	public List<Solicitation> findSolicitationsByDuration(String duration);
-	public List<Solicitation> findSolicitationsByNumStudents(int numStudents);
-	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType);
+	//PROJECTS
+	
+	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type) throws IOException, SQLException;
+	public void deleteProject(int project_id) throws IOException, SQLException;
+	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
+	public void editDescription(int ProjectID, String description) throws IOException, SQLException;
+	public void editStart(int ProjectID, String start) throws IOException, SQLException;
+	public void editDuration(int ProjectID, String duration) throws IOException, SQLException;
+	public List<Project> findAllProjects() throws IOException, SQLException;
+	public Project findProjectByProjectID(int ProjectID) throws IOException, SQLException;
+	public Project findProjectByTitle(String title) throws IOException, SQLException;
+	public Project findProjectByDescription(String description) throws IOException, SQLException;
+	public List<Project> findProjectByStart(String start) throws IOException, SQLException;
+	public List<Project> findProjectByDuration(int duration) throws IOException, SQLException;
+	public List<Project> findProjectByProjectType(ProjectType type) throws IOException, SQLException;
+	public List<Project> findProjectBySolicitationType(SolicitationType type) throws IOException, SQLException;
+	public List<Project> findProjectByMajorType(MajorType major) throws IOException, SQLException;
+	public List<Project> findProjectByClassType(ClassType classtype) throws IOException, SQLException;
+	public List<Project> findProjectByNumStudents(int numStudents) throws IOException, SQLException;
+	public List<Project> findProjectByCost(double cost) throws IOException, SQLException;
+	public List<Project> findProjectByIsFunded(boolean funded) throws IOException, SQLException;
+	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException;
+	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException;
  }
