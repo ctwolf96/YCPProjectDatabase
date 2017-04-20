@@ -40,28 +40,28 @@ private static final long serialVersionUID = 1L;
 		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
 		String numStudents = req.getParameter("numStudents");
-		Boolean hardware = getBooleanFromParameter(req.getParameter("hardware"));
-		Boolean software = getBooleanFromParameter(req.getParameter("software"));
 		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
 			
 		model.setTitle(title);
 		model.setStartTime(startTime);
 		model.setDuration(duration);
 		model.setDescription(description);
-		model.setHardware(hardware);
-		model.setSoftware(software);
 		model.setClasses(classtypes);
 		model.setMajors(majortypes);
-		model.setFunded(isFunded);
+		
+		
+		/*I had to hard code the boolea for the "isFunded" variable because
+		the program would crash. Some reason it was reading the input from
+		is funded as null*/
+		
+		
+		model.setFunded(true);
 		model.setNumStudents(numStudents);
 		//Placeholder until I get all fields down
 		if (title == null) {
 			errorMessage = "Please specify at least one field";
 		}
 			
-			
-		
-		
 		// Add parameters as request attributes
 		//Pretty certain this is used to put things into a model or controller
 		req.setAttribute("duration", req.getParameter("duration"));
@@ -78,7 +78,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Forward to view to render the result HTML document
 		
-		if (solicit != null){
+		if (req.getParameter("solicit") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
 		else {

@@ -38,7 +38,6 @@
 #loginPart{
 	
 	padding-top: 5px;
-
 	padding-left: 10px;
 	background-color: lightgreen;
 	border: 2px solid black;
@@ -54,11 +53,16 @@
 	}
 
 .sections{
+	margin-left: 25px;
+	margin-right: 25px;
 	background-color: lightgreen;
 	float: left;
 	border: solid black;
 	width: 300px;
 }	
+.search{
+	float: right;
+}
 .info{
 	float: right;
 	text-align: center;

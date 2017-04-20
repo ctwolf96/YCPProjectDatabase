@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import edu.ycp.cs320.cspath1.user.User;
 
 public class ActiveProject extends Project {
-	private ArrayList<User> members;
-	private User mentor;
 	private String deadline;
 	private ArrayList<String> tasks;
 	private double cost;
 	private double budget;
 	private ArrayList<Project> prevVersions;
 	private Project original;
+	private int numStudents;
 	
 	//Constructor
 	public ActiveProject() {
@@ -20,9 +19,6 @@ public class ActiveProject extends Project {
 	}
 	
 	//Setters
-	public void setMentor(User mentor) {
-		this.mentor = mentor;
-	}
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
@@ -32,11 +28,12 @@ public class ActiveProject extends Project {
 	public void setBudget(double budget) {
 		this.budget = budget;
 	}
+	public void setNumStudents(int numStudents) {
+		this.numStudents = numStudents;
+	}
 	
 	//Getters
-	public User getMentor() {
-		return mentor;
-	}
+	
 	public String getDeadline() {
 		return deadline;
 	}
@@ -46,15 +43,32 @@ public class ActiveProject extends Project {
 	public double getBudget() {
 		return budget;
 	}
+	public int getNumStudents() {
+		return numStudents;
+	}
 	
 	//Methods
-	public void addMember(User user) {
-		members.add(user);
-	}
+	
 	public void addTask(String task) {
 		tasks.add(task);
 	}
 	public void markComplete() {
 		//move to past project
+	}
+
+	public ArrayList<Project> getPrevVersions() {
+		return prevVersions;
+	}
+
+	public void setPrevVersions(ArrayList<Project> prevVersions) {
+		this.prevVersions = prevVersions;
+	}
+
+	public Project getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(Project original) {
+		this.original = original;
 	}
 }

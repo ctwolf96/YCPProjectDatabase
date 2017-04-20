@@ -9,27 +9,20 @@ import edu.ycp.cs320.cspath1.enums.SolicitationType;
 public class Solicitation extends Project {
 	private ArrayList<MajorType> majors;
 	private ArrayList<ClassType> classes;
-	private String duration;
-	private String startTime;
 	private int numStudents;
+	private double cost;
 	private SolicitationType solicitationType;
-
-
-	//Constructor
 
 	public Solicitation() {
 		
 	}
 	
 	//Setters
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
 	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
 	}
 	public void setMajors(ArrayList<MajorType> majors) {
 		this.majors = majors;
@@ -37,23 +30,25 @@ public class Solicitation extends Project {
 	public void setClasses(ArrayList<ClassType> classes) {
 		this.classes = classes;
 	}
+	public void setSolicitationType(SolicitationType solicitationType) {
+		this.solicitationType = solicitationType;
+	}
 
 	//Getters
-	public String getDuration() {
-		return duration;
-	}
-	public String getStartTime() {
-		return startTime;
-	}
 	public int getNumStudents() {
 		return numStudents;
 	}
-
+	public double getCost() {
+		return cost;
+	}
 	public ArrayList<MajorType> getMajors() {
 		return majors;
 	}
 	public ArrayList<ClassType> getClasses() {
 		return classes;
+	}
+	public SolicitationType getSolicitationType() {
+		return solicitationType;
 	}
 	
 	//Methods
@@ -70,13 +65,4 @@ public class Solicitation extends Project {
 	public void makeActive() {
 		
 	}
-
-	public SolicitationType getSolicitationType() {
-		return solicitationType;
-	}
-
-	public void setSolicitationType(SolicitationType solicitationType) {
-		this.solicitationType = solicitationType;
-	}
-
 }

@@ -14,9 +14,19 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("In the Index servlet");
+		Object username = req.getSession().getAttribute("username");
+		Object password = req.getSession().getAttribute("password");
 		
-		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		if (username == null || username.equals("") || password == null || password.equals("")){
+			System.out.println("You must login, sir");
+			resp.sendRedirect(req.getContextPath() + "/login");
+		}
+		
+		else {
+			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		}
+		
+		
 	}
 	
 	@Override
@@ -29,7 +39,7 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
 		else if (req.getParameter("guestCreation") != null){
-			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("login") != null){
 			resp.sendRedirect(req.getContextPath() + "/login");

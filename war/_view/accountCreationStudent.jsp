@@ -5,52 +5,60 @@
 <html>
 	<head>
 		<title>Account Creation</title>
-		<link rel="stylesheet" href="TestCSS.css">
+		<link rel="stylesheet" href="newAccountStyle1.css">
+		<meta name = "viewport" content = "width = device-width initial-scale =1">
 	</head>
 	
 	<body>
+		<div id="header">
+			<div id="logo">
+				<img src="Logo.png"/>			
+			</div>
+		</div>
 	<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1 id="webpageTitle">Account Creation (Student)</h1>
 	
-	<div id="loginPart">
-	<h3 id="webpageSubtitle">Please fill out the following information</h3>
+	
+
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
+	<div class=container>
+	<h1 style = "text-align: center">Student Account Creation</h1>
 			<table>
 				<tr>
 					<td class="label">Email:</td>
-					<td><input type="text" name="email" size="12" value="${model.email}" /></td>
+					<td><input type="text" placeholder="Enter Email" name="email" size="12" value="${model.email}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Username:</td>
-					<td><input type="text" name="username" size="12" value="${model.username}" /></td>
+					<td><input type="text" placeholder="Enter Username" name="username" size="12" value="${model.username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="password" name="password" size="12" value="${model.password}" /></td>
+					<td><input type="password" placeholder="Enter Password" name="password" size="12" value="${model.password}" /></td>
 				</tr>
 				
 			</table>
 			<p></p>
-			<p>Major/Discipline: </p>
+			<label><a>Major/Discipline</a></label><br>
 			<input type="radio" name="majortype" value="CE"> Computer Engineering<br>
 			<input type="radio" name="majortype" value="CS"> Computer Science<br>
 			<input type="radio" name="majortype" value="EE"> Electrical Engineering<br>
-			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br>
+			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br><br>
 			
-			<p>Current Year: </p>
+			<label><a>Current Year</a></label><br>
 			<input type="radio" name="classtype" value="FRESHMAN">Freshman<br>
 			<input type="radio" name="classtype" value="SOPHOMORE">Sophomore<br>
 			<input type="radio" name="classtype" value="JUNIOR">Junior<br>
 			<input type="radio" name="classtype" value="SENIOR">Senior<br>
 			
-			<input type="Submit" name="submit" value="Create Account">
-			<p></p>
-			<input type="Submit" name="faculty" value="Faculty Account Link">
-			<input type="Submit" name="guest" value="Guest Account Link">
+			<div id="newLogin">
+			<input type="Submit" name="submit" value="Create Account" class = "button button5">
+			<input type="Submit" name="faculty" value="Faculty Account Link" class = "button button5">
+			<input type="Submit" name="guest" value="Guest Account Link" class = "button button5">
+			</div>
+			</div>
 		</form>
-		</div>
 	</body>
 </html>

@@ -7,34 +7,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 
 
-public class GuestHomeServlet extends HttpServlet {
+
+public class AccountCreationBusinessServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/guestHome.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/accountCreationBusiness.jsp").forward(req, resp);
 	}
 	
-	/*@Override
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		String result = null;
+		AccountCreationModel model = new AccountCreationModel();
 		
 		
 		try {
+			//Required fields for guest account
 			String email = req.getParameter("email");
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
 			
+			model.setEmail(email);
+			model.setPassword(password);
+			model.setUsername(username);
+			model.setUsertype(UserType.BUSINESS);
+			
+			
 			if (username == null || password == null || email == null) {
-				errorMessage = "Please specify username, password, and email";
+				errorMessage = "Please specify required fields";
 			}
 			
-			result = username + password;
+			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
@@ -47,19 +57,20 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		req.setAttribute("model", model);
 		
-		//See if the user clicked either of the other account types, redirect accordingly
-		if (req.getParameter("guest") != null){
-			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+		
+		// Forward to view to render the result HTML document
+		if (req.getParameter("student") != null){
+			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
 		else if (req.getParameter("faculty") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
-		else {
-			req.getRequestDispatcher("/_view/accountCreationStudent.jsp").forward(req, resp);
+		else{
+			resp.sendRedirect(req.getContextPath() + "/guestHome");
 		}
-	}*/
+	}
 	
 	
 

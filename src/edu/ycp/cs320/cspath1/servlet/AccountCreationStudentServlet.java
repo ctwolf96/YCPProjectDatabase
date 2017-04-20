@@ -61,7 +61,7 @@ private static final long serialVersionUID = 1L;
 		
 		//See if the user clicked either of the other account types, redirect accordingly
 		if (req.getParameter("guest") != null){
-			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("faculty") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");

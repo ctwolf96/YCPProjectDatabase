@@ -7,16 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GuestHomeAjaxServlet extends HttpServlet {
+public class AccountCreationBusinessAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//TODO: Add things for the radio parameters
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//doRequest(req, resp);
+		doRequest(req, resp);
 	}
 	
-	/*@Override
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doRequest(req, resp);
@@ -47,5 +47,5 @@ public class GuestHomeAjaxServlet extends HttpServlet {
 		resp.setContentType("text/plain");
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		resp.getWriter().println(message);
-	}*/
+	}
 }

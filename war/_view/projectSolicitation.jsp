@@ -5,56 +5,47 @@
 <html>
 	<head>
 		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="TestCSS.css">
+		<link rel="stylesheet" href="Solicitation.css">
+		<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
 	<body>
+	<div id="header">
+		<div id="logo">
+			<img src="Logo.png">
+		</div>
+	</div>
 	<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1 id="webpageTitle">Project Solicitation</h1>
 	
 	
-	<div id="loginPart">
-	<h3 id="webpageSubtitle">Please fill out the following information</h3>
+	
+	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
-	
-		<p>Hardware?</p>
-		<select name="hardware">
-			<option value="true">Yes</option>
-			<option value="false">No</option>
-		</select>
-		<p>Software?</p>
-		<select name="software">
-			<option value="true">Yes</option>
-			<option value="false">No</option>
-		</select>
+	<h1 style = "text-align: center">Project Solicitation</h1>
+		<label><a>Project Title</a></label><br>
+		<input type="text" name="title"><br>
+		<label><a>Description</a></label>
+		<textarea name="message" class="description" rows="10" cols="30">
+		</textarea><br><br>
+		<label><a>Duration (Semesters)</a></label><br>
+		<select name="duration">
+				<option value="1"selected>1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+		</select><br>
+		<label><a>Start Date (mm/dd/yyyy)</a></label><br>
+		<input type="text" name="startDate"><br><br>
 		
-			<table>
-				<tr>
-					<td class="label">Project Title:</td>
-					<td><input type="text" name="title" size="12" value="${model.title}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Description:</td>
-					<td><input type="text" name="description" value="${model.description}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Duration of Project (# of semesters):</td>
-					<td><input type="text" name="duration" size="12" value="${model.duration}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Start Time:</td>
-					<td><input type="text" name="startTime" size="12" value="${model.startTime}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Number of Students:</td>
-					<td><input type="text" name="numStudents" size="12" value="${model.numStudents}" /></td>
-				</tr>
-			</table>
-			<br>
-			
 			<p>Majors/Disciplines: </p>
 			<input type="checkbox" name="CE" value="CE">Computer Engineering<br>
 			<input type="checkbox" name="CS" value="CS">Computer Science<br>
@@ -68,11 +59,10 @@
 			<input type="checkbox" name="junior" value="JR">Junior<br>
 			<input type="checkbox" name="senior" value="SR">Senior<br>
 			<br>
-			<br>
-			<input type="Submit" name="submit" value="Find Projects">
-			<br>
-			<br>
-			<input type="Submit" name="project" value="Project Creation">
+			
+			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
+			
+			<input type="Submit" name="project" value="Project Creation Link" class = "button button5">
 			
 		</form>
 		</div>

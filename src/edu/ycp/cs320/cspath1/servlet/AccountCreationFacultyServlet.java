@@ -62,7 +62,7 @@ private static final long serialVersionUID = 1L;
 		
 		// Forward to view to render the result HTML document
 		if (req.getParameter("guest") != null){
-			resp.sendRedirect(req.getContextPath() + "/accountCreationGuest");
+			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("student") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");

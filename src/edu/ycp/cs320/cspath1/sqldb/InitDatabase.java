@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.FakeDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 
 
 
@@ -14,7 +15,7 @@ public class InitDatabase {
 		if (which == 0) {
 			DatabaseProvider.setInstance(new FakeDatabase());
 		} else if (which == 1) {
-			//DatabaseProvider.setInstance(new DerbyDatabase());
+			DatabaseProvider.setInstance(new YCPDatabase());
 		} else {
 			throw new IllegalArgumentException("Invalid choice: " + which);
 		}

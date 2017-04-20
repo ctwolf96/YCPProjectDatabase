@@ -14,53 +14,28 @@ public class FacultyTest {
 	public void setUp() {
 		prof = new Faculty();
 	}
-	
 	@Test
-	public void testSetUsername() {
-		prof.setUsername("cspath1");
-		String username1 = prof.getUsername();
-		prof.setUsername("jbady");
-		String username2 = prof.getUsername();
-		prof.setUsername("cwolf11");
-		String username3 = prof.getUsername();
-		prof.setUsername("jhopkins1");
-		String username4 = prof.getUsername();
-		assertEquals(username1, "cspath1");
-		assertEquals(username2, "jbady");
-		assertEquals(username3, "cwolf11");
-		assertEquals(username4, "jhopkins1");
+	public void testSetFirstname() {
+		prof.setFirstname("Corey");
+		assertEquals("Corey", prof.getFirstname());
+		prof.setFirstname("Cody");
+		assertEquals("Cody", prof.getFirstname());
+		prof.setFirstname("Joe");
+		assertEquals("Joe", prof.getFirstname());
+		prof.setFirstname("Jason");
+		assertEquals("Jason", prof.getFirstname());
 	}
 	
 	@Test
-	public void testSetPassword(){
-		prof.setPassword("password1");
-		String password1 = prof.getPassword();
-		prof.setPassword("password2");
-		String password2 = prof.getPassword();
-		prof.setPassword("password3");
-		String password3 = prof.getPassword();
-		prof.setPassword("password4");
-		String password4 = prof.getPassword();
-		assertEquals(password1, "password1");
-		assertEquals(password2, "password2");
-		assertEquals(password3, "password3");
-		assertEquals(password4, "password4");
-	}
-
-	@Test
-	public void testSetEmail(){
-		prof.setEmail("cspath1@ycp.edu");
-		String email1 = prof.getEmail();
-		prof.setEmail("jbady@ycp.edu");
-		String email2 = prof.getEmail();
-		prof.setEmail("cwolf11@ycp.edu");
-		String email3 = prof.getEmail();
-		prof.setEmail("jhopkins1@ycp.edu");
-		String email4 = prof.getEmail();
-		assertEquals(email1, "cspath1@ycp.edu");
-		assertEquals(email2, "jbady@ycp.edu");
-		assertEquals(email3, "cwolf11@ycp.edu");
-		assertEquals(email4, "jhopkins1@ycp.edu");
+	public void testSetLastname() {
+		prof.setLastname("Wolf");
+		assertEquals("Wolf", prof.getLastname());
+		prof.setLastname("Spath");
+		assertEquals("Spath", prof.getLastname());
+		prof.setLastname("Hopkins");
+		assertEquals("Hopkins", prof.getLastname());
+		prof.setLastname("Bady");
+		assertEquals("Bady", prof.getLastname());
 	}
 	
 	@Test 

@@ -19,8 +19,8 @@
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.LoginServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>AccountCreationGuestServlet</servlet-name>
-  	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationGuestServlet</servlet-class>
+  	<servlet-name>AccountCreationBusinessServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationBusinessServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>AccountCreationFacultyServlet</servlet-name>
@@ -31,7 +31,6 @@
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationStudentServlet</servlet-class>
   </servlet>
   <servlet>
-
   	<servlet-name>StudentHomeServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.StudentHomeServlet</servlet-class>
   </servlet>
@@ -40,8 +39,8 @@
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.FacultyHomeServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>GuestHomeServlet</servlet-name>
-  	<servlet-class>edu.ycp.cs320.cspath1.servlet.GuestHomeServlet</servlet-class>
+  	<servlet-name>BusinessHomeServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.BusinessHomeServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>ProjectSolicitationServlet</servlet-name>
@@ -51,19 +50,23 @@
   	<servlet-name>ProjectProposalServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ProjectProposalServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewProjectsServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ViewProjectsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SampleProjectServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.SampleProjectServlet</servlet-class>
+  </servlet>
 
   <!-- AJAX servlets. -->
-  <servlet>
-    <servlet-name>NextGuessAjaxServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.NextGuessAjaxServlet</servlet-class>
-  </servlet>
   <servlet>
   	<servlet-name>AccountCreationFacultyAjaxServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationFacultyAjaxServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>AccountCreationGuestAjaxServlet</servlet-name>
-  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationGuestAjaxServlet</servlet-class>
+  	<servlet-name>AccountCreationBusinessAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.AccountCreationBusinessAjaxServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>AccountCreationStudentAjaxServlet</servlet-name>
@@ -74,16 +77,12 @@
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.LoginAjaxServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>StudentHomeAjaxServlet</servlet-name>
-  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.StudentHomeAjaxServlet</servlet-class>
-  </servlet>
-  <servlet>
   	<servlet-name>FacultyHomeAjaxServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.FacultyHomeAjaxServlet</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>GuestHomeAjaxServlet</servlet-name>
-  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.GuestHomeAjaxServlet</servlet-class>
+  	<servlet-name>BusinessHomeAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.BusinessHomeAjaxServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>ProjectSolicitationAjaxServlet</servlet-name>
@@ -92,6 +91,10 @@
   <servlet>
   	<servlet-name>ProjectProposalAjaxServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.ProjectProposalAjaxServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewProjectsAjaxServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.ViewProjectsAjaxServlet</servlet-class>
   </servlet>
 
   <!-- Servlet mappings -->
@@ -108,8 +111,8 @@
   	<url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>AccountCreationGuestServlet</servlet-name>
-  	<url-pattern>/accountCreationGuest</url-pattern>
+  	<servlet-name>AccountCreationBusinessServlet</servlet-name>
+  	<url-pattern>/accountCreationBusiness</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AccountCreationFacultyServlet</servlet-name>
@@ -128,8 +131,8 @@
   	<url-pattern>/facultyHome</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>GuestHomeServlet</servlet-name>
-  	<url-pattern>/guestHome</url-pattern>
+  	<servlet-name>BusinessHomeServlet</servlet-name>
+  	<url-pattern>/businessHome</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ProjectSolicitationServlet</servlet-name>
@@ -139,12 +142,16 @@
   	<servlet-name>ProjectProposalServlet</servlet-name>
   	<url-pattern>/projectProposal</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewProjectsServlet</servlet-name>
+  	<url-pattern>/viewProjects</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SampleProjectServlet</servlet-name>
+  	<url-pattern>/sampleProject</url-pattern>
+  </servlet-mapping>
 
   <!--  AJAX servlet mappings. -->
-  <servlet-mapping>
-    <servlet-name>NextGuessAjaxServlet</servlet-name>
-    <url-pattern>/ajax/nextGuess</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>LoginAjaxServlet</servlet-name>
   	<url-pattern>/ajax/login</url-pattern>
@@ -158,21 +165,16 @@
   	<url-pattern>/ajax/accountCreationFaculty</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>AccountCreationGuestAjaxServlet</servlet-name>
-  	<url-pattern>/ajax/accountCreationGuest</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>StudentHomeAjaxServlet</servlet-name>
-  	<url-pattern>/ajax/studentHome</url-pattern>
+  	<servlet-name>AccountCreationBusinessAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationBusiness</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>FacultyHomeAjaxServlet</servlet-name>
   	<url-pattern>/ajax/facultyHome</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>GuestHomeAjaxServlet</servlet-name>
-  	<url-pattern>/ajax/guestHome</url-pattern>
->>>>>>> refs/remotes/jbady/master
+  	<servlet-name>BusinessHomeAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/businessHome</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ProjectSolicitationAjaxServlet</servlet-name>
@@ -181,6 +183,10 @@
   <servlet-mapping>
   	<servlet-name>ProjectProposalAjaxServlet</servlet-name>
   	<url-pattern>/ajax/projectProposal</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewProjectsAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/viewProjects</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
