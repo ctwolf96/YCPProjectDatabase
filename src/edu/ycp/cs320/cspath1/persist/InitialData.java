@@ -54,7 +54,7 @@ public class InitialData {
 					business.setUserID(user.getUserID());
 					business.setUsername(user.getUsername());
 					business.setPassword(user.getPassword());
-					business.setEmail(user.getPassword());
+					business.setEmail(user.getEmail());
 					business.setUsertype(user.getUsertype());
 					business.setName(i.next());
 					business.setAddress(i.next());
@@ -131,7 +131,7 @@ public class InitialData {
 					active.setCost((double) Integer.parseInt(i.next()));
 					active.setDeadline(i.next());
 					active.setBudget((double) Integer.parseInt(i.next()));
-					projectList.add(project);
+					projectList.add(active);
 				}
 			} 
 			return projectList;

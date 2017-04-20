@@ -22,6 +22,7 @@ public interface IDatabase {
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException;
 	public void editPassword(int UserID, String password) throws IOException, SQLException;
+	public void editUsername(int UserID, String username) throws IOException, SQLException;
 	public void editEmail(int UserID, String email) throws IOException, SQLException;
 	public List<User> findAllUsers() throws IOException, SQLException;
 	public User findUserByUserID(int UserID) throws IOException, SQLException;

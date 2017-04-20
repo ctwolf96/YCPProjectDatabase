@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Thu Apr 20 10:06:26 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-8baf-7ebc-00000300fda8 
-on database directory C:\Users\radio shack\workspace\project_database.db with class loader sun.misc.Launcher$AppClassLoader@2a84aee7 
-Loaded from file:/C:/Users/radio%20shack/workspace/CS320_Derby/lib/derby.jar
+Thu Apr 20 14:02:08 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-8c87-4a9b-00000677e9f8 
+on database directory C:\Users\spath\workspace\project_database.db with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Loaded from file:/C:/Users/spath/Downloads/CS320_Library_Example_2017/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_51-b16
-user.dir=C:\Users\radio shack\git\YCPProjectDatabase
-os.name=Windows 7
+java.runtime.version=1.8.0_121-b13
+user.dir=C:\Users\spath\git\YCPProjectDatabase
+os.name=Windows 10
 os.arch=amd64
-os.version=6.1
+os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
