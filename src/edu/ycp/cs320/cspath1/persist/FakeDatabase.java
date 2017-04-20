@@ -157,7 +157,7 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void editDuration(int ProjectID, String duration) throws IOException, SQLException {
+	public void editDuration(int ProjectID, int duration) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -250,7 +250,5 @@ public class FakeDatabase implements IDatabase {
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	
+	}	
 }

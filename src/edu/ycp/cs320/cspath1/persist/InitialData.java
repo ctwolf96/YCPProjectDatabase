@@ -11,6 +11,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Proposal;
@@ -131,12 +132,34 @@ public class InitialData {
 					active.setCost((double) Integer.parseInt(i.next()));
 					active.setDeadline(i.next());
 					active.setBudget((double) Integer.parseInt(i.next()));
-					projectList.add(project);
+					projectList.add(active);
 				}
 			} 
 			return projectList;
 		} finally {
 				readProject.close();
+		}
+	}
+	
+	public static List<ProjectUser> getProjectUsers() throws IOException {
+		List<ProjectUser> projectUserList = new ArrayList<ProjectUser>();
+		ReadCSV readProjectUsers = new ReadCSV("projectUsers.CSV");
+		try {
+			while (true) {
+				List<String> tuple = readProjectUsers.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				ProjectUser projectUser = new ProjectUser();
+				projectUser.setUserId(Integer.parseInt(i.next()));				
+				projectUser.setProjectId(Integer.parseInt(i.next()));
+				projectUserList.add(projectUser);
+			}
+			System.out.println("projectUserList loaded from CSV file");			
+			return projectUserList;
+		} finally {
+			readProjectUsers.close();
 		}
 	}
  	

@@ -43,7 +43,7 @@ public interface IDatabase {
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
 	public void editDescription(int ProjectID, String description) throws IOException, SQLException;
 	public void editStart(int ProjectID, String start) throws IOException, SQLException;
-	public void editDuration(int ProjectID, String duration) throws IOException, SQLException;
+	public void editDuration(int ProjectID, int duration) throws IOException, SQLException;
 	public List<Project> findAllProjects() throws IOException, SQLException;
 	public Project findProjectByProjectID(int ProjectID) throws IOException, SQLException;
 	public Project findProjectByTitle(String title) throws IOException, SQLException;

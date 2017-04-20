@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.Pair;
@@ -27,7 +28,7 @@ public class YCPDatabaseTests {
 	
 	User user = null;
 	Project project = null;
-	ArrayList<Project> projects = null;
+	List<Project> projects = null;
 	List<User> users = null;
 	List<Pair<User, Project>> userProjectList = null;
 	List<Pair<User, Project>> projectUserList = null;
@@ -411,9 +412,239 @@ public class YCPDatabaseTests {
 		
 		if (project == null) {
 			System.out.println("Something has gone horribly wrong...");
-			fail("No users returned from DB");
+			fail("No projects returned from DB");
 		} else {
 			System.out.println(project.getProjectID() + ", " + project.getTitle());
+		}
+	}
+	
+	@Test
+	public void testFindProjectByTitle() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByTitle ***");
+		
+		String title = "YCP Project Database";
+		
+		project = db.findProjectByTitle(title);
+		
+		if (project == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			System.out.println(project.getProjectID() + ", " + project.getTitle());
+		}
+	}
+	
+	@Test
+	public void testFindProjectByDescription() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByDescription ***");
+		
+		String description = "Allows for insight on specific classes";
+		
+		project = db.findProjectByDescription(description);
+		
+		if (project == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			System.out.println(project.getProjectID() + ", " + project.getTitle());
+		}
+	}
+	
+	@Test
+	public void testFindProjectByStart() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByStart ***");
+		
+		String start = "1/27/17";
+		
+		projects = db.findProjectByStart(start);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByDuration() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByDuration ***");
+		
+		int duration = 1;
+		
+		projects = db.findProjectByDuration(duration);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByProjectType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByProjectType ***");
+		
+		ProjectType type = ProjectType.PROPOSAL;
+		
+		projects = db.findProjectByProjectType(type);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectBySolicitationType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectBySolicitationType ***");
+		
+		SolicitationType type = SolicitationType.CLASS_PROJECT;
+		
+		projects = db.findProjectBySolicitationType(type);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByMajorType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByMajorType ***");
+		
+		MajorType major = MajorType.CE;
+		
+		projects = db.findProjectByMajorType(major);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByClassType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByClassType ***");
+		
+		ClassType type = ClassType.SOPHOMORE;
+		
+		projects = db.findProjectByClassType(type);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByNumStudents() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByNumStudents ***");
+		
+		int numStudents = 3;
+		
+		projects = db.findProjectByNumStudents(numStudents);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByCost() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByCost ***");
+		
+		double cost = 0;
+		
+		projects = db.findProjectByCost(cost);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByIsFunded() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByIsFunded ***");
+		
+		Boolean isFunded = true;
+		
+		projects = db.findProjectByIsFunded(isFunded);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByDeadline() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByDeadline ***");
+		
+		String deadline = "5/7/17";
+		
+		projects = db.findProjectByStart(deadline);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindProjectByBudget() throws IOException, SQLException {
+		System.out.println("\n*** Testing findProjectByBudget ***");
+		
+		double budget = 10000;
+		
+		projects = db.findProjectByBudget(budget);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from DB");
+		} else {
+			for (Project project: projects) {
+				System.out.println(project.getProjectID() + ", " + project.getTitle());
+			}
 		}
 	}
 }
