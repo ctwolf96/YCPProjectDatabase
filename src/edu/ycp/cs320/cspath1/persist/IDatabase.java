@@ -49,9 +49,9 @@ public interface IDatabase {
 	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException;
 	//tested
 	public List<User> findAllUsers() throws IOException, SQLException;
-	
+	//tested
 	public User findUserByName(String name) throws IOException, SQLException;
-	
+	//tested
 	public User findUserByAddress(String address) throws IOException, SQLException;
 	
 	public User findUserByNumber(String number) throws IOException, SQLException;

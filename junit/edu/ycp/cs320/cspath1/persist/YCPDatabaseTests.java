@@ -191,9 +191,42 @@ public class YCPDatabaseTests {
 	public void testFindUserByName() throws IOException, SQLException {
 		System.out.println("\n*** Testing findUserByName");
 		
-		user = db.findUserByName("Business1");
+		user = db.findUserByName("Business1 Inc.");
 		
 		if(user.getEmail() == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getUsername());
+		}
+	}
+	
+	@Test
+	public void testFindUserByAddress() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByAddress");
+		
+		user = db.findUserByAddress("123 Fake Address Street");
+		
+		if(user.getEmail() == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getUsername());
+		}
+		
+	}
+	
+	@Test
+	public void testFindUserByNumber() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByNumber");
+		
+		user = db.findUserByNumber("717-777-7776");
+		
+		if(user.getPassword() == null) {
 			System.out.println("Something has gone horribly wrong...");
 			fail("No users returned from DB");
 		}

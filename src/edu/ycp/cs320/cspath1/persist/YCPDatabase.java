@@ -335,6 +335,10 @@ public class YCPDatabase implements IDatabase {
 			past.setStart(project.getStart());
 			past.setDuration(project.getDuration());
 			past.setProjectType(project.getProjectType());
+			past.setNumStudents(resultSet.getInt(11));
+			past.setCost(resultSet.getInt(12));
+			past.setDeadline(resultSet.getString(14));
+			past.setBudget(resultSet.getInt(15));
 			return past;
 		}
 		return null;
@@ -443,9 +447,7 @@ public class YCPDatabase implements IDatabase {
 						"	cost integer," +
 						"	isFunded varchar(5)," +
 						"	deadline varchar(20)," +
-						"	budget integer," +
-						"	members varchar(1000)," +
-						"	tasks varchar(1000)" +
+						"	budget integer" +
 						")"
 					);
 					stmt2.executeUpdate();
@@ -474,13 +476,15 @@ public class YCPDatabase implements IDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				List<User> userList;
-				
+				List<Project> projectList;
 				try {
 					userList = InitialData.getUsers();
+					projectList = InitialData.getProjects();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				PreparedStatement insertUser = null;
+				PreparedStatement insertProject = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -507,14 +511,51 @@ public class YCPDatabase implements IDatabase {
 							insertUser.setString(11, ((Business) user).getNumber());
 						}
 						insertUser.addBatch();
-
 					}
 					insertUser.executeBatch();
+
+					
+					insertProject = conn.prepareStatement(
+							"insert into projects" +
+							"	(title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
+							"	cost, isFunded, deadline, budget)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					for (Project project : projectList) {
+						insertProject.setString(1, project.getTitle());
+						insertProject.setString(2, project.getDescription());
+						insertProject.setString(3, project.getStart());
+						insertProject.setInt(4, project.getDuration());
+						insertProject.setString(5, project.getProjectType().toString());
+						if (project.getProjectType().equals(ProjectType.PROPOSAL)) {
+							insertProject.setString(7, ((Proposal) project).getMajors().toString());
+							insertProject.setString(8, ((Proposal) project).getClasses().toString());
+							insertProject.setInt(9, ((Proposal) project).getNumStudents());
+							insertProject.setInt(10, ((int) ((Proposal) project).getCost()));
+							insertProject.setString(11, Boolean.toString(((Proposal) project).getIsFunded()));
+							insertProject.setString(12, ((Proposal) project).getDeadline());
+						} else if (project.getProjectType().equals(ProjectType.SOLICITATION)) {
+							insertProject.setString(6, ((Solicitation) project).getSolicitationType().toString());
+							insertProject.setString(7, ((Solicitation) project).getMajors().toString());
+							insertProject.setString(8, ((Solicitation) project).getClasses().toString());
+							insertProject.setInt(9, ((Solicitation) project).getNumStudents());
+							insertProject.setInt(10, ((int) ((Solicitation) project).getCost()));
+						}/* else if (project.getProjectType().equals(ProjectType.ACTIVE)){
+							insertProject.setInt(9, ((ActiveProject) project).getNumStudents());
+							insertProject.setInt(10, ((int) ((ActiveProject) project).getCost()));
+							insertProject.setString(12, ((ActiveProject) project).getDeadline());
+							insertProject.setInt(13, ((int) ((ActiveProject) project).getBudget()));
+						}*/
+						insertProject.addBatch();
+					}
+					insertUser.executeBatch();
+					insertProject.executeBatch();
+
 					return true;
 				} finally {
 
 					DBUtil.closeQuietly(insertUser);
-
+					DBUtil.closeQuietly(insertProject);
 				}
 			}
 		});
@@ -1151,8 +1192,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where address = ?"
+					"	from users" +
+					"	where address = ?"
 					);
 			stmt.setString(1, address);
 			
@@ -1188,8 +1229,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where number = ?"
+					"	from users" +
+					"	where contactNum = ?"
 					);
 			stmt.setString(1, number);
 			

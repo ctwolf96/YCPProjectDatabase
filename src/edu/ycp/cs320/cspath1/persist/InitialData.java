@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.project.ActiveProject;
+import edu.ycp.cs320.cspath1.project.Project;
+import edu.ycp.cs320.cspath1.project.Proposal;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
 import edu.ycp.cs320.cspath1.user.Faculty;
@@ -63,169 +68,75 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Faculty> getFaculty() throws IOException {
-		List<Faculty> facultyList = new ArrayList<Faculty>();
-		ReadCSV readFaculty = new ReadCSV("FacultyUser.CSV");
+	public static List<Project> getProjects() throws IOException {
+		List<Project> projectList = new ArrayList<Project>();
+		ReadCSV readProject = new ReadCSV("Projects.CSV");
 		try {
-			Integer userID = 1;
+			Integer projectID = 0;
 			while (true) {
-				List<String> tuple = readFaculty.next();
+				List<String> tuple = readProject.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Faculty faculty = new Faculty();
-				faculty.setUserID(userID++);
-				faculty.setFirstname(i.next());
-				faculty.setLastname(i.next());
-				faculty.setPassword(i.next());
-				String string = i.next();
-				MajorType major = getMajorTypeFromParameter(string);
-				faculty.setMajor(major);
-				faculty.setEmail(i.next());
-				faculty.setUsername(i.next());
-				UserType usertype = getUserTypeFromParameter(i.next());
-				faculty.setUsertype(usertype);
-				facultyList.add(faculty);
-			}
-			return facultyList;
-		} finally {
-			readFaculty.close();
-		}
-		
-	}
-	
-	public static List<Student> getStudents() throws IOException {
-		List<Student> studentList = new ArrayList<Student>();
-		ReadCSV readStudents = new ReadCSV("StudentUsers.CSV");
-		try {
-			Integer userID = 18;
-			while (true) {
-				List<String> tuple = readStudents.next();
-				if (tuple == null){
-					break;
+				Proposal project = new Proposal();
+				project.setProjectID(projectID++);
+				project.setUserID(Integer.parseInt(i.next()));
+				project.setTitle(i.next());
+				project.setDescription(i.next());
+				project.setStart(i.next());
+				project.setDuration(Integer.parseInt(i.next()));
+				project.setProjectType(getProjectTypeFromParameter(i.next()));
+				if (project.getProjectType().equals(ProjectType.PROPOSAL)) {
+					Proposal proposal = new Proposal();
+					proposal.setProjectID(project.getProjectID());
+					proposal.setUserID(project.getUserID());
+					proposal.setTitle(project.getTitle());
+					proposal.setDescription(project.getDescription());
+					proposal.setStart(project.getStart());
+					proposal.setDuration(project.getDuration());
+					proposal.setProjectType(project.getProjectType());
+					proposal.setMajors(getMajorListFromString(i.next()));
+					proposal.setClasses(getClassListFromString(i.next()));
+					proposal.setNumStudents(Integer.parseInt(i.next()));
+					proposal.setCost((double) Integer.parseInt(i.next()));
+					proposal.setIsFunded(getBoolFromString(i.next()));
+					proposal.setDeadline(i.next());
+					projectList.add(proposal);
+				} else if (project.getProjectType().equals(ProjectType.SOLICITATION)) {
+					Solicitation solicitation = new Solicitation();
+					solicitation.setProjectID(project.getProjectID());
+					solicitation.setUserID(project.getUserID());
+					solicitation.setTitle(project.getTitle());
+					solicitation.setDescription(project.getDescription());
+					solicitation.setStart(project.getStart());
+					solicitation.setDuration(project.getDuration());
+					solicitation.setProjectType(project.getProjectType());
+					solicitation.setSolicitationType(getSolicitationTypeFromParameter(i.next()));
+					solicitation.setMajors(getMajorListFromString(i.next()));
+					solicitation.setClasses(getClassListFromString(i.next()));
+					solicitation.setNumStudents(Integer.parseInt(i.next()));
+					solicitation.setCost((double) Integer.parseInt(i.next()));
+					projectList.add(solicitation);
+				} else {
+					ActiveProject active = new ActiveProject();
+					active.setProjectID(project.getProjectID());
+					active.setUserID(project.getUserID());
+					active.setTitle(project.getTitle());
+					active.setDescription(project.getDescription());
+					active.setStart(project.getStart());
+					active.setDuration(project.getDuration());
+					active.setProjectType(project.getProjectType());
+					active.setNumStudents(Integer.parseInt(i.next()));
+					active.setCost((double) Integer.parseInt(i.next()));
+					active.setDeadline(i.next());
+					active.setBudget((double) Integer.parseInt(i.next()));
+					projectList.add(project);
 				}
-				Iterator<String> i = tuple.iterator();
-				Student student = new Student();
-				student.setUserID(userID++);
-				student.setFirstname(i.next());
-				student.setLastname(i.next());
-				student.setPassword(i.next());
-				MajorType major = getMajorTypeFromParameter(i.next());
-				student.setMajor(major);
-				ClassType classtype = getClassTypeFromParameter(i.next());
-				student.setClassLevel(classtype);
-				student.setEmail(i.next());
-				student.setUsername(i.next());
-				UserType usertype = getUserTypeFromParameter(i.next());
-				student.setUsertype(usertype);
-				
-				
-				studentList.add(student);
-			}
-			return studentList;
-		} finally {
-			readStudents.close();
-
-		}
-	}
-	
-	
-	public static List<Business> getBusinesses() throws IOException {
-		List<Business> businessList = new ArrayList<Business>();
-		ReadCSV readBusiness = new ReadCSV("BusinessUsers.CSV");
-		try {
-			int userID = 65;
-			while (true) {
-				List<String> tuple = readBusiness.next();
-				if (tuple == null) {
-					break;
-				}
-				Iterator<String> i = tuple.iterator();
-				Business business = new Business();
-				business.setUserID(userID++);
-				business.setUsername(i.next());
-				business.setUsername(i.next());
-				business.setEmail(i.next());
-				business.setPassword(i.next());
-				business.setAddress(i.next());
-				business.setNumber(i.next());
-				business.setUsertype(getUserTypeFromParameter(i.next()));
-				businessList.add(business);
-			}
-			return businessList;
-		} finally {
-			readBusiness.close();
-
-		}
-	}
-	
-	public static List<Solicitation> getSolicitations() throws IOException {
-		List<Solicitation> solicitationList = new ArrayList<Solicitation>();
-		ReadCSV readSolicitations = new ReadCSV("Solicitations.CSV");
-		try {
-			Integer projectID = 1;
-			while (true) {
-				List<String> tuple = readSolicitations.next();
-				ArrayList<MajorType> majors = new ArrayList<MajorType>();
-				ArrayList<ClassType> classes = new ArrayList<ClassType>();
-				if (tuple == null){
-					break;
-				}
-				
-				Iterator<String> i = tuple.iterator();
-				Solicitation solicitation = new Solicitation();
-				solicitation.setProjectID(projectID++);
-				Integer userID = Integer.parseInt(i.next());
-//				solicitation.setUserID(userID);
-				MajorType CS = getMajorTypeFromParameter(i.next());
-				if (CS != null) {
-					majors.add(CS);
-				}
-				MajorType CE = getMajorTypeFromParameter(i.next());
-				if (CE != null) {
-					majors.add(CE);
-				}
-				MajorType EE = getMajorTypeFromParameter(i.next());
-				if (EE != null){
-					majors.add(EE);
-				}
-				MajorType ME = getMajorTypeFromParameter(i.next());
-				if (ME != null){
-					majors.add(ME);
-				}
-				MajorType CIV = getMajorTypeFromParameter(i.next());
-				if (CIV != null){
-					majors.add(CIV);
-				}
-				solicitation.setMajors(majors);
-				ClassType FR = getClassTypeFromParameter(i.next());
-				if (FR != null){
-					classes.add(FR);
-				}
-				ClassType SO = getClassTypeFromParameter(i.next());
-				if (SO != null) {
-					classes.add(SO);
-				}
-				ClassType JR = getClassTypeFromParameter(i.next());
-				if (JR != null){
-					classes.add(JR);
-				}
-				ClassType SR = getClassTypeFromParameter(i.next());
-				if (SR != null){
-					classes.add(SR);
-				}
-				solicitation.setClasses(classes);
-				solicitation.setDuration(i.next());
-				solicitation.setNumStudents(Integer.parseInt(i.next()));
-				SolicitationType solicitationType = getSolicitationTypeFromParameter(i.next());
-				solicitation.setSolicitationType(solicitationType);
-				solicitationList.add(solicitation);
 			} 
-			return solicitationList;
-		}
-		finally {
-			readSolicitations.close();
+			return projectList;
+		} finally {
+				readProject.close();
 		}
 	}
  	
@@ -294,6 +205,7 @@ public class InitialData {
 		}
 		return null;
 	}
+	
 	private static SolicitationType getSolicitationTypeFromParameter(String s){
 		if (s == null || s.equals("")){
 			return null;
@@ -334,4 +246,48 @@ public class InitialData {
 		return null;
 	}
 	
+	private static ProjectType getProjectTypeFromParameter(String s){
+		if (s == null || s.equals("")){
+			return null;
+		}
+		else if (s.equals("PROPOSAL")) {
+			return ProjectType.PROPOSAL;
+		}
+		else if (s.equals("SOLICITATION")) {
+			return ProjectType.SOLICITATION;
+		}
+		else if (s.equals("ACTIVE")) {
+			return ProjectType.ACTIVE;
+		}
+		else if (s.equals("PAST")) {
+			return ProjectType.PAST;
+		}
+		return null;
+	}
+	
+	private static ArrayList<MajorType> getMajorListFromString(String s) {
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		StringTokenizer st = new StringTokenizer(s);
+	     while (st.hasMoreTokens()) {
+	         majors.add(getMajorTypeFromParameter(st.nextToken()));
+	     }
+	     return majors;
+	}
+	
+	private static ArrayList<ClassType> getClassListFromString(String s) {
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		StringTokenizer st = new StringTokenizer(s);
+	     while (st.hasMoreTokens()) {
+	         classes.add(getClassTypeFromParameter(st.nextToken()));
+	     }
+	     return classes;
+	}
+	
+	private static Boolean getBoolFromString(String s) {
+		if (s.equals("true")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
