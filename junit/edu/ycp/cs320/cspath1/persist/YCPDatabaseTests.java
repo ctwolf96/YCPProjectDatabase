@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
+import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
@@ -73,23 +74,43 @@ public class YCPDatabaseTests {
 	public void testFindUserByClassType() throws IOException, SQLException {
 		System.out.println("\n*** Testing findUserByClassType ***");
 		
-		ClassType classtype = ClassType.SOPHOMORE;
-		
-		users = db.findUserByClassType(classtype);
+		List<User> userList = db.findUserByClassType(ClassType.SOPHOMORE);
 		
 		
-		if (users.isEmpty()) {
+		if (userList.isEmpty()) {
 			System.out.println("Something has gone horribly wrong...");
 			fail("No users returned from DB");
 				
 		}
 		
 		else {
-			for (User user : users){
+			users = new ArrayList<User>();
+			for (User user : userList){
+				users.add(user);
 				System.out.println(user.getUsername() + ", " + user.getEmail() + ", " + user.getPassword() + ", " + user.getUsertype());;
 			}
 		}
 		
+	}
+	
+	@Test
+	public void testFindUsersByMajorType() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUsersByMajorType ***");
+		
+		List<User> userList = db.findUserByMajorType(MajorType.CS);
+		
+		if(userList.isEmpty()) {
+			System.out.println("No users found in DB");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			users = new ArrayList<User>();
+			for (User user : userList) {
+				users.add(user);
+				System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getUserID());
+			}
+		}
 	}
 	
 	@Test
@@ -166,7 +187,23 @@ public class YCPDatabaseTests {
 		}
 	}
 	
-	/*@Test
+	@Test
+	public void testFindUserByName() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByName");
+		
+		user = db.findUserByName("Business1");
+		
+		if(user.getEmail() == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getUsername());
+		}
+	}
+	
+	@Test
 	public void testEditEmail() throws IOException, SQLException { 
 		System.out.println("\n*** Testing editEmail***");
 		
@@ -183,7 +220,44 @@ public class YCPDatabaseTests {
 			System.out.println(user.getEmail() + ", " + user.getPassword() + ", " + user.getUsername());
 		}
 		
-	}*/
+	}
+	
+	@Test
+	public void testEditUsername() throws IOException, SQLException {
+		System.out.println("\n*** Testing editUsername");
+		
+		db.editUsername(17, "spathcody");
+		
+		user = db.findUserByUserID(17);
+		
+		if(user.getEmail() == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getUsername() + ", " + user.getUserID());
+		}
+	}
+	
+	@Test
+	public void testEditPassword() throws IOException, SQLException {
+		System.out.println("\n*** Testing editPassword***");
+		
+		db.editPassword(17, "password1");
+		
+		user = db.findUserByUserID(17);
+		
+		if (user.getEmail() == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from db");
+			
+		}
+		
+		else {
+			System.out.println(user.getEmail() + ", " + user.getPassword());
+		}
+	}
 	
 	@Test
 	public void testInsertUser() throws IOException, SQLException {
@@ -233,5 +307,6 @@ public class YCPDatabaseTests {
 		}
 	}
 	
+
 	
 }

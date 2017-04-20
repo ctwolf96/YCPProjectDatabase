@@ -19,14 +19,16 @@ import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public interface IDatabase {
-	//IN PROGRESS
+	//tested
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
-	//IN PROGRESS
+	//tested
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException;
-	
+	//tested
 	public void editPassword(int UserID, String password) throws IOException, SQLException;
-	//IN PROGRESS
+	//tested
 	public void editEmail(int UserID, String email) throws IOException, SQLException;
+	//tested
+	public void editUsername(int UserID, String email) throws IOException, SQLException;
 	//tested
 	public User findUserByUserID(int UserID) throws IOException, SQLException;
 	//tested
@@ -41,15 +43,17 @@ public interface IDatabase {
 	public List<User> findUserByFirstname(String firstname) throws IOException, SQLException;
 	//tested
 	public List<User> findUserByLastname(String lastname) throws IOException, SQLException; 
-	
+	//tested
 	public List<User> findUserByMajorType(MajorType major) throws IOException, SQLException; 
 	//tested
 	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException;
-	
+	//tested
 	public List<User> findAllUsers() throws IOException, SQLException;
 	
 	public User findUserByName(String name) throws IOException, SQLException;
+	
 	public User findUserByAddress(String address) throws IOException, SQLException;
+	
 	public User findUserByNumber(String number) throws IOException, SQLException;
 	
 	public void insertProject(int UserID, String title, String description, String start, String duration, ProjectType type) throws IOException, SQLException;

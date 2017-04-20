@@ -733,6 +733,27 @@ public class YCPDatabase implements IDatabase {
 		}
 	}
 	
+	@Override
+	public void editUsername(int UserID, String username) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update users" +
+					"	set username = ?" +
+					"	where user_id = ?"
+					);
+			
+			stmt.setString(1, username);
+			stmt.setInt(2, UserID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+	
 	//TESTED
 	@Override
 	public User findUserByUserID(int UserID) throws IOException, SQLException{
@@ -1015,8 +1036,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where major = ?"
+					"	from users" +
+					"	where major = ?"
 					);
 			stmt.setString(1, major.toString());
 			
@@ -1093,8 +1114,8 @@ public class YCPDatabase implements IDatabase {
 		try {
 			stmt = conn.prepareStatement(
 					"select users.*" +
-					"from users" +
-					"where name = ?"
+					"	from users" +
+					"	where name = ?"
 					);
 			stmt.setString(1, name);
 			
