@@ -646,4 +646,44 @@ public class YCPDatabaseTests {
 			}
 		}
 	}
+	
+	@Test
+	public void testFindAllUsersByProject() throws IOException, SQLException {
+		System.out.println("\n*** Testing findAllUsersByProject ***");
+		
+		int project_id = 1;
+		
+		projectUserList = db.findAllUsersByProject(1);
+		
+		if(projectUserList.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No project with such project id was found in the DB");
+		} else {
+			for (Pair<User, Project> projectUser : projectUserList) {
+				User user = projectUser.getLeft();
+				Project project = projectUser.getRight();
+				System.out.println(user.getUserID() + ", " + user.getUsername() + ", " + project.getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindAllProjectsByUser() throws IOException, SQLException {
+		System.out.println("\n*** Testing findAllProjectsByUser ***");
+		
+		int user_id = 1;
+		
+		userProjectList = db.findAllProjectsByUser(user_id);
+		
+		if(userProjectList.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No user with such user id was found in the DB");
+		} else {
+			for (Pair<User, Project> projectUser : userProjectList) {
+				User user = projectUser.getLeft();
+				Project project = projectUser.getRight();
+				System.out.println(project.getProjectID() + ", " + project.getTitle() + ", " + user.getUsername());
+			}
+		}
+	}
 }

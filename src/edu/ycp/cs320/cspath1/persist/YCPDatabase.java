@@ -15,6 +15,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.PastProject;
@@ -1926,6 +1927,127 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 			DBUtil.closeQuietly(resultSet);
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	
+	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
+		User user = new Student();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where project_id = ?"
+					);
+			stmt.setInt(1, ProjectID);
+			
+			resultSet = stmt.executeQuery();
+			
+			stmt2 = conn.prepareStatement(
+					"select users.*" +
+					"	from projects, users, projectUsers" +
+					"	where projects.project_id = projectUsers.project_id and" +
+					"	users.user_id = projectUsers.user_id and" +
+					"	projects.project_id = ?" +
+					"	order by users.user_id"
+					);
+			stmt2.setInt(1, ProjectID);
+			
+			resultSet2 = stmt2.executeQuery();
+			
+			Boolean found = false;
+			
+			if (resultSet.next()) {
+				found = true;
+				
+				project = loadProject(project, resultSet);
+			}
+			while (resultSet2.next()) {
+				found = true;
+				
+				user = loadUser(user, resultSet2);
+		
+				list.add(new Pair<User, Project>(user, project));
+			}
+			
+			if (!found) {
+				System.out.println("No project with project id <" + ProjectID + "> was found in the database");
+			}
+			
+			return list;
+		} finally { 
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
+		User user = new Student();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select users.*" +
+					"	from users" +
+					"	where user_id = ?"
+					);
+			stmt.setInt(1, UserID);
+			
+			resultSet = stmt.executeQuery();
+			
+			stmt2 = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects, users, projectUsers" +
+					"	where projects.project_id = projectUsers.project_id and" +
+					"	users.user_id = projectUsers.user_id and" +
+					"	users.user_id = ?" +
+					"	order by projects.project_id"
+					);
+			stmt2.setInt(1, UserID);
+			
+			resultSet2 = stmt2.executeQuery();
+			
+			Boolean found = false;
+			
+			if (resultSet.next()) {
+				found = true;
+				
+				user = loadUser(user, resultSet);
+			}
+			while (resultSet2.next()) {
+				found = true;
+				
+				project = loadProject(project, resultSet2);
+		
+				list.add(new Pair<User, Project>(user, project));
+			}
+			
+			if (!found) {
+				System.out.println("No user with user id <" + UserID + "> was found in the database");
+			}
+			
+			return list;
+		} finally { 
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(conn);
 		}
 	}
