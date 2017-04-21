@@ -32,6 +32,9 @@ private static final long serialVersionUID = 1L;
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 			
+		req.getSession().setAttribute("username", username);
+		req.getSession().setAttribute("password", password);
+		
 		model.setUsername(username);
 		model.setPassword(password);
 			
@@ -53,7 +56,7 @@ private static final long serialVersionUID = 1L;
 
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
 	}
 	
 	

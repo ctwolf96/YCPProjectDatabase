@@ -10,7 +10,7 @@ public class Project {
 	private String title;
 	private String description;
 	private String start;
-	private String duration;
+	private int duration; //units have yet to be determined (semesters, months, days)
 	private int userID; //Creator as well as mentor
 	private int projectID;
 	private ProjectType projectType;
@@ -25,7 +25,7 @@ public class Project {
 	public void setStart(String start) {
 		this.start = start;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 	public void setUserID(int userID) {
@@ -48,7 +48,7 @@ public class Project {
 	public String getStart() {
 		return start;
 	}
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 	public int getUserID() {
