@@ -261,7 +261,7 @@ public class YCPDatabase implements IDatabase {
 			business.setUserID(user.getUserID());
 			business.setUsername(user.getUsername());
 			business.setPassword(user.getPassword());
-			business.setEmail(user.getPassword());
+			business.setEmail(user.getEmail());
 			business.setUsertype(user.getUsertype());
 			business.setName(resultSet.getString(10));
 			business.setAddress(resultSet.getString(11));
@@ -507,9 +507,9 @@ public class YCPDatabase implements IDatabase {
 							insertUser.setString(7, ((Student) user).getMajor().toString());
 							insertUser.setString(8, ((Student) user).getClassLevel().toString());
 						} else if (user.getUsertype().equals(UserType.FACULTY)) {
-							insertUser.setString(5, ((Student) user).getFirstname());
-							insertUser.setString(6, ((Student) user).getLastname());
-							insertUser.setString(7, ((Student) user).getMajor().toString());
+							insertUser.setString(5, ((Faculty) user).getFirstname());
+							insertUser.setString(6, ((Faculty) user).getLastname());
+							insertUser.setString(7, ((Faculty) user).getMajor().toString());
 						} else if (user.getUsertype().equals(UserType.BUSINESS)) {
 							insertUser.setString(9, ((Business) user).getName());
 							insertUser.setString(10, ((Business) user).getAddress());
@@ -520,6 +520,7 @@ public class YCPDatabase implements IDatabase {
 					insertUser.executeBatch();
 					
 					System.out.println("Users table populated");
+
 
 					insertProject = conn.prepareStatement(
 							"insert into projects" +
@@ -555,6 +556,7 @@ public class YCPDatabase implements IDatabase {
 						insertProject.addBatch();
 					}
 					insertProject.executeBatch();
+
 					
 					System.out.println("Projects table populated");
 					
@@ -572,6 +574,7 @@ public class YCPDatabase implements IDatabase {
 					
 					System.out.println("ProjectUsers table populated");
 					
+
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);
@@ -1398,27 +1401,88 @@ public class YCPDatabase implements IDatabase {
 	@Override
 	public void deleteProject(int project_id) throws IOException, SQLException {
 		Connection conn = connect();
-		PreparedStatement  stmt = null;
+
+		PreparedStatement  stmt1 = null;
 		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		
+		
+
 		try {
-			stmt = conn.prepareStatement(
-					"delete from projectUsers" +
-					"	where project_id = ?"
+
+			stmt1 = conn.prepareStatement(
+					"select users.* " +
+					"	from users, projects, projectUsers " +
+					"	where projects.project_id = projectUsers.project_id " +
+					"		and users.user_id = projectUsers.user_id" +
+					"		and projects.project_id = ?"
 					);
-			stmt.setInt(1, project_id);
+			stmt1.setInt(1, project_id);
 			
-			stmt.execute();
+			resultSet1 = stmt1.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			
+			if (users.size() == 0) {
+				System.out.println("This should not have happened...");
+			}
 			
 			stmt2 = conn.prepareStatement(
-					"delete from projects" +
-					"	where project_id = ?"
+					"select projects.*" +
+					"	from projects" +
+					"	where projects.project_id = ?"
 					);
+			
 			stmt2.setInt(1, project_id);
 			
-			stmt2.execute();
+			resultSet2 = stmt2.executeQuery(); 
+			
+			List<Project> projects = new ArrayList<Project>();
+			
+			while(resultSet2.next()) {
+				Project project = new Proposal();
+				loadProject(project, resultSet2);
+				projects.add(project);
+			}
+			
+			stmt3 = conn.prepareStatement(
+					"delete from projectUsers " +
+					"	where project_id = ?"
+					);
+
+			
+			stmt3.setInt(1, projects.get(0).getProjectID());
+			stmt3.executeUpdate();
+
+			stmt4 = conn.prepareStatement(
+					"delete from projects" + 
+					"	where project_id = ?"
+					);
+			
+			stmt4.setInt(1, project_id);
+			
+			stmt4.executeUpdate();
+			
+
 		} finally {
-			DBUtil.closeQuietly(stmt);
+
+			DBUtil.closeQuietly(stmt1);
 			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
+
 			DBUtil.closeQuietly(conn);
 		}
 		

@@ -1,19 +1,27 @@
 package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+import edu.ycp.cs320.cspath1.persist.IDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.user.Student;
+import edu.ycp.cs320.cspath1.user.User;
 
 
 
 public class LoginServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
-	
+private IDatabase db;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -23,25 +31,45 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		DatabaseProvider.setInstance(new YCPDatabase());
+		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
-		AccountCreationModel model = new AccountCreationModel();
+		String username;
+		String password;
+		boolean validLogin = false;
+		User user = null;
 
-		
-		
-
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		username = req.getParameter("username");
+		password = req.getParameter("password");
 			
-		req.getSession().setAttribute("username", username);
-		req.getSession().setAttribute("password", password);
 		
-		model.setUsername(username);
-		model.setPassword(password);
+		
+		
 			
-		if (username == null || password == null) {
+		if (username == null || password == null || username.equals("")||password.equals("")) {
 			errorMessage = "Please specify username and password";
 		}
+		else{
 			
+			
+			
+			try {
+				user = db.findUserByUsernameAndPassword(username, password);
+				
+				if(user.getEmail() != null && user.getPassword() != null){
+					validLogin = true;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+		
+			
+		}
+		
+		
 		
 		
 		// Add parameters as request attributes
@@ -51,12 +79,22 @@ private static final long serialVersionUID = 1L;
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("model", model);
+		System.out.println(validLogin);
 		
+		if(validLogin){
+			req.getSession().setAttribute("username", username);
+			req.getSession().setAttribute("password", password);
+			
+			resp.sendRedirect(req.getContextPath() + "/index");
+			
+			return;
+		}
 
+		else {
+			// Forward to view to render the result HTML document
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		}
 		
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
 	}
 	
 	

@@ -46,16 +46,22 @@ public class InitialData {
 					user.setClassLevel(getClassTypeFromParameter(i.next()));
 					userList.add(user);
 				} else if (user.getUsertype().equals(UserType.FACULTY)) {
-					user.setFirstname(i.next());
-					user.setLastname(i.next());
-					user.setMajor(getMajorTypeFromParameter(i.next()));
-					userList.add(user);
+					Faculty faculty = new Faculty();
+					faculty.setUserID(user.getUserID());
+					faculty.setUsername(user.getUsername());
+					faculty.setPassword(user.getPassword());
+					faculty.setEmail(user.getEmail());
+					faculty.setUsertype(user.getUsertype());
+					faculty.setFirstname(i.next());
+					faculty.setLastname(i.next());
+					faculty.setMajor(getMajorTypeFromParameter(i.next()));
+					userList.add(faculty);
 				} else if (user.getUsertype().equals(UserType.BUSINESS)) {
 					Business business = new Business();
 					business.setUserID(user.getUserID());
 					business.setUsername(user.getUsername());
 					business.setPassword(user.getPassword());
-					business.setEmail(user.getPassword());
+					business.setEmail(user.getEmail());
 					business.setUsertype(user.getUsertype());
 					business.setName(i.next());
 					business.setAddress(i.next());

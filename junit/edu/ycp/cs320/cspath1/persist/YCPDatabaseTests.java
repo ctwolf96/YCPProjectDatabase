@@ -17,6 +17,7 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
@@ -52,6 +53,45 @@ public class YCPDatabaseTests {
 	@After
 	public void tearDown() throws Exception {
 		
+	}
+	
+	@Test
+	public void testFindUserByFirstname() throws IOException, SQLException {
+		System.out.println("\n*** Testing findUserByFirstname");
+		
+		String firstname = "Jason";
+		
+		users = db.findUserByFirstname(firstname);
+		
+		if(users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			for (User user : users){
+				System.out.println(user.getUsername() + ", " + user.getEmail());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindUserByLastname() throws IOException, SQLException{
+		System.out.println("\n*** Testing findUserByLastname");
+		
+		String lastname = "Spath";
+		
+		users = db.findUserByLastname(lastname);
+		
+		if(users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getUsername());
+			}
+		}
 	}
 	
 	@Test
@@ -376,17 +416,25 @@ public class YCPDatabaseTests {
 		db.deleteProject(project_id);
 		project = db.findProjectByProjectID(project_id);
 		
-		if(project == null) {
+		if(project.getDescription() == null) {
 			System.out.println("Project was deleted successfully!");
 		} else {
+			System.out.println(project.getTitle());
 			System.out.println("Project was not deleted");
 			fail("DB did not successfully delete the project");
 		}
 	}
+
 	@Test
 	public void testFindAllProjects() throws IOException, SQLException {
 		System.out.println("\n*** Testing findAllProjects ***");
 		
+
+		List<Project> projectList = db.findAllProjects();
+		projects = new ArrayList<Project>();
+		if (projectList.isEmpty()) {
+			System.out.println("No projectss found in DB");
+
 		projects = new ArrayList<Project>();
 		projects = db.findAllProjects();
 		
@@ -394,8 +442,12 @@ public class YCPDatabaseTests {
 			System.out.println("No projects found in DB");
 			fail("No projectss returned from DB");
 			
+		}
+		
+		
 		} else {
 			for (Project project : projects){
+
 				System.out.println(project.getProjectID() + ", " + project.getTitle());
 			}
 		}
@@ -684,6 +736,87 @@ public class YCPDatabaseTests {
 				Project project = projectUser.getRight();
 				System.out.println(project.getProjectID() + ", " + project.getTitle() + ", " + user.getUsername());
 			}
+		}
+	}
+		
+	public void testEditDescription() throws IOException, SQLException {
+		System.out.println("\n*** Testing editDescription");
+		
+		Integer project_id = 3;
+		String description = "I would like to change the description to this project...";
+		
+		db.editDescription(project_id, description);
+		
+		project = db.findProjectByDescription(description);
+		
+		if(project == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(project.getTitle() + ", " + project.getProjectID());
+		}
+	}
+	
+	@Test
+	public void testEditTitle() throws IOException, SQLException {
+		System.out.println("\n*** Testing editTitle");
+		
+		Integer project_id = 2;
+		String title = "NEW PROJECT TITLE";
+		
+		db.editTitle(project_id, title);
+		
+		project = db.findProjectByTitle(title);
+		
+		if (project == null) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		else {
+			System.out.println(project.getStart() + ", " + project.getProjectID());
+		}
+	}
+	
+	@Test
+	public void testEditStart() throws IOException, SQLException {
+		System.out.println("\n*** Testing editStart");
+		
+		Integer project_id = 4;
+		String start = "3/14/17";
+		
+		db.editStart(project_id, start);
+		
+		projects = db.findProjectByStart(start);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getProjectID());
+		}
+	}
+	
+	@Test
+	public void testEditDuration() throws IOException, SQLException {
+		System.out.println("\n ***Testing editDuration");
+		
+		Integer project_id = 1;
+		Integer duration = 8;
+		db.editDuration(project_id, duration);
+		
+		projects = db.findProjectByDuration(duration);
+		
+		if(projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from DB");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getProjectID());
 		}
 	}
 }

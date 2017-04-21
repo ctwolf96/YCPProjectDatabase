@@ -10,6 +10,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.User;
@@ -45,12 +46,6 @@ public class FakeDatabase implements IDatabase {
 	public void editUsername(int UserID, String email) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<User> findAllUsers() throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -103,6 +98,12 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public List<User> findUserByClassType(ClassType classtype) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> findAllUsers() throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -250,5 +251,19 @@ public class FakeDatabase implements IDatabase {
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}	
+	}
+
+	@Override
+	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
