@@ -1,8 +1,10 @@
 package edu.ycp.cs320.cspath1.controller;
 
+import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 import edu.ycp.cs320.cspath1.email.EmailValidator;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 
@@ -12,7 +14,8 @@ import java.sql.SQLException;
 public class UserController {
 	private User user;
 	private IDatabase db = new YCPDatabase();
-	private EmailValidator emailvalidator;
+	private EmailValidator emailValidator;
+	private AccountCreationModel model;
 	
 	public void setUser(User user) {
 		this.user = user;
@@ -36,15 +39,35 @@ public class UserController {
 	public void verifyCred() {
 		//
 	}
-	public void createAcct(String username, String password, String email, UserType usertype) throws IOException, SQLException {
-		//will need to add queries to check if username and password already exist
-		boolean check = emailvalidator.validate(email);
+	//should be good just need to implement
+	public User createAcct() throws IOException, SQLException {
+		emailValidator = new EmailValidator();
+		User user = new Student();
+		boolean check = emailValidator.validate(model.getEmail());
 		if (check == true) {
-			db.insertUser(username, password, email, usertype);
+			Integer user_id = db.insertUser(model.getUsername(), model.getPassword(), model.getEmail(), model.getUsertype());
+			user = db.findUserByUserID(user_id);
+			return user;
+		}
+		else {
+			System.out.println("That username is already in use.");
+			return null;
 		}
 	}
+		
+		
+		
+	
 	public void proposeProject() {
 		//create a new proposal a send to admin/faculty
 		
+	}
+
+	public AccountCreationModel getModel() {
+		return model;
+	}
+
+	public void setModel(AccountCreationModel model) {
+		this.model = model;
 	}
 }
