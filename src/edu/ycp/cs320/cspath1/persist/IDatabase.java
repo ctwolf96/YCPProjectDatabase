@@ -19,9 +19,11 @@ import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 public interface IDatabase {
+
 	//USERS
 	//tested
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
+
 	//tested
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException;
 	//tested
@@ -60,25 +62,42 @@ public interface IDatabase {
 	
 	//PROJECTS
 	
+	//tested
 	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type) throws IOException, SQLException;
+	//IN PROGRESS
 	public void deleteProject(int project_id) throws IOException, SQLException;
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
 	public void editDescription(int ProjectID, String description) throws IOException, SQLException;
 	public void editStart(int ProjectID, String start) throws IOException, SQLException;
-	public void editDuration(int ProjectID, String duration) throws IOException, SQLException;
+	public void editDuration(int ProjectID, int duration) throws IOException, SQLException;
+	//tested
 	public List<Project> findAllProjects() throws IOException, SQLException;
+	//tested
 	public Project findProjectByProjectID(int ProjectID) throws IOException, SQLException;
+	//tested
 	public Project findProjectByTitle(String title) throws IOException, SQLException;
+	//tested
 	public Project findProjectByDescription(String description) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByStart(String start) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByDuration(int duration) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByProjectType(ProjectType type) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectBySolicitationType(SolicitationType type) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByMajorType(MajorType major) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByClassType(ClassType classtype) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByNumStudents(int numStudents) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByCost(double cost) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByIsFunded(boolean funded) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException;
  }

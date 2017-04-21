@@ -15,6 +15,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
@@ -102,24 +103,25 @@ public class YCPDatabase implements IDatabase {
 		if (s == null || s.equals("")){
 			return null;
 		}
-		else if (s.equals("ME")){
+		else if (s.contains("ME")){
 			majortype = MajorType.ME;
 		}
-		else if (s.equals("CE")){
+		else if (s.contains("CE")){
 			majortype = MajorType.CE;
 		}
-		else if(s.equals("CS")){
+		else if(s.contains("CS")){
 			majortype = MajorType.CS;
 		}
-		else if(s.equals("EE")){
+		else if(s.contains("EE")){
 			majortype = MajorType.EE;
 		}
-		else if (s.equals("UN")) {
+		else if (s.contains("UN")) {
 			majortype = MajorType.UN;
 		}
-		else if (s.equals("CIV")){
+		else if (s.contains("CIV")){
 			majortype = MajorType.CIV;
 		}
+		System.out.println(majortype.toString());
 		return majortype;
 	}
 	
@@ -306,7 +308,7 @@ public class YCPDatabase implements IDatabase {
 			proposal.setClasses(getClassListFromString(resultSet.getString(9)));
 			proposal.setNumStudents(resultSet.getInt(10));
 			proposal.setCost(resultSet.getInt(11));
-			proposal.setIsFunded(getBoolFromString(resultSet.getString(12)));
+			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(12)));
 			proposal.setDeadline(resultSet.getString(13));
 			return proposal;
 		}
@@ -349,7 +351,7 @@ public class YCPDatabase implements IDatabase {
 		int index = 0;
 		for (MajorType major: list) {
 			major = list.get(index);
-			majors = "" + major.toString() + ", ";
+			majors = "" + major.toString() + " ";
 			index++;
 		}
 		return majors;
@@ -357,11 +359,22 @@ public class YCPDatabase implements IDatabase {
 	
 	private ArrayList<MajorType> getMajorListFromString(String s) {
 		ArrayList<MajorType> majors = new ArrayList<MajorType>();
-		StringTokenizer st = new StringTokenizer(s);
-	     while (st.hasMoreTokens()) {
-	         majors.add(getMajorTypeFromParameter(st.nextToken()));
-	     }
-	     return majors;
+		if (s == null || s.equals("")) {
+			return null;
+		} else if (s.contains("CE")) {
+			majors.add(MajorType.CE);
+		} else if (s.contains("CS")) {
+			majors.add(MajorType.CS);
+		} else if (s.contains("EE")) {
+			majors.add(MajorType.EE);
+		} else if (s.contains("ME")) {
+			majors.add(MajorType.ME);
+		} else if (s.contains("CIV")) {
+			majors.add(MajorType.CIV);
+		} else if (s.contains("UN")) {
+			majors.add(MajorType.UN);
+		}
+		return majors;
 	}
 	
 	private String getStringFromClassList(List<ClassType> list) {
@@ -377,29 +390,18 @@ public class YCPDatabase implements IDatabase {
 	
 	private ArrayList<ClassType> getClassListFromString(String s) {
 		ArrayList<ClassType> classes = new ArrayList<ClassType>();
-		StringTokenizer st = new StringTokenizer(s);
-	     while (st.hasMoreTokens()) {
-	         classes.add(getClassTypeFromParameter(st.nextToken()));
-	     }
-	     return classes;
-	}
-	
-	private String getStringFromBool(Boolean bool) {
-		String s = null;
-		if (bool.TRUE) {
-			s = "true";
-		} else if (bool.FALSE) {
-			s = "false";
+		if (s == null || s.equals("")) {
+			return null;
+		} else if (s.contains("FRESHMAN")) {
+			classes.add(ClassType.FRESHMAN);
+		} else if (s.contains("SOPHOMORE")) {
+			classes.add(ClassType.SOPHOMORE);
+		} else if (s.contains("JUNIOR")) {
+			classes.add(ClassType.JUNIOR);
+		} else if (s.contains("SENIOR")) {
+			classes.add(ClassType.SENIOR);
 		}
-		return s;
-	}
-	
-	private Boolean getBoolFromString(String s) {
-		if (s.equals("true")) {
-			return true;
-		} else {
-			return false;
-		}
+		return classes;
 	}
 	
 	public void createTables() {
@@ -476,14 +478,17 @@ public class YCPDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				List<User> userList;
 				List<Project> projectList;
+				List<ProjectUser> projectUserList;
 				try {
 					userList = InitialData.getUsers();
 					projectList = InitialData.getProjects();
+					projectUserList = InitialData.getProjectUsers();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				PreparedStatement insertUser = null;
 				PreparedStatement insertProject = null;
+				PreparedStatement insertProjectUser = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -501,9 +506,9 @@ public class YCPDatabase implements IDatabase {
 							insertUser.setString(7, ((Student) user).getMajor().toString());
 							insertUser.setString(8, ((Student) user).getClassLevel().toString());
 						} else if (user.getUsertype().equals(UserType.FACULTY)) {
-							insertUser.setString(5, ((Student) user).getFirstname());
-							insertUser.setString(6, ((Student) user).getLastname());
-							insertUser.setString(7, ((Student) user).getMajor().toString());
+							insertUser.setString(5, ((Faculty) user).getFirstname());
+							insertUser.setString(6, ((Faculty) user).getLastname());
+							insertUser.setString(7, ((Faculty) user).getMajor().toString());
 						} else if (user.getUsertype().equals(UserType.BUSINESS)) {
 							insertUser.setString(9, ((Business) user).getName());
 							insertUser.setString(10, ((Business) user).getAddress());
@@ -511,6 +516,10 @@ public class YCPDatabase implements IDatabase {
 						}
 						insertUser.addBatch();
 					}
+					insertUser.executeBatch();
+					
+					System.out.println("Users table populated");
+
 
 					insertProject = conn.prepareStatement(
 							"insert into projects" +
@@ -545,13 +554,31 @@ public class YCPDatabase implements IDatabase {
 						}
 						insertProject.addBatch();
 					}
-					insertUser.executeBatch();
 					insertProject.executeBatch();
+
+					
+					System.out.println("Projects table populated");
+					
+					insertProjectUser = conn.prepareStatement(
+							"insert into projectUsers" +
+							"	(user_id, project_id)" +
+							"	values (?, ?)"
+							);
+					for (ProjectUser projectUser : projectUserList) {
+						insertProjectUser.setInt(1, projectUser.getUserId());
+						insertProjectUser.setInt(2, projectUser.getProjectId());
+						insertProjectUser.addBatch();
+					}
+					insertProjectUser.executeBatch();
+					
+					System.out.println("ProjectUsers table populated");
+					
 
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);
 					DBUtil.closeQuietly(insertProject);
+					DBUtil.closeQuietly(insertProjectUser);
 				}
 			}
 		});
@@ -1360,18 +1387,81 @@ public class YCPDatabase implements IDatabase {
 	@Override
 	public void deleteProject(int project_id) throws IOException, SQLException {
 		Connection conn = connect();
-		PreparedStatement  stmt = null;
+		PreparedStatement  stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		
+		
 		try {
-			stmt = conn.prepareStatement(
-					"delete from projects" +
+			stmt1 = conn.prepareStatement(
+					"select users.* " +
+					"	from users, projects, projectUsers " +
+					"	where projects.project_id = projectUsers.project_id " +
+					"		and users.user_id = projectUsers.user_id" +
+					"		and projects.project_id = ?"
+					);
+			stmt1.setInt(1, project_id);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			List<User> users = new ArrayList<User>();
+			
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			
+			if (users.size() == 0) {
+				System.out.println("This should not have happened...");
+			}
+			
+			stmt2 = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where projects.project_id = ?"
+					);
+			
+			stmt2.setInt(1, project_id);
+			
+			resultSet2 = stmt2.executeQuery(); 
+			
+			List<Project> projects = new ArrayList<Project>();
+			
+			while(resultSet2.next()) {
+				Project project = new Proposal();
+				loadProject(project, resultSet2);
+				projects.add(project);
+			}
+			
+			stmt3 = conn.prepareStatement(
+					"delete from projectUsers " +
 					"	where project_id = ?"
 					);
 			
-			stmt.setInt(1, project_id);
+			stmt3.setInt(1, projects.get(0).getProjectID());
+			stmt3.executeUpdate();
 			
-			stmt.execute();
+			stmt4 = conn.prepareStatement(
+					"delete from projects" + 
+					"	where project_id = ?"
+					);
+			
+			stmt4.setInt(1, project_id);
+			
+			stmt4.executeUpdate();
+			
 		} finally {
-			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
 			DBUtil.closeQuietly(conn);
 		}
 		
@@ -1379,26 +1469,86 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, title);
+			stmt.setInt(2, ProjectID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public void editDescription(int ProjectID, String description) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set description = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, description);
+			stmt.setInt(2, ProjectID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public void editStart(int ProjectID, String start) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set start = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, start);
+			stmt.setInt(2, ProjectID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
-	public void editDuration(int ProjectID, String duration) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+	public void editDuration(int ProjectID, int duration) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set duration = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, duration);
+			stmt.setInt(2, ProjectID);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
@@ -1443,7 +1593,7 @@ public class YCPDatabase implements IDatabase {
 		Connection conn = connect();
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
-		Project project = null;
+		Project project = new Proposal();
 		try {
 			stmt = conn.prepareStatement(
 					"select projects.*" +
@@ -1453,7 +1603,9 @@ public class YCPDatabase implements IDatabase {
 			stmt.setInt(1, ProjectID);
 			
 			resultSet = stmt.executeQuery();
-			loadProject(project, resultSet);
+			if (resultSet.next()) {
+				loadProject(project, resultSet);
+			}
 			return project;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
@@ -1464,79 +1616,361 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public Project findProjectByTitle(String title) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where title = ?"
+					);
+			stmt.setString(1, title);
+			
+			resultSet = stmt.executeQuery();
+			if (resultSet.next()) {
+				loadProject(project, resultSet);
+			}
+			return project;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public Project findProjectByDescription(String description) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where description = ?"
+					);
+			stmt.setString(1, description);
+			
+			resultSet = stmt.executeQuery();
+			if (resultSet.next()) {
+				loadProject(project, resultSet);
+			}
+			return project;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByStart(String start) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where start = ?"
+					);
+			stmt.setString(1, start);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByDuration(int duration) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where duration = ?"
+					);
+			stmt.setInt(1, duration);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByProjectType(ProjectType type) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where projectType = ?"
+					);
+			stmt.setString(1, type.toString());
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectBySolicitationType(SolicitationType type) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where solicitationType = ?"
+					);
+			stmt.setString(1, type.toString());
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByMajorType(MajorType major) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where majors like '%' || ? || '%'"
+					);
+			stmt.setString(1, major.toString());
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByClassType(ClassType classtype) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where classes like '%' || ? || '%'"
+					);
+			stmt.setString(1, classtype.toString());
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByNumStudents(int numStudents) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where numStudents = ?"
+					);
+			stmt.setInt(1, numStudents);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByCost(double cost) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where cost = ?"
+					);
+			stmt.setDouble(1, cost);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByIsFunded(boolean funded) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where isFunded = ?"
+					);
+			stmt.setString(1, Boolean.toString(funded));
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where deadline = ?"
+					);
+			stmt.setString(1, deadline);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;
+		List<Project> projectList = new ArrayList<Project>();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+					"select projects.*" +
+					"	from projects" +
+					"	where budget = ?"
+					);
+			stmt.setDouble(1, budget);
+			
+			resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				project = loadProject(project, resultSet);
+				projectList.add(project);
+			}
+			return projectList;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 }
