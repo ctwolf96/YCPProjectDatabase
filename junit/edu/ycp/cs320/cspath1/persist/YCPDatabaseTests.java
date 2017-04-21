@@ -387,16 +387,15 @@ public class YCPDatabaseTests {
 	public void testFindAllProjects() throws IOException, SQLException {
 		System.out.println("\n*** Testing findAllProjects ***");
 		
-		List<Project> projectList = db.findAllProjects();
+		projects = new ArrayList<Project>();
+		projects = db.findAllProjects();
 		
-		if (projectList.isEmpty()) {
-			System.out.println("No projectss found in DB");
+		if (projects.isEmpty()) {
+			System.out.println("No projects found in DB");
 			fail("No projectss returned from DB");
 			
-		}
-		else {
-			for (Project project : projectList){
-				projects.add(project);
+		} else {
+			for (Project project : projects){
 				System.out.println(project.getProjectID() + ", " + project.getTitle());
 			}
 		}
@@ -618,7 +617,7 @@ public class YCPDatabaseTests {
 		
 		String deadline = "5/7/17";
 		
-		projects = db.findProjectByStart(deadline);
+		projects = db.findProjectByDeadline(deadline);
 		
 		if (projects.isEmpty()) {
 			System.out.println("Something has gone horribly wrong...");

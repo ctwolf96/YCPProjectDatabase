@@ -1324,6 +1324,7 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement  stmt = null;
 		PreparedStatement stmt2 = null;
 		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
 		Integer project_id = 0;
 		try {
 			stmt = conn.prepareStatement(
@@ -1370,6 +1371,17 @@ public class YCPDatabase implements IDatabase {
 					project_id = resultSet2.getInt(1);
 				}
 			}
+			
+			stmt4 = conn.prepareStatement(
+					"insert into projectUsers" +
+					"	(user_id, project_id)" +
+					"	values (?, ?)"
+					);
+			stmt4.setInt(1, UserID);
+			stmt4.setInt(2, project_id);
+			
+			stmt4.execute();
+			
 			return project_id;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
@@ -1377,6 +1389,7 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
 			DBUtil.closeQuietly(conn);
 		}
 	}
@@ -1385,17 +1398,26 @@ public class YCPDatabase implements IDatabase {
 	public void deleteProject(int project_id) throws IOException, SQLException {
 		Connection conn = connect();
 		PreparedStatement  stmt = null;
+		PreparedStatement stmt2 = null;
 		try {
 			stmt = conn.prepareStatement(
-					"delete from projects" +
+					"delete from projectUsers" +
 					"	where project_id = ?"
 					);
-			
 			stmt.setInt(1, project_id);
 			
 			stmt.execute();
+			
+			stmt2 = conn.prepareStatement(
+					"delete from projects" +
+					"	where project_id = ?"
+					);
+			stmt2.setInt(1, project_id);
+			
+			stmt2.execute();
 		} finally {
 			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(conn);
 		}
 		
@@ -1723,7 +1745,7 @@ public class YCPDatabase implements IDatabase {
 			stmt = conn.prepareStatement(
 					"select projects.*" +
 					"	from projects" +
-					"	where major like %?%"
+					"	where majors like '%' || ? || '%'"
 					);
 			stmt.setString(1, major.toString());
 			
@@ -1751,7 +1773,7 @@ public class YCPDatabase implements IDatabase {
 			stmt = conn.prepareStatement(
 					"select projects.*" +
 					"	from projects" +
-					"	where classes like %?%"
+					"	where classes like '%' || ? || '%'"
 					);
 			stmt.setString(1, classtype.toString());
 			
