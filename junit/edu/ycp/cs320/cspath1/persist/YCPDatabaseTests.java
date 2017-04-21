@@ -429,18 +429,25 @@ public class YCPDatabaseTests {
 	public void testFindAllProjects() throws IOException, SQLException {
 		System.out.println("\n*** Testing findAllProjects ***");
 		
+
 		List<Project> projectList = db.findAllProjects();
 		projects = new ArrayList<Project>();
 		if (projectList.isEmpty()) {
 			System.out.println("No projectss found in DB");
+
+		projects = new ArrayList<Project>();
+		projects = db.findAllProjects();
+		
+		if (projects.isEmpty()) {
+			System.out.println("No projects found in DB");
 			fail("No projectss returned from DB");
 			
 		}
 		
 		
-		else {
-			for (Project project : projectList){
-				projects.add(project);
+		} else {
+			for (Project project : projects){
+
 				System.out.println(project.getProjectID() + ", " + project.getTitle());
 			}
 		}
