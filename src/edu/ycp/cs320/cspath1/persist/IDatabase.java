@@ -11,6 +11,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.Business;
@@ -100,4 +101,7 @@ public interface IDatabase {
 	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException;
 	//tested
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException;
+	
+	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException;
+	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException;
  }
