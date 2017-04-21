@@ -1,6 +1,7 @@
 package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.ProjectType;
 
 import edu.ycp.cs320.cspath1.model.ProjectModel;
+import edu.ycp.cs320.cspath1.controller.InsertProjectController;
 
 public class ProjectProposalServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
@@ -19,6 +22,21 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		String user = (String) req.getSession().getAttribute("user");
+		if (user == null) {
+			System.out.println("   User: <" + user + "> not logged in or session timed out");
+			
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/login");
+			return;
+		}
+
+		// now we have the user's User object,
+		// proceed to handle request...
+		
+		System.out.println("   User: <" + user + "> logged in");
+		
 		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 	}
 	
@@ -26,13 +44,14 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
+		String successMessage = null;
 		ProjectModel model = new ProjectModel();
 		
 		
 
 		//All fields needed for project solicitation
 		String solicit =req.getParameter("solicit");
-		String duration = req.getParameter("duration");
+		String strduration = req.getParameter("duration");
 		String startTime = req.getParameter("startTime");
 		String title = req.getParameter("title");
 		String description= req.getParameter("description");
@@ -41,10 +60,11 @@ private static final long serialVersionUID = 1L;
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
 		String numStudents = req.getParameter("numStudents");
 		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
+		String struserID = req.getParameter("userID");
 			
 		model.setTitle(title);
 		model.setStartTime(startTime);
-		model.setDuration(duration);
+		model.setDuration(strduration);
 		model.setDescription(description);
 		model.setClasses(classtypes);
 		model.setMajors(majortypes);
@@ -58,16 +78,39 @@ private static final long serialVersionUID = 1L;
 		model.setFunded(true);
 		model.setNumStudents(numStudents);
 		//Placeholder until I get all fields down
-		if (title == null) {
-			errorMessage = "Please specify at least one field";
-		}
+			if (title 		 == null || title.equals("") ||
+				description  == null || description.equals("")  ||
+				startTime    == null || startTime.equals("")     ||
+				strduration     == null || strduration.equals("") ||
+				struserID 	 == null || struserID.equals("")) {
+				
+				errorMessage = "Please fill in all of the required fields";
+			}else {
+				InsertProjectController controller = new InsertProjectController();
+				
+				//convert userID into a int for the controller
+				int userID = Integer.parseInt(struserID);
+				int duration = Integer.parseInt(strduration);
+				
+				try {
+					if(controller.insertProjectIntoDatabase(userID, title, description, startTime, duration, ProjectType.PROPOSAL)){
+						successMessage = title;
+					}
+					else{
+						errorMessage = "Failed to sumbit project"+title;
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 		// Add parameters as request attributes
 		//Pretty certain this is used to put things into a model or controller
 		req.setAttribute("duration", req.getParameter("duration"));
 		req.setAttribute("startTime", req.getParameter("startTime"));
-		req.setAttribute("hardware", req.getParameter("hardware"));
-		req.setAttribute("software", req.getParameter("software"));
+		req.setAttribute("title", req.getParameter("title"));
+		req.setAttribute("description", req.getParameter("description"));
 		
 		
 		

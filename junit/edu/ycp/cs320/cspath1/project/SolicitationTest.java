@@ -20,18 +20,24 @@ public class SolicitationTest {
 	public void testSetNumStudents(){
 		solicitation.setNumStudents(5);
 		assertEquals(solicitation.getNumStudents(), 5);
+		solicitation.setNumStudents(8);
+		assertEquals(solicitation.getNumStudents(), 8);
 	}
 	
 	@Test
 	public void testSetCost(){
 		solicitation.setCost(12000);
 		assertEquals(solicitation.getCost(), 12000, DELTA);
+		solicitation.setCost(150.75);
+		assertEquals(solicitation.getCost(), 150.75, DELTA);
 	}
 	
 	@Test
 	public void testSetSolicitationType(){
 		solicitation.setSolicitationType(SolicitationType.CivE_CAPSTONE);
 		assertEquals(SolicitationType.CivE_CAPSTONE, solicitation.getSolicitationType());
+		solicitation.setSolicitationType(SolicitationType.SW_ENGINEERING);
+		assertEquals(SolicitationType.SW_ENGINEERING, solicitation.getSolicitationType());
 	}
 }
 
