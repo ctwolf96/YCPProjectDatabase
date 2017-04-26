@@ -700,6 +700,7 @@ public class YCPDatabaseTests {
 	}
 	
 	@Test
+
 	public void testFindAllUsersByProject() throws IOException, SQLException {
 		System.out.println("\n*** Testing findAllUsersByProject ***");
 		
@@ -739,6 +740,7 @@ public class YCPDatabaseTests {
 		}
 	}
 		
+
 	public void testEditDescription() throws IOException, SQLException {
 		System.out.println("\n*** Testing editDescription");
 		
@@ -818,5 +820,8 @@ public class YCPDatabaseTests {
 		else {
 			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getProjectID());
 		}
+
+		
 	}
+	
 }
