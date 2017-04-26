@@ -1,14 +1,17 @@
 package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.controller.UserController;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+import edu.ycp.cs320.cspath1.user.User;
 
 
 
@@ -41,6 +44,7 @@ private static final long serialVersionUID = 1L;
 			throws ServletException, IOException {
 		String errorMessage = null;
 		AccountCreationModel model = new AccountCreationModel();
+		UserController controller = new UserController();
 		
 		
 		try {
@@ -53,7 +57,7 @@ private static final long serialVersionUID = 1L;
 			model.setPassword(password);
 			model.setUsername(username);
 			model.setUsertype(UserType.BUSINESS);
-			
+			controller.setModel(model);
 			
 			if (username == null || password == null || email == null) {
 				errorMessage = "Please specify required fields";
@@ -64,6 +68,20 @@ private static final long serialVersionUID = 1L;
 			errorMessage = "Invalid double";
 		}
 		
+		
+		try {
+			User user = controller.createAcct();
+			if (user.getUsername() != null) {
+				resp.sendRedirect(req.getContextPath() + "/businessHome");
+			}
+			else {
+				req.getRequestDispatcher("/_view/accountCreationBusiness.jsp").forward(req, resp);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
@@ -82,9 +100,7 @@ private static final long serialVersionUID = 1L;
 		else if (req.getParameter("faculty") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
-		else{
-			resp.sendRedirect(req.getContextPath() + "/guestHome");
-		}
+		
 	}
 	
 	

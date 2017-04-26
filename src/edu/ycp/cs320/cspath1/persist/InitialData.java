@@ -12,6 +12,7 @@ import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
+import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Proposal;
@@ -77,7 +78,7 @@ public class InitialData {
 	
 	public static List<Project> getProjects() throws IOException {
 		List<Project> projectList = new ArrayList<Project>();
-		ReadCSV readProject = new ReadCSV("Projects.CSV");
+		ReadCSV readProject = new ReadCSV("projects.csv");
 		try {
 			Integer projectID = 0;
 			while (true) {
@@ -195,6 +196,27 @@ public class InitialData {
 			return projectUserList;
 		} finally {
 			readProjectUsers.close();
+		}
+	}
+	
+	public static List<projectProject> getProjectProject() throws IOException {
+		List<projectProject> projectProjectList = new ArrayList<projectProject>();
+		ReadCSV readProjectProject = new ReadCSV("projectProject.csv");
+		try {
+			while (true) {
+				List<String> tuple = readProjectProject.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				projectProject projectRelation = new projectProject();
+				projectRelation.setProject_id_1(Integer.parseInt(i.next()));
+				projectRelation.setProject_id_2(Integer.parseInt(i.next()));
+				projectProjectList.add(projectRelation);
+			}
+			return projectProjectList;
+		} finally {
+			readProjectProject.close();
 		}
 	}
  	

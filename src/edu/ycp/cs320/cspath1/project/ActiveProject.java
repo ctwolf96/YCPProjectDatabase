@@ -6,11 +6,8 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class ActiveProject extends Project {
 	private String deadline;
-	private ArrayList<String> tasks;
 	private double cost;
 	private double budget;
-	private ArrayList<Project> prevVersions;
-	private Project original;
 	private int numStudents;
 	
 	//Constructor
@@ -49,26 +46,9 @@ public class ActiveProject extends Project {
 	
 	//Methods
 	
-	public void addTask(String task) {
-		tasks.add(task);
-	}
+	
 	public void markComplete() {
 		//move to past project
 	}
 
-	public ArrayList<Project> getPrevVersions() {
-		return prevVersions;
-	}
-
-	public void setPrevVersions(ArrayList<Project> prevVersions) {
-		this.prevVersions = prevVersions;
-	}
-
-	public Project getOriginal() {
-		return original;
-	}
-
-	public void setOriginal(Project original) {
-		this.original = original;
-	}
 }
