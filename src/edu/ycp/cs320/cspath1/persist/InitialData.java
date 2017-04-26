@@ -140,11 +140,40 @@ public class InitialData {
 					active.setBudget((double) Integer.parseInt(i.next()));
 					projectList.add(active);
 				}
-			} 
+			}
 			return projectList;
 		} finally {
 				readProject.close();
 		}
+	}
+	
+	
+	public static List<Business> getBusinesses() throws IOException {
+		List<Business> businessList = new ArrayList<Business>();
+		ReadCSV readBusiness = new ReadCSV("BusinessUsers.CSV");
+		try {
+			int userID = 65;
+			while (true) {
+				List<String> tuple = readBusiness.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Business business = new Business();
+				business.setUserID(userID++);
+				business.setUsername(i.next());
+				business.setUsername(i.next());
+				business.setEmail(i.next());
+				business.setPassword(i.next());
+				business.setAddress(i.next());
+				business.setNumber(i.next());
+				business.setUsertype(getUserTypeFromParameter(i.next()));
+				businessList.add(business);
+			}
+			return businessList;
+		} finally {
+			readBusiness.close();
+			} 
 	}
 	
 	public static List<ProjectUser> getProjectUsers() throws IOException {

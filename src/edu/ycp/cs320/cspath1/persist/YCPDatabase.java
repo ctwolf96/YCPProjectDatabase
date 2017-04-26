@@ -586,16 +586,6 @@ public class YCPDatabase implements IDatabase {
 	}
 	
 	// The main method creates the database tables and loads the initial data.
-	public static void main(String[] args) throws IOException {
-		System.out.println("Creating tables...");
-		YCPDatabase db = new YCPDatabase();
-		db.createTables();
-		
-		System.out.println("Loading initial data...");
-		db.loadInitialData();
-		
-		System.out.println("Success!");
-	}
 
 	//IN PROGRESS
 	@Override
