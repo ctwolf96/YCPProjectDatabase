@@ -475,8 +475,8 @@ public class YCPDatabase implements IDatabase {
 					
 					stmt4 = conn.prepareStatement(
 						"create table project_projects (" +
-						"	project_id_1 integer constraint project_id_copy3 references projects," +
-						"	project_id_2 integer constraint project_id_copy4 references projects" +
+						"	project_id_copy3 integer constraint project_id_copy3 references projects," +
+						"	project_id_copy4 integer constraint project_id_copy4 references projects" +
 						")"
 						);	
 					
@@ -486,8 +486,8 @@ public class YCPDatabase implements IDatabase {
 						"create table activeProjects (" +
 						"	active_project_id integer primary key " +
 						"	generated always as identity (start with 1, increment by 1), " +
-						"	project_id_sol integer constraint project_id_copy1 references projects," +
-						"	project_id_pro integer constraint project_id_copy2 references projects," +
+						"	project_id_copy1 integer constraint project_id_copy1 references projects," +
+						"	project_id_copy2 integer constraint project_id_copy2 references projects," +
 						"	title varchar(30) not null," +
 						"	description varchar(200) not null," +
 						"	start varchar(20) not null," +
@@ -551,6 +551,7 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement insertProjectUser = null;
 				PreparedStatement insertActiveProjects = null;
 				PreparedStatement insertProjectProject = null;
+				PreparedStatement insertActiveProjectUsers = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -641,7 +642,7 @@ public class YCPDatabase implements IDatabase {
 					
 					insertProjectProject = conn.prepareStatement(
 							"insert into project_projects" +
-							"	(project_id_1, project_id_2)" +
+							"	(project_id_copy3, project_id_copy4)" +
 							"	values (?, ?)"
 							);
 					for (projectProject projectRelation : projectProjectList) {
@@ -652,12 +653,53 @@ public class YCPDatabase implements IDatabase {
 					insertProjectProject.executeBatch();
 					
 					System.out.println("ProjectProject table populated");
-
+					
+					insertActiveProjects = conn.prepareStatement(
+							"insert into activeProjects" +
+							"	(project_id_copy1, project_id_copy2, title, description, start, duration, projectType, majors, classes, numStudents, cost, isFunded, deadline, budget)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					for (ActiveProject activeProject : activeProjectList){
+						insertActiveProjects.setInt(1, activeProject.getProject_id_copy_1());
+						insertActiveProjects.setInt(2, activeProject.getProject_id_copy_2());
+						insertActiveProjects.setString(3, activeProject.getTitle());
+						insertActiveProjects.setString(4, activeProject.getDescription());
+						insertActiveProjects.setString(5, activeProject.getStart());
+						insertActiveProjects.setInt(6, activeProject.getDuration());
+						insertActiveProjects.setString(7, activeProject.getProjectType().toString());
+						insertActiveProjects.setString(8, activeProject.getMajors().toString());
+						insertActiveProjects.setString(9, activeProject.getClasses().toString());
+						insertActiveProjects.setInt(10, activeProject.getNumStudents());
+						insertActiveProjects.setDouble(11, activeProject.getCost());
+						insertActiveProjects.setString(12, Boolean.toString(activeProject.isFunded()));
+						insertActiveProjects.setString(13, activeProject.getDeadline());
+						insertActiveProjects.setDouble(14, activeProject.getBudget());
+						insertActiveProjects.addBatch();
+					}
+					insertActiveProjects.executeBatch();
+					System.out.println("activeProject table populated");
+					
+					insertActiveProjectUsers = conn.prepareStatement(
+							"insert into activeProjectUsers" + 
+							"	(active_project_id, user_id)" + 
+							"	values(?, ?)"
+							);
+					for (ActiveProjectUsers activeProjectUser : activeProjectUsersList) {
+						insertActiveProjectUsers.setInt(1, activeProjectUser.getActiveProjectID());
+						insertActiveProjectUsers.setInt(2, activeProjectUser.getUserID());
+						insertActiveProjectUsers.addBatch();
+					}
+					insertActiveProjectUsers.executeBatch();
+					System.out.println("activeProjectUsers table populated");
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);
 					DBUtil.closeQuietly(insertProject);
 					DBUtil.closeQuietly(insertProjectUser);
+					DBUtil.closeQuietly(insertProjectProject);
+					DBUtil.closeQuietly(insertActiveProjects);
+					DBUtil.closeQuietly(insertActiveProjectUsers);
 				}
 			}
 		});
