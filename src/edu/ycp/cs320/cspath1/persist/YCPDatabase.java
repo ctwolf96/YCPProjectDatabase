@@ -15,8 +15,10 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ActiveProjectUsers;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
+import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
@@ -531,16 +533,24 @@ public class YCPDatabase implements IDatabase {
 				List<User> userList;
 				List<Project> projectList;
 				List<ProjectUser> projectUserList;
+				List<projectProject> projectProjectList;
+				List<ActiveProjectUsers> activeProjectUsersList;
+				List<ActiveProject> activeProjectList;
 				try {
 					userList = InitialData.getUsers();
 					projectList = InitialData.getProjects();
 					projectUserList = InitialData.getProjectUsers();
+					projectProjectList = InitialData.getProjectProject();
+					activeProjectUsersList = InitialData.getActiveProjectUsers();
+					activeProjectList = InitialData.getActiveProjects();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				PreparedStatement insertUser = null;
 				PreparedStatement insertProject = null;
 				PreparedStatement insertProjectUser = null;
+				PreparedStatement insertActiveProjects = null;
+				PreparedStatement insertProjectProject = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -629,6 +639,19 @@ public class YCPDatabase implements IDatabase {
 					
 					System.out.println("ProjectUsers table populated");
 					
+					insertProjectProject = conn.prepareStatement(
+							"insert into project_projects" +
+							"	(project_id_1, project_id_2)" +
+							"	values (?, ?)"
+							);
+					for (projectProject projectRelation : projectProjectList) {
+						insertProjectProject.setInt(1, projectRelation.getProject_id_1());
+						insertProjectProject.setInt(2, projectRelation.getProject_id_2());
+						insertProjectProject.addBatch();
+					}
+					insertProjectProject.executeBatch();
+					
+					System.out.println("ProjectProject table populated");
 
 					return true;
 				} finally {

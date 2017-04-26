@@ -11,6 +11,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ActiveProjectUsers;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
@@ -185,9 +186,67 @@ public class InitialData {
 				projectRelation.setProject_id_2(Integer.parseInt(i.next()));
 				projectProjectList.add(projectRelation);
 			}
+			System.out.println("projectProject loaded from CSV file");	
 			return projectProjectList;
 		} finally {
 			readProjectProject.close();
+		}
+	}
+	
+	public static List<ActiveProjectUsers> getActiveProjectUsers() throws IOException {
+		List<ActiveProjectUsers> activeProjectUserList = new ArrayList<ActiveProjectUsers>();
+		ReadCSV readActiveProjectUsers = new ReadCSV("activeProjectUsers.csv");
+		try {
+			while (true) {
+				List<String> tuple = readActiveProjectUsers.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				ActiveProjectUsers activeProjectUser = new ActiveProjectUsers();
+				activeProjectUser.setActiveProjectID(Integer.parseInt(i.next()));
+				activeProjectUser.setUserID(Integer.parseInt(i.next()));
+				activeProjectUserList.add(activeProjectUser);
+			}
+			System.out.println("activeProjectUsers loaded from CSV file");
+			return activeProjectUserList;
+		} finally {
+			readActiveProjectUsers.close();
+		}
+	}
+	
+	public static List<ActiveProject> getActiveProjects() throws IOException {
+		List<ActiveProject> activeProjectList = new ArrayList<ActiveProject>();
+		ReadCSV readActiveProjects = new ReadCSV("activeProjects.csv");
+		try {
+			while (true) {
+				List<String> tuple = readActiveProjects.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator <String> i = tuple.iterator();
+				ActiveProject activeProject = new ActiveProject();
+				activeProject.setProject_id_copy_1(Integer.parseInt(i.next()));
+				activeProject.setProject_id_copy_2(Integer.parseInt(i.next()));
+				activeProject.setUserID(Integer.parseInt(i.next()));
+				activeProject.setTitle(i.next());
+				activeProject.setDescription(i.next());
+				activeProject.setStart(i.next());
+				activeProject.setDuration(Integer.parseInt(i.next()));
+				activeProject.setProjectType(getProjectTypeFromParameter(i.next()));
+				activeProject.setMajors(getMajorListFromString(i.next()));
+				activeProject.setClasses(getClassListFromString(i.next()));
+				activeProject.setNumStudents(Integer.parseInt(i.next()));
+				activeProject.setCost(Double.parseDouble(i.next()));
+				activeProject.setFunded(Boolean.parseBoolean(i.next()));
+				activeProject.setDeadline(i.next());
+				activeProject.setBudget(Integer.parseInt(i.next()));
+				activeProjectList.add(activeProject);
+			}
+			System.out.println("activeProjects loaded from CSV file");
+			return activeProjectList;
+		} finally {
+			readActiveProjects.close();
 		}
 	}
  	
