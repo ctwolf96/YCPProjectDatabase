@@ -250,8 +250,7 @@ public class FakeDatabase implements IDatabase {
 	@Override
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-		return null;
-<<<<<<< HEAD
+		return null;	
 	}
 
 	@Override
@@ -265,9 +264,4 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-=======
-	}	
->>>>>>> refs/remotes/jason/master
-	
 }

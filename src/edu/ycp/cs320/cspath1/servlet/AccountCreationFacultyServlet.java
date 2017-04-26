@@ -23,7 +23,7 @@ private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		String user = (String) req.getSession().getAttribute("user");
+		String user = (String) req.getSession().getAttribute("username");
 		if (user == null) {
 			System.out.println("   User: <" + user + "> not logged in or session timed out");
 			
