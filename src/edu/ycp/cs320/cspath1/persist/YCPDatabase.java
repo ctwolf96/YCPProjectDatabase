@@ -91,7 +91,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/radio shack/workspace/project_database.db;create=true");
 		
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
