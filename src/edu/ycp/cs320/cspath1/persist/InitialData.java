@@ -11,6 +11,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Proposal;
@@ -45,10 +46,16 @@ public class InitialData {
 					user.setClassLevel(getClassTypeFromParameter(i.next()));
 					userList.add(user);
 				} else if (user.getUsertype().equals(UserType.FACULTY)) {
-					user.setFirstname(i.next());
-					user.setLastname(i.next());
-					user.setMajor(getMajorTypeFromParameter(i.next()));
-					userList.add(user);
+					Faculty faculty = new Faculty();
+					faculty.setUserID(user.getUserID());
+					faculty.setUsername(user.getUsername());
+					faculty.setPassword(user.getPassword());
+					faculty.setEmail(user.getEmail());
+					faculty.setUsertype(user.getUsertype());
+					faculty.setFirstname(i.next());
+					faculty.setLastname(i.next());
+					faculty.setMajor(getMajorTypeFromParameter(i.next()));
+					userList.add(faculty);
 				} else if (user.getUsertype().equals(UserType.BUSINESS)) {
 					Business business = new Business();
 					business.setUserID(user.getUserID());
@@ -137,6 +144,28 @@ public class InitialData {
 			return projectList;
 		} finally {
 				readProject.close();
+		}
+	}
+	
+	public static List<ProjectUser> getProjectUsers() throws IOException {
+		List<ProjectUser> projectUserList = new ArrayList<ProjectUser>();
+		ReadCSV readProjectUsers = new ReadCSV("projectUsers.CSV");
+		try {
+			while (true) {
+				List<String> tuple = readProjectUsers.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				ProjectUser projectUser = new ProjectUser();
+				projectUser.setUserId(Integer.parseInt(i.next()));				
+				projectUser.setProjectId(Integer.parseInt(i.next()));
+				projectUserList.add(projectUser);
+			}
+			System.out.println("projectUserList loaded from CSV file");			
+			return projectUserList;
+		} finally {
+			readProjectUsers.close();
 		}
 	}
  	

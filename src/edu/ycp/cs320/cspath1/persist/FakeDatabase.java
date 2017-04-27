@@ -10,11 +10,25 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 import edu.ycp.cs320.cspath1.user.User;
 
 public class FakeDatabase implements IDatabase {
+
+	@Override
+	public Integer insertUser(String username, String password, String email, UserType usertype)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void editPassword(int UserID, String password) throws IOException, SQLException {
@@ -24,6 +38,12 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public void editEmail(int UserID, String email) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editUsername(int UserID, String email) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -83,6 +103,12 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
+	public List<User> findAllUsers() throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public User findUserByName(String name) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -101,89 +127,143 @@ public class FakeDatabase implements IDatabase {
 	}
 
 	@Override
-	public void insertProject(int UserID, String title, String description, String start, String duration,
+	public Integer insertProject(int UserID, String title, String description, String start, int duration,
 			ProjectType type) throws IOException, SQLException {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteProject(Project project) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Solicitation findSolicitationByProjectID(int projectID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Solicitation> findSolicitationsByMajorType(MajorType majortype) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByMajorTypes(ArrayList<MajorType> majors) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByClassType(ClassType classtype) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByClassTypes(ArrayList<ClassType> classtypes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByStartTime(String startTime) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByDuration(String duration) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsByNumStudents(int numStudents) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Solicitation> findSolicitationsBySolicitationType(SolicitationType solicitationType) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer insertUser(String username, String password, String email, UserType usertype)
-			throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
+	public void deleteProject(int project_id) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<User> findAllUsers() throws IOException, SQLException {
+	public void editTitle(int ProjectID, String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editDescription(int ProjectID, String description) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editStart(int ProjectID, String start) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editDuration(int ProjectID, int duration) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Project> findAllProjects() throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public Project findProjectByProjectID(int ProjectID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project findProjectByTitle(String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project findProjectByDescription(String description) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByStart(String start) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByDuration(int duration) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByProjectType(ProjectType type) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectBySolicitationType(SolicitationType type) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByMajorType(MajorType major) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByClassType(ClassType classtype) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByNumStudents(int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByCost(double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByIsFunded(boolean funded) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
