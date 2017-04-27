@@ -74,12 +74,14 @@ public interface IDatabase {
 	public void editStart(int ProjectID, String start) throws IOException, SQLException;
 	//tested
 	public void editDuration(int ProjectID, int duration) throws IOException, SQLException;
-	
+	//tested
 	public void editCost(int project_id, double cost) throws IOException, SQLException;
+	//tested
 	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException;
+	//tested
 	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException;
+	//tested
 	public void editSolicitationType(int project_id, SolicitationType solicitationType) throws IOException, SQLException;
-	
 	//tested
 	public List<Project> findAllProjects() throws IOException, SQLException;
 	//tested
@@ -110,8 +112,9 @@ public interface IDatabase {
 	public List<Project> findProjectByDeadline(String deadline) throws IOException, SQLException;
 	//tested
 	public List<Project> findProjectByBudget(Double budget) throws IOException, SQLException;
-	
+	//tested
 	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException;
+	//tested
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException;
 	
 
