@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="Solicitation.css">
+	<header>
+		<title>Solicited Project Search</title>
+		<link rel="stylesheet" href="Search.css">
 		<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
@@ -20,8 +20,10 @@
 	</c:if>
 	
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
-	<h1 style = "text-align: center">Project Solicitation</h1>
+	<form action="${pageContext.servletContext.contextPath}/solicitationSearch" method="post">
+	<h1 style = "text-align: center">Solicited Project Search</h1>
+		<p>Select a field to search by and click "Search"</p><br>
+		
 		<label><a>Project Title:</a></label><br>
 		<input type="text" name="title"><br><br>
 		
@@ -52,14 +54,14 @@
 			<input type="checkbox" name="EE" value="EE">Electrical Engineering
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering
 			<input type="checkbox" name="CivE" value="CivE">Civil Engineering
-			<br><br>
+			<br>
 			
 			<label><a>Student Year(s):</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior
-			<br><br>
+			<input type="checkbox" name="freshman" value="Freshman">Freshman
+			<input type="checkbox" name="sophomore" value="Sophomore">Sophomore
+			<input type="checkbox" name="junior" value="Junior">Junior
+			<input type="checkbox" name="senior" value="Senior">Senior
+			<br>
 			
 			<label><a>Solicitation Type:</a></label><br>
 			<select> name="solicitationType">
@@ -82,9 +84,7 @@
 			<label><a>Cost:</a></label><br>
 			<input type="text" name="cost"><br><br>
 			
-			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
-			
-			<input type="Submit" name="project" value="Propose Project Form" class = "button button5">
+			<input type="Submit" name="submit" value="Search" class = "button button5">
 			
 		</form>
 		</div>

@@ -13,13 +13,13 @@
 		<div id="logo">
 			<img src ="Logo.png"/>
 		</div>
-		<form>
+		<form action="${pageContext.servletContext.contextPath}/businessHome" method="post">
 			<ul id = "navbar">
-				<li><a><input type="Submit" name="submit" value="Home" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="submit" value="MySolicitations" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="submit" value="NewSolicitation" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="submit" value="Search" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="submit" value="Logout" class = "navButtons"></a></li>	
+				<li><a><input type="Submit" name="home" value="Home" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="myProjects" value="My Proposals" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="proposal" value="New Proposal" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="search" value="Search" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="login" value="Logout" class = "navButtons"></a></li>	
 			</ul>
 		</form>
 	</div>

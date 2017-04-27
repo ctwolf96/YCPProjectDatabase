@@ -1,6 +1,7 @@
  package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
-import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
+import edu.ycp.cs320.cspath1.persist.IDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.user.Student;
 
 
 
 public class AccountCreationStudentServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
-	
+private IDatabase db;	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -26,25 +31,27 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		DatabaseProvider.setInstance(new YCPDatabase());
+		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
-		AccountCreationModel model = new AccountCreationModel();
-		
 		
 		String email = req.getParameter("email");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		String password1 = req.getParameter("password1");
 		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
 			
-		model.setEmail(email);
-		model.setPassword(password);
-		model.setUsername(username);
-		model.setMajortype(majortype);
-		model.setUsertype(UserType.FACULTY);
-		model.setClasstype(classtype);
-			
-		if (username == null || password == null || email == null || majortype == null || classtype == null) {
-				errorMessage = "Please specify required fields";
+		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null) {
+			errorMessage = "Please specify required fields";
+		} else if (password != password1) {
+			errorMessage = "Passwords do not match";
+		} else {
+			try {
+				db.insertUser(username, password1, email, UserType.STUDENT);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 			
 		
@@ -54,13 +61,13 @@ private static final long serialVersionUID = 1L;
 		req.setAttribute("email", req.getParameter("email"));
 		req.setAttribute("classtype", req.getParameter("classtype"));
 		req.setAttribute("majortype", req.getParameter("majortype"));
+		req.setAttribute("password1", req.getParameter("password1"));
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("model", model);
 		
 		//See if the user clicked either of the other account types, redirect accordingly
-		if (req.getParameter("buisness") != null){
+		if (req.getParameter("business") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("faculty") != null){

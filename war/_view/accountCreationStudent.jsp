@@ -15,11 +15,6 @@
 				<img src="Logo.png"/>			
 			</div>
 		</div>
-	
-	
-	
-	
-
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 	<div class=container>
 	<h1 style = "text-align: center">Student Account Creation</h1><br>
@@ -62,7 +57,7 @@
 			<div id="newLogin">
 			<input type="Submit" name="submit" value="Create Account" class = "button button5">
 			<input type="Submit" name="faculty" value="Faculty Account" class = "button button5">
-			<input type="Submit" name="buisness" value="Buisness Account" class = "button button5">
+			<input type="Submit" name="business" value="Business Account" class = "button button5">
 			</div>
 			</div>
 		</form>

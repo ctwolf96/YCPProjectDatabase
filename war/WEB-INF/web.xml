@@ -54,6 +54,10 @@
   	<servlet-name>SampleProjectServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.SampleProjectServlet</servlet-class>
   </servlet>
+   <servlet>
+  	<servlet-name>UserSearchServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSearchServlet</servlet-class>
+  </servlet>
 
   <!-- AJAX servlets. -->
   <servlet>
@@ -141,6 +145,10 @@
   <servlet-mapping>
   	<servlet-name>SampleProjectServlet</servlet-name>
   	<url-pattern>/sampleProject</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserSearchServlet</servlet-name>
+  	<url-pattern>/userSearch</url-pattern>
   </servlet-mapping>
 
   <!--  AJAX servlet mappings. -->

@@ -3,12 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-
-		<title>Project Proposal</title>
-		<link rel="stylesheet" href="ProposalPage.css">
-		<meta name = "viewport" content = "width = device-width initial-scale =1">
-		
+	<header>
+		<title>Proposed Project Search</title>
+		<link rel="stylesheet" href="Search.css">
+		<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
 	<body>
@@ -21,12 +19,11 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	
-	
-	
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
-	<h1 style = "text-align: center">Project Proposal</h1>
+	<form action="${pageContext.servletContext.contextPath}/proposalSearch" method="post">
+	<h1 style = "text-align: center">Proposed Project Search</h1>
+		<p>Select a field to search by and click "Search"</p><br>
+		
 		<label><a>Project Title:</a></label><br>
 		<input type="text" name="title"><br><br>
 		
@@ -52,7 +49,7 @@
 		<input type="date" name="startTime"><br><br>
 		
 		<label><a>Deadline:</a></label><br>
-		<input type="date" name="startDate"><br><br>
+		<input type="date" name="deadline"><br><br>
 		
 		<label><a>Funding:</a></label><br>
 		<select name="isFunded">
@@ -71,19 +68,15 @@
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br><br>
 			
 			<label><a>Student Year(s)</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior<br><br>
+			<input type="checkbox" name="freshman" value="Freshman">Freshman
+			<input type="checkbox" name="sophomore" value="Sophomore">Sophomore
+			<input type="checkbox" name="junior" value="Junior">Junior
+			<input type="checkbox" name="senior" value="Senior">Senior<br><br>
 			
 			<label><a>Cost:</a></label><br>
 			<input type="text" name="cost"><br><br>
 			
-			<div>
-			<input type="Submit" name="submit" value="Create Project" class = "button button5">
-			
-			<input type="Submit" name="solicit" value="Solicit Project Form" class = "button button5">
-			</div>
+			<input type="Submit" name="submit" value="Search" class = "button button5">
 
 		</form>
 		</div>

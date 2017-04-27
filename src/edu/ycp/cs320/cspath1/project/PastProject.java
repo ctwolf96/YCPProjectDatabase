@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
-import edu.ycp.cs320.cspath1.user.User;
 
 public class PastProject extends Project {
 	private int project_id_copy_5;

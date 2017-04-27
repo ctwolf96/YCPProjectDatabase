@@ -5,6 +5,7 @@ import edu.ycp.cs320.cspath1.user.User;
 import edu.ycp.cs320.cspath1.email.EmailValidator;
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 
@@ -13,23 +14,29 @@ import java.sql.SQLException;
 
 public class UserController {
 	private User user;
-	private IDatabase db = new YCPDatabase();
+	private IDatabase db;
 	private EmailValidator emailValidator;
 	private AccountCreationModel model;
+	
+	public UserController() {
+		DatabaseProvider.setInstance(new YCPDatabase());
+		db = DatabaseProvider.getInstance();
+	}
 	
 	public void setUser(User user) {
 		this.user = user;
 	}
 	
-	public void login(String username, String password) throws IOException, SQLException {
+	public boolean login(String username, String password) throws IOException, SQLException {
 		user = db.findUserByUsernameAndPassword(username, password);
 		if (user.getUsername() == username && user.getPassword() == password) {
-			//login
+			return true;
 		}
 		else {
-			//no login
+			return false;
 		}
 	}
+	
 	public void logout() {
 		//logout
 	}
