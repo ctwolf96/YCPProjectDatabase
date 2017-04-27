@@ -1,12 +1,13 @@
 
-*{margin:0px; padding: 0px;}
-body{background: white;
-min-width: 1200px;
-background-image: url("YCP.png");
--webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-repeat: no-repeat;
+
+body{background: url("YCP.png");  
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+	height: 100%;
+	width: 100%;	
+	min-height: 940px;
+	max-width: 1900px;
+	min-width: 900px;
 
 
 }
@@ -51,14 +52,11 @@ label>a{
 }
 div.superContainer{
 	width: 800px;
-	height: 600px;
+	height: 700px;
 	border: 2px solid #ccc;
-	padding: 10px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	margin-top: -300px;
-	margin-left: -400px;
+	position: relative;
+	margin: auto;
+	margin-top: 50px;
 	background-color: #fff;
 	padding: 10px;
 	

@@ -15,6 +15,7 @@ import edu.ycp.cs320.cspath1.model.ActiveProjectUsers;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
 import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
+import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Proposal;
 import edu.ycp.cs320.cspath1.project.Solicitation;
@@ -149,35 +150,6 @@ public class InitialData {
 		}
 	}
 	
-	
-	public static List<Business> getBusinesses() throws IOException {
-		List<Business> businessList = new ArrayList<Business>();
-		ReadCSV readBusiness = new ReadCSV("BusinessUsers.CSV");
-		try {
-			int userID = 65;
-			while (true) {
-				List<String> tuple = readBusiness.next();
-				if (tuple == null) {
-					break;
-				}
-				Iterator<String> i = tuple.iterator();
-				Business business = new Business();
-				business.setUserID(userID++);
-				business.setUsername(i.next());
-				business.setUsername(i.next());
-				business.setEmail(i.next());
-				business.setPassword(i.next());
-				business.setAddress(i.next());
-				business.setNumber(i.next());
-				business.setUsertype(getUserTypeFromParameter(i.next()));
-				businessList.add(business);
-			}
-			return businessList;
-		} finally {
-			readBusiness.close();
-			} 
-	}
-	
 	public static List<ProjectUser> getProjectUsers() throws IOException {
 		List<ProjectUser> projectUserList = new ArrayList<ProjectUser>();
 		ReadCSV readProjectUsers = new ReadCSV("projectUsers.CSV");
@@ -276,6 +248,41 @@ public class InitialData {
 			return activeProjectList;
 		} finally {
 			readActiveProjects.close();
+		}
+	}
+	
+	public static List<PastProject> getPastProjects() throws IOException {
+		List<PastProject> pastProjectList = new ArrayList<PastProject>();
+		ReadCSV readPastProjects = new ReadCSV("pastProjects.csv");
+		try {
+			while (true) {
+				List<String> tuple = readPastProjects.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator <String> i = tuple.iterator();
+				PastProject pastProject = new PastProject();
+				pastProject.setProject_id_copy_5(Integer.parseInt(i.next()));
+				pastProject.setProject_id_copy_6(Integer.parseInt(i.next()));
+				pastProject.setUserID(Integer.parseInt(i.next()));
+				pastProject.setTitle(i.next());
+				pastProject.setDescription(i.next());
+				pastProject.setStart(i.next());
+				pastProject.setDuration(Integer.parseInt(i.next()));
+				pastProject.setProjectType(getProjectTypeFromParameter(i.next()));
+				pastProject.setMajors(getMajorListFromString(i.next()));
+				pastProject.setClasses(getClassListFromString(i.next()));
+				pastProject.setNumStudents(Integer.parseInt(i.next()));
+				pastProject.setCost(Double.parseDouble(i.next()));
+				pastProject.setFunded(Boolean.parseBoolean(i.next()));
+				pastProject.setDeadline(i.next());
+				pastProject.setBudget(Integer.parseInt(i.next()));
+				pastProjectList.add(pastProject);
+			}
+			System.out.println("pastProjects loaded from CSV file");
+			return pastProjectList;
+		} finally {
+			readPastProjects.close();
 		}
 	}
  	

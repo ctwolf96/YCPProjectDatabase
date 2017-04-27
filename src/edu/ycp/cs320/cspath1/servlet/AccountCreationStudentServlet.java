@@ -1,4 +1,4 @@
-package edu.ycp.cs320.cspath1.servlet;
+ package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
 
@@ -20,21 +20,6 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		String user = (String) req.getSession().getAttribute("username");
-		if (user == null) {
-			System.out.println("   User: <" + user + "> not logged in or session timed out");
-			
-			// user is not logged in, or the session expired
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
-
-		// now we have the user's User object,
-		// proceed to handle request...
-		
-		System.out.println("   User: <" + user + "> logged in");
-		
 		req.getRequestDispatcher("/_view/accountCreationStudent.jsp").forward(req, resp);
 	}
 	
@@ -75,7 +60,7 @@ private static final long serialVersionUID = 1L;
 		req.setAttribute("model", model);
 		
 		//See if the user clicked either of the other account types, redirect accordingly
-		if (req.getParameter("guest") != null){
+		if (req.getParameter("buisness") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("faculty") != null){
