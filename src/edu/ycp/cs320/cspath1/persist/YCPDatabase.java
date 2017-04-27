@@ -148,6 +148,7 @@ public class YCPDatabase implements IDatabase {
 		return classtype;
 	}
 	
+	
 	private static UserType getUserTypeFromParameter(String s) {
 		if (s == null || s.equals("")){
 			return null;
@@ -2305,5 +2306,47 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+
+	@Override
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

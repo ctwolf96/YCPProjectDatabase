@@ -103,4 +103,12 @@ public interface IDatabase {
 	
 	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException;
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException;
+
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException;
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException;
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException;
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException;
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException;
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException;
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException;
  }
