@@ -340,7 +340,7 @@ public class YCPDatabaseTests {
 		System.out.println("\n*** Testing insertUser***");
 		
 		Integer user_id = 0;
-		user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
+		user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT, "Charles", "Spath", MajorType.EE, ClassType.FRESHMAN, null, null, null);
 		
 		System.out.println(user_id);
 		

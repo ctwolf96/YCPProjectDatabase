@@ -824,7 +824,8 @@ public class YCPDatabase implements IDatabase {
 
 	//IN PROGRESS
 	@Override
-	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
+	public Integer insertUser(String username, String password, String email, UserType usertype, String firstname, String lastname
+			, MajorType major, ClassType classtype, String name, String address, String contactNum) throws IOException, SQLException {
 	Connection conn = connect();
 	ResultSet resultSet = null;
 	ResultSet resultSet2 = null;
@@ -846,18 +847,38 @@ public class YCPDatabase implements IDatabase {
 	resultSet = stmt.executeQuery();
 	
 	if(resultSet.next()) {
-	user_id = resultSet.getInt(1);
+		user_id = resultSet.getInt(1);
 	}
 	else {
 	stmt2 = conn.prepareStatement(
 	"insert into users " +
-	"	(username, password, email, usertype)" +
-	"	values (?, ?, ?, ?)"
+	"	(username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
+	"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	);
 	stmt2.setString(1, username);
 	stmt2.setString(2, password);
 	stmt2.setString(3, email);
 	stmt2.setString(4, usertype.toString());
+	if (!usertype.equals(UserType.BUSINESS)) {
+		stmt2.setString(5, firstname);
+		stmt2.setString(6, lastname);
+		stmt2.setString(7, major.toString());
+		stmt2.setString(9, null);
+		stmt2.setString(10, null);
+		stmt2.setString(11, null);
+	}
+	if (usertype.equals(UserType.STUDENT)) {
+		stmt2.setString(8, classtype.toString());
+	}
+	if(usertype.equals(UserType.BUSINESS)) {
+		stmt2.setString(5, null);
+		stmt2.setString(6, null);
+		stmt2.setString(7, null);
+		stmt2.setString(8, null);
+		stmt2.setString(9, name);
+		stmt2.setString(10, address);
+		stmt2.setString(11, contactNum);
+	}
 	
 	stmt2.executeUpdate();
 	
@@ -897,6 +918,9 @@ public class YCPDatabase implements IDatabase {
 	PreparedStatement stmt4 = null;
 	PreparedStatement stmt5 = null;
 	PreparedStatement stmt6 = null;
+	PreparedStatement stmt7 = null;
+	PreparedStatement stmt8 = null;
+	PreparedStatement stmt9 = null;
 	
 	ResultSet resultSet1 = null;
 	ResultSet resultSet2 = null;
@@ -948,28 +972,32 @@ public class YCPDatabase implements IDatabase {
 	
 	stmt4.executeUpdate();
 	//NOW I AM CONFUSED
-	/*for (int i = 0; i < users.size(); i++){
-	stmt5 = conn.prepareStatement(
-	"select projects.project_id from projects, projectUsers" +
-	"	where projectUsers.user_id = ?"
-	);
-	stmt5.setInt(1, projects.get(i).getUserID());
-	resultSet3 = stmt5.executeQuery();
+	if (!projects.isEmpty()) {
+		for (int i = 0; i < projects.size(); i++){
+			stmt5 = conn.prepareStatement(
+			"select projects.project_id from projects, projectUsers" +
+			"	where projectUsers.user_id = ?"
+			);
+			stmt5.setInt(1, user_id);
+			resultSet3 = stmt5.executeQuery();
+			
+	}
 	
 	if(!resultSet3.next()){
-	stmt6 = conn.prepareStatement(
-	"delete from users " +
-	"	where user_id = ?"
-	);
-	
-	stmt6.setInt(1, users.get(i).getUserID());
-	stmt6.executeUpdate();
-	
-	DBUtil.closeQuietly(stmt6);
-	} 
+		stmt6 = conn.prepareStatement(
+		"delete from users " +
+		"	where user_id = ?"
+		);
+		
+		stmt6.setInt(1, user_id);
+		stmt6.executeUpdate();
+		
+		DBUtil.closeQuietly(stmt6);
+		} 
 	DBUtil.closeQuietly(resultSet3);
 	DBUtil.closeQuietly(stmt5);
-	}*/
+	}
+	//ONCE WE HAVE QUERIES FOR THE NEW TABLES, WE MUST ADD TO THIS.........
 	
 	} finally {
 	DBUtil.closeQuietly(stmt1);
