@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
-import edu.ycp.cs320.cspath1.model.AccountCreationModel;
+import edu.ycp.cs320.cspath1.user.Student;
 
 
 
@@ -27,24 +27,26 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String errorMessage = null;
-		AccountCreationModel model = new AccountCreationModel();
-		
+		Student student = new Student();
 		
 		String email = req.getParameter("email");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		String password1 = req.getParameter("password1");
 		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
 			
-		model.setEmail(email);
-		model.setPassword(password);
-		model.setUsername(username);
-		model.setMajortype(majortype);
-		model.setUsertype(UserType.FACULTY);
-		model.setClasstype(classtype);
+		student.setEmail(email);
+		student.setPassword(password);
+		student.setUsername(username);
+		student.setMajor(majortype);
+		student.setUsertype(UserType.STUDENT);
+		student.setClassLevel(classtype);
 			
-		if (username == null || password == null || email == null || majortype == null || classtype == null) {
-				errorMessage = "Please specify required fields";
+		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null) {
+			errorMessage = "Please specify required fields";
+		} else if (password != password1) {
+			errorMessage = "Passwords do not match";
 		}
 			
 		
@@ -54,13 +56,13 @@ private static final long serialVersionUID = 1L;
 		req.setAttribute("email", req.getParameter("email"));
 		req.setAttribute("classtype", req.getParameter("classtype"));
 		req.setAttribute("majortype", req.getParameter("majortype"));
+		req.setAttribute("password1", req.getParameter("password1"));
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("model", model);
 		
 		//See if the user clicked either of the other account types, redirect accordingly
-		if (req.getParameter("buisness") != null){
+		if (req.getParameter("business") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("faculty") != null){

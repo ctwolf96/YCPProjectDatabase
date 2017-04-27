@@ -57,10 +57,10 @@
 			<br>
 			
 			<label><a>Student Year(s):</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior
+			<input type="checkbox" name="freshman" value="Freshman">Freshman
+			<input type="checkbox" name="sophomore" value="Sophomore">Sophomore
+			<input type="checkbox" name="junior" value="Junior">Junior
+			<input type="checkbox" name="senior" value="Senior">Senior
 			<br>
 			
 			<label><a>Solicitation Type:</a></label><br>
@@ -84,9 +84,7 @@
 			<label><a>Cost:</a></label><br>
 			<input type="text" name="cost"><br><br>
 			
-			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
-			
-			<input type="Submit" name="project" value="Propose Project Form" class = "button button5">
+			<input type="Submit" name="submit" value="Search" class = "button button5">
 			
 		</form>
 		</div>

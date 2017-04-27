@@ -12,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 import edu.ycp.cs320.cspath1.enums.UserType;
-import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
-import edu.ycp.cs320.cspath1.persist.YCPDatabase;
-import edu.ycp.cs320.cspath1.user.Student;
 import edu.ycp.cs320.cspath1.user.User;
 
 
@@ -44,18 +41,18 @@ private IDatabase db;
 		username = req.getParameter("username");
 		password = req.getParameter("password");
 			
-		if (username == null || password == null || username.equals("")||password.equals("")) {
+		if (username == null || password == null || username.equals("") || password.equals("")) {
 			errorMessage = "Please specify username and password";
 		} else {
 			try {
 				user = db.findUserByUsernameAndPassword(username, password);
-				System.out.println(user.getUsername() + ", " + user.getPassword());
-				System.out.println(username + ", " + password);
+//				System.out.println(user.getUsername() + ", " + user.getPassword());
+//				System.out.println(username + ", " + password);
 				
-				if(user.getEmail() != null && user.getPassword() != null){
+				if(user.getUsername() != null && user.getPassword() != null && user.getUsername() == username && user.getPassword() == password){
 					validLogin = true;
 				}
-				else{
+				else {
 					errorMessage = "Username or Password may be inccorect";
 				}
 				
@@ -91,18 +88,9 @@ private IDatabase db;
 				resp.sendRedirect(req.getContextPath() + "/facultyHome");
 			}			
 			return;
-		}
-
-		else {
+		} else {
 			// Forward to view to render the result HTML document
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
-		
-		
-		
 	}
-	
-	
-
 }
-

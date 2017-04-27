@@ -49,7 +49,7 @@
 		<input type="date" name="startTime"><br><br>
 		
 		<label><a>Deadline:</a></label><br>
-		<input type="date" name="startDate"><br><br>
+		<input type="date" name="deadline"><br><br>
 		
 		<label><a>Funding:</a></label><br>
 		<select name="isFunded">
@@ -68,19 +68,15 @@
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br><br>
 			
 			<label><a>Student Year(s)</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior<br><br>
+			<input type="checkbox" name="freshman" value="Freshman">Freshman
+			<input type="checkbox" name="sophomore" value="Sophomore">Sophomore
+			<input type="checkbox" name="junior" value="Junior">Junior
+			<input type="checkbox" name="senior" value="Senior">Senior<br><br>
 			
 			<label><a>Cost:</a></label><br>
 			<input type="text" name="cost"><br><br>
 			
-			<div>
-			<input type="Submit" name="submit" value="Create Project" class = "button button5">
-			
-			<input type="Submit" name="solicit" value="Solicit Project Form" class = "button button5">
-			</div>
+			<input type="Submit" name="submit" value="Search" class = "button button5">
 
 		</form>
 		</div>

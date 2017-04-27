@@ -57,7 +57,7 @@
 			<div id="newLogin">
 			<input type="Submit" name="submit" value="Create Account" class = "button button5">
 			<input type="Submit" name="faculty" value="Faculty Account" class = "button button5">
-			<input type="Submit" name="buisness" value="Buisness Account" class = "button button5">
+			<input type="Submit" name="business" value="Business Account" class = "button button5">
 			</div>
 			</div>
 		</form>
