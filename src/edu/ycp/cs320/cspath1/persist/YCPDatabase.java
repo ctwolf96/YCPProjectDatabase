@@ -148,6 +148,7 @@ public class YCPDatabase implements IDatabase {
 		return classtype;
 	}
 	
+	
 	private static UserType getUserTypeFromParameter(String s) {
 		if (s == null || s.equals("")){
 			return null;

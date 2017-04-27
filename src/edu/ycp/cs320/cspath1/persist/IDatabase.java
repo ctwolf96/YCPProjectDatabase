@@ -115,6 +115,7 @@ public interface IDatabase {
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException;
 	
 
+	
 	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException;
 	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException;
 	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException;
