@@ -229,10 +229,10 @@ public class YCPDatabase implements IDatabase {
 	//Method to create a user from database
 	private User loadUser(User user, ResultSet resultSet) throws SQLException {
 		user.setUserID(resultSet.getInt(1));
-		user.setUsername(resultSet.getString(2));
-		user.setPassword(resultSet.getString(3));
-		user.setEmail(resultSet.getString(4));
-		user.setUsertype(getUserTypeFromParameter(resultSet.getString(5)));
+		user.setUsername(resultSet.getString(3));
+		user.setPassword(resultSet.getString(4));
+		user.setEmail(resultSet.getString(5));
+		user.setUsertype(getUserTypeFromParameter(resultSet.getString(6)));
 		if (user.getUsertype() == UserType.STUDENT) {
 			Student student = new Student();
 			student.setUserID(user.getUserID());
@@ -240,10 +240,10 @@ public class YCPDatabase implements IDatabase {
 			student.setPassword(user.getPassword());
 			student.setEmail(user.getEmail());
 			student.setUsertype(user.getUsertype());
-			student.setFirstname(resultSet.getString(6));
-			student.setLastname(resultSet.getString(7));
-			student.setMajor(getMajorTypeFromParameter(resultSet.getString(8)));
-			student.setClassLevel(getClassTypeFromParameter(resultSet.getString(9)));
+			student.setFirstname(resultSet.getString(7));
+			student.setLastname(resultSet.getString(8));
+			student.setMajor(getMajorTypeFromParameter(resultSet.getString(9)));
+			student.setClassLevel(getClassTypeFromParameter(resultSet.getString(10)));
 			return student;
 		}
 		else if (user.getUsertype() == UserType.FACULTY){
@@ -253,9 +253,9 @@ public class YCPDatabase implements IDatabase {
 			faculty.setPassword(user.getPassword());
 			faculty.setEmail(user.getEmail());
 			faculty.setUsertype(user.getUsertype());
-			faculty.setFirstname(resultSet.getString(6));
-			faculty.setLastname(resultSet.getString(7));
-			faculty.setMajor(getMajorTypeFromParameter(resultSet.getString(8)));
+			faculty.setFirstname(resultSet.getString(7));
+			faculty.setLastname(resultSet.getString(8));
+			faculty.setMajor(getMajorTypeFromParameter(resultSet.getString(9)));
 			return faculty;
 		}
 		else if (user.getUsertype() == UserType.BUSINESS) {
@@ -265,9 +265,9 @@ public class YCPDatabase implements IDatabase {
 			business.setPassword(user.getPassword());
 			business.setEmail(user.getEmail());
 			business.setUsertype(user.getUsertype());
-			business.setName(resultSet.getString(10));
-			business.setAddress(resultSet.getString(11));
-			business.setNumber(resultSet.getString(12));
+			business.setName(resultSet.getString(11));
+			business.setAddress(resultSet.getString(12));
+			business.setNumber(resultSet.getString(13));
 			return business;
 		}
 		return null;
@@ -277,11 +277,11 @@ public class YCPDatabase implements IDatabase {
 	//Method to create a project from database
 	private Project loadProject(Project project, ResultSet resultSet) throws SQLException {
 		project.setProjectID(resultSet.getInt(1));
-		project.setTitle(resultSet.getString(2));
-		project.setDescription(resultSet.getString(3));
-		project.setStart(resultSet.getString(4));
-		project.setDuration(resultSet.getInt(5));
-		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(6)));
+		project.setTitle(resultSet.getString(6));
+		project.setDescription(resultSet.getString(7));
+		project.setStart(resultSet.getString(8));
+		project.setDuration(resultSet.getInt(9));
+		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(10)));
 		if (project.getProjectType() == ProjectType.SOLICITATION) {
 			Solicitation solicitation = new Solicitation();
 			solicitation.setProjectID(project.getProjectID());
@@ -291,11 +291,11 @@ public class YCPDatabase implements IDatabase {
 			solicitation.setStart(project.getStart());
 			solicitation.setDuration(project.getDuration());
 			solicitation.setProjectType(project.getProjectType());
-			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(7)));
-			solicitation.setMajors(getMajorListFromString(resultSet.getString(8)));
-			solicitation.setClasses(getClassListFromString(resultSet.getString(9)));
-			solicitation.setNumStudents(resultSet.getInt(10));
-			solicitation.setCost(resultSet.getInt(11));
+			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(11)));
+			solicitation.setMajors(getMajorListFromString(resultSet.getString(12)));
+			solicitation.setClasses(getClassListFromString(resultSet.getString(13)));
+			solicitation.setNumStudents(resultSet.getInt(14));
+			solicitation.setCost(resultSet.getInt(15));
 			return solicitation;
 		}
 		else if (project.getProjectType() == ProjectType.PROPOSAL) {
@@ -307,12 +307,12 @@ public class YCPDatabase implements IDatabase {
 			proposal.setStart(project.getStart());
 			proposal.setDuration(project.getDuration());
 			proposal.setProjectType(project.getProjectType());
-			proposal.setMajors(getMajorListFromString(resultSet.getString(8)));
-			proposal.setClasses(getClassListFromString(resultSet.getString(9)));
-			proposal.setNumStudents(resultSet.getInt(10));
-			proposal.setCost(resultSet.getInt(11));
-			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(12)));
-			proposal.setDeadline(resultSet.getString(13));
+			proposal.setMajors(getMajorListFromString(resultSet.getString(12)));
+			proposal.setClasses(getClassListFromString(resultSet.getString(13)));
+			proposal.setNumStudents(resultSet.getInt(14));
+			proposal.setCost(resultSet.getInt(15));
+			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(16)));
+			proposal.setDeadline(resultSet.getString(17));
 			return proposal;
 		}
 		else if (project.getProjectType() == ProjectType.ACTIVE) {
@@ -423,7 +423,7 @@ public class YCPDatabase implements IDatabase {
 						"create table users (" +
 						"	user_id integer primary key " +
 						"	generated always as identity (start with 1, increment by 1), " +
-						"	user_id_copy integer not null," +
+						"	user_id_copy integer," +
 						"	username varchar(40) not null," +
 						"	password varchar(40) not null," +
 						"	email varchar(60) not null," +
@@ -443,10 +443,10 @@ public class YCPDatabase implements IDatabase {
 						"create table projects (" +
 						"	project_id integer primary key " +
 						"	generated always as identity (start with 1, increment by 1), " +
-						"	project_id_copy1 integer not null," +
-						"	project_id_copy2 integer not null," +
-						"	project_id_copy3 integer not null," +
-						"	project_id_copy4 integer not null," +
+						"	project_id_copy1 integer," +
+						"	project_id_copy2 integer," +
+						"	project_id_copy3 integer," +
+						"	project_id_copy4 integer," +
 						"	title varchar(30) not null," +
 						"	description varchar(200) not null," +
 						"	start varchar(20) not null," +
@@ -2235,4 +2235,246 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
+
+	@Override
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, title);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set description = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, description);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set start = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, start);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set duration = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, duration);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+		
+	}
+
+	@Override
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, numStudents);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set cost = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setDouble(1, cost);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set deadline = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, deadline);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editCost(int project_id, double cost) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set cost = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setDouble(1, cost);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set numStudents = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, numStudents);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set isFunded = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, Boolean.toString(isFunded));
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editSolicitationType(int project_id, SolicitationType solicitationType)
+			throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set solicitationType = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, solicitationType.toString());
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	
 }
