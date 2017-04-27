@@ -52,14 +52,14 @@
 			<input type="checkbox" name="EE" value="EE">Electrical Engineering
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering
 			<input type="checkbox" name="CivE" value="CivE">Civil Engineering
-			<br>
+			<br><br>
 			
 			<label><a>Student Year(s):</a></label><br>
 			<input type="checkbox" name="freshman" value="FR">Freshman
 			<input type="checkbox" name="sophomore" value="SO">Sophomore
 			<input type="checkbox" name="junior" value="JR">Junior
 			<input type="checkbox" name="senior" value="SR">Senior
-			<br>
+			<br><br>
 			
 			<label><a>Solicitation Type:</a></label><br>
 			<select> name="solicitationType">

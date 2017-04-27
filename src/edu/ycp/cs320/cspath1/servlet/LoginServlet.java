@@ -46,14 +46,14 @@ private IDatabase db;
 		} else {
 			try {
 				user = db.findUserByUsernameAndPassword(username, password);
-//				System.out.println(user.getUsername() + ", " + user.getPassword());
-//				System.out.println(username + ", " + password);
+				System.out.println(user.getUsername() + ", " + user.getPassword());
+				System.out.println(username + ", " + password);
 				
-				if(user.getUsername() != null && user.getPassword() != null && user.getUsername() == username && user.getPassword() == password){
+				if(user.getUsername() != null && user.getPassword() != null && user.getUsername().equals(username) && user.getPassword().equals(password)){
 					validLogin = true;
 				}
 				else {
-					errorMessage = "Username or Password may be inccorect";
+					errorMessage = "Username or Password may be incorrect";
 				}
 				
 			} catch (SQLException e) {
@@ -74,9 +74,14 @@ private IDatabase db;
 			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
 		else if(validLogin){
+			
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
+			System.out.println(user.getUsername() + ", " + user.getPassword());
 			UserType userType = user.getUsertype();
+			System.out.println(userType);
+			
+			
 			
 			if(userType == UserType.STUDENT){
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
@@ -87,7 +92,7 @@ private IDatabase db;
 			else if(userType == UserType.FACULTY){
 				resp.sendRedirect(req.getContextPath() + "/facultyHome");
 			}			
-			return;
+			
 		} else {
 			// Forward to view to render the result HTML document
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);

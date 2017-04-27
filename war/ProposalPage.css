@@ -52,7 +52,7 @@ label>a{
 }
 div.superContainer{
 	width: 800px;
-	height: 700px;
+	height: 900px;
 	border: 2px solid #ccc;
 	position: relative;
 	margin: auto;
@@ -113,4 +113,4 @@ li>a:hover{
 .button5:hover {
     background-color: white;
     color: black;
-}
+}}
