@@ -1,6 +1,7 @@
  package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
+import edu.ycp.cs320.cspath1.persist.IDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 import edu.ycp.cs320.cspath1.user.Student;
 
 
 
 public class AccountCreationStudentServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
-	
+private IDatabase db;	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -26,8 +31,9 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		DatabaseProvider.setInstance(new YCPDatabase());
+		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
-		Student student = new Student();
 		
 		String email = req.getParameter("email");
 		String username = req.getParameter("username");
@@ -36,17 +42,16 @@ private static final long serialVersionUID = 1L;
 		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
 			
-		student.setEmail(email);
-		student.setPassword(password);
-		student.setUsername(username);
-		student.setMajor(majortype);
-		student.setUsertype(UserType.STUDENT);
-		student.setClassLevel(classtype);
-			
 		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null) {
 			errorMessage = "Please specify required fields";
 		} else if (password != password1) {
 			errorMessage = "Passwords do not match";
+		} else {
+			try {
+				db.insertUser(username, password1, email, UserType.STUDENT);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 			
 		
