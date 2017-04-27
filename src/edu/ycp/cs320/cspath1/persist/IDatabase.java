@@ -63,7 +63,8 @@ public interface IDatabase {
 	//PROJECTS
 	
 	//tested
-	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type) throws IOException, SQLException;
+	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type
+			, SolicitationType solicitationType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline) throws IOException, SQLException;
 	//IN PROGRESS
 	public void deleteProject(int project_id) throws IOException, SQLException;
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
