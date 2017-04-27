@@ -13,7 +13,7 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 
-import edu.ycp.cs320.cspath1.persist.FakeDatabase;
+//import edu.ycp.cs320.cspath1.persist.FakeDatabase;
 import edu.ycp.cs320.cspath1.project.Solicitation;
 
 public class ProjectSolicitationServlet extends HttpServlet{
@@ -181,7 +181,7 @@ private static final long serialVersionUID = 1L;
 		return classtypes;
 	}
 	
-	public ArrayList<Solicitation> getFoundProjects(ClassType classtype){
+	/*public ArrayList<Solicitation> getFoundProjects(ClassType classtype){
 		ArrayList<Solicitation> result = new ArrayList<Solicitation>();
 		FakeDatabase fb = new FakeDatabase();
 		//result.addAll(fb.findSolicitationsByMajorType(majortype));
@@ -194,5 +194,5 @@ private static final long serialVersionUID = 1L;
 		//result.addAll(fb.findSolicitationsBySolicitationType(solicitationType));
 		//result.add(fb.findSolicitationByProjectID(projectID));
 		return result;
-	}
+	}*/
 }

@@ -417,6 +417,7 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement stmt4 = null;
 				PreparedStatement stmt5 = null;
 				PreparedStatement stmt6 = null;
+				PreparedStatement stmt7 = null;
 				
 				try {
 					stmt1 = conn.prepareStatement(
@@ -447,6 +448,8 @@ public class YCPDatabase implements IDatabase {
 						"	project_id_copy2 integer," +
 						"	project_id_copy3 integer," +
 						"	project_id_copy4 integer," +
+						"	project_id_copy5 integer," +
+						"	project_id_copy6 integer," +
 						"	title varchar(30) not null," +
 						"	description varchar(200) not null," +
 						"	start varchar(20) not null," +
@@ -470,7 +473,6 @@ public class YCPDatabase implements IDatabase {
 						"	project_id integer constraint project_id references projects" +
 						")"
 						);
-					
 						stmt3.executeUpdate();
 					
 					stmt4 = conn.prepareStatement(
@@ -479,7 +481,6 @@ public class YCPDatabase implements IDatabase {
 						"	project_id_copy4 integer constraint project_id_copy4 references projects" +
 						")"
 						);	
-					
 						stmt4.executeUpdate();
 						
 					stmt5 = conn.prepareStatement(
@@ -510,8 +511,29 @@ public class YCPDatabase implements IDatabase {
 						"	active_project_id integer constraint active_project_id references activeProjects" +
 						")"
 						);
-					
 					stmt6.executeUpdate();
+					
+					stmt7 = conn.prepareStatement(
+							"create table pastProjects (" +
+							"	active_project_id integer primary key " +
+							"	generated always as identity (start with 1, increment by 1), " +
+							"	project_id_copy5 integer constraint project_id_copy5 references projects," +
+							"	project_id_copy6 integer constraint project_id_copy6 references projects," +
+							"	title varchar(30) not null," +
+							"	description varchar(200) not null," +
+							"	start varchar(20) not null," +
+							"	duration integer not null," +
+							"	projectType varchar(20) not null," +
+							"	majors varchar(20) not null," +
+							"	classes varchar(30) not null," +
+							"	numStudents integer not null," + 
+							"	cost integer," + 
+							"	isFunded varchar(5) not null," +
+							"	deadline varchar(20) not null," +
+							"	budget integer" + 
+							")"
+							);	
+						stmt7.executeUpdate();
 					
 					return true;
 				} finally {
@@ -536,6 +558,7 @@ public class YCPDatabase implements IDatabase {
 				List<projectProject> projectProjectList;
 				List<ActiveProjectUsers> activeProjectUsersList;
 				List<ActiveProject> activeProjectList;
+				List<PastProject> pastProjectList;
 				try {
 					userList = InitialData.getUsers();
 					projectList = InitialData.getProjects();
@@ -543,6 +566,7 @@ public class YCPDatabase implements IDatabase {
 					projectProjectList = InitialData.getProjectProject();
 					activeProjectUsersList = InitialData.getActiveProjectUsers();
 					activeProjectList = InitialData.getActiveProjects();
+					pastProjectList = InitialData.getPastProjects();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -552,6 +576,7 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement insertActiveProjects = null;
 				PreparedStatement insertProjectProject = null;
 				PreparedStatement insertActiveProjectUsers = null;
+				PreparedStatement insertPastProjects = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
@@ -586,12 +611,11 @@ public class YCPDatabase implements IDatabase {
 					
 					System.out.println("Users table populated");
 
-
 					insertProject = conn.prepareStatement(
 							"insert into projects" +
-							"	(project_id_copy1, project_id_copy2, project_id_copy3, project_id_copy4, title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
+							"	(project_id_copy1, project_id_copy2, project_id_copy3, project_id_copy4, project_id_copy5, project_id_copy6, title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
 							"	cost, isFunded, deadline)" +
-							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 							);
 					for (Project project : projectList) {
 						int index = 1;
@@ -599,30 +623,31 @@ public class YCPDatabase implements IDatabase {
 						insertProject.setInt(2, index);
 						insertProject.setInt(3, index);
 						insertProject.setInt(4, index);
-						insertProject.setString(5, project.getTitle());
-						insertProject.setString(6, project.getDescription());
-						insertProject.setString(7, project.getStart());
-						insertProject.setInt(8, project.getDuration());
-						insertProject.setString(9, project.getProjectType().toString());
+						insertProject.setInt(5, index);
+						insertProject.setInt(6, index);
+						insertProject.setString(7, project.getTitle());
+						insertProject.setString(8, project.getDescription());
+						insertProject.setString(9, project.getStart());
+						insertProject.setInt(10, project.getDuration());
+						insertProject.setString(11, project.getProjectType().toString());
 						if (project.getProjectType().equals(ProjectType.PROPOSAL)) {
-							insertProject.setString(11, ((Proposal) project).getMajors().toString());
-							insertProject.setString(12, ((Proposal) project).getClasses().toString());
-							insertProject.setInt(13, ((Proposal) project).getNumStudents());
-							insertProject.setDouble(14, ((Proposal) project).getCost());
-							insertProject.setString(15, Boolean.toString(((Proposal) project).getIsFunded()));
-							insertProject.setString(16, ((Proposal) project).getDeadline());
+							insertProject.setString(13, ((Proposal) project).getMajors().toString());
+							insertProject.setString(14, ((Proposal) project).getClasses().toString());
+							insertProject.setInt(15, ((Proposal) project).getNumStudents());
+							insertProject.setDouble(16, ((Proposal) project).getCost());
+							insertProject.setString(17, Boolean.toString(((Proposal) project).getIsFunded()));
+							insertProject.setString(18, ((Proposal) project).getDeadline());
 						} else if (project.getProjectType().equals(ProjectType.SOLICITATION)) {
-							insertProject.setString(10, ((Solicitation) project).getSolicitationType().toString());
-							insertProject.setString(11, ((Solicitation) project).getMajors().toString());
-							insertProject.setString(12, ((Solicitation) project).getClasses().toString());
-							insertProject.setInt(13, ((Solicitation) project).getNumStudents());
-							insertProject.setInt(14, ((int) ((Solicitation) project).getCost()));
+							insertProject.setString(12, ((Solicitation) project).getSolicitationType().toString());
+							insertProject.setString(13, ((Solicitation) project).getMajors().toString());
+							insertProject.setString(14, ((Solicitation) project).getClasses().toString());
+							insertProject.setInt(15, ((Solicitation) project).getNumStudents());
+							insertProject.setInt(16, ((int) ((Solicitation) project).getCost()));
 						} 
 						index++;
 						insertProject.addBatch();
 					}
 					insertProject.executeBatch();
-
 					
 					System.out.println("Projects table populated");
 					
@@ -690,7 +715,34 @@ public class YCPDatabase implements IDatabase {
 						insertActiveProjectUsers.addBatch();
 					}
 					insertActiveProjectUsers.executeBatch();
+					
 					System.out.println("activeProjectUsers table populated");
+					
+					insertPastProjects = conn.prepareStatement(
+							"insert into pastProjects" +
+							"	(project_id_copy5, project_id_copy6, title, description, start, duration, projectType, majors, classes, numStudents, cost, isFunded, deadline, budget)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					for (PastProject pastProject : pastProjectList){
+						insertPastProjects.setInt(1, pastProject.getProject_id_copy_5());
+						insertPastProjects.setInt(2, pastProject.getProject_id_copy_6());
+						insertPastProjects.setString(3, pastProject.getTitle());
+						insertPastProjects.setString(4, pastProject.getDescription());
+						insertPastProjects.setString(5, pastProject.getStart());
+						insertPastProjects.setInt(6, pastProject.getDuration());
+						insertPastProjects.setString(7, pastProject.getProjectType().toString());
+						insertPastProjects.setString(8, pastProject.getMajors().toString());
+						insertPastProjects.setString(9, pastProject.getClasses().toString());
+						insertPastProjects.setInt(10, pastProject.getNumStudents());
+						insertPastProjects.setDouble(11, pastProject.getCost());
+						insertPastProjects.setString(12, Boolean.toString(pastProject.isFunded()));
+						insertPastProjects.setString(13, pastProject.getDeadline());
+						insertPastProjects.setDouble(14, pastProject.getBudget());
+						insertPastProjects.addBatch();
+					}
+					insertPastProjects.executeBatch();
+					
+					System.out.println("pastProject table populated");
 					
 					return true;
 				} finally {
@@ -714,7 +766,7 @@ public class YCPDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		
-		System.out.println("Success!");
+		System.out.println("Success!!");
 	}
 
 	//IN PROGRESS
@@ -1449,6 +1501,7 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement stmt2 = null;
 		PreparedStatement stmt3 = null;
 		PreparedStatement stmt4 = null;
+		PreparedStatement stmt5 = null;
 		Integer project_id = 0;
 		try {
 			stmt = conn.prepareStatement(
@@ -1506,6 +1559,23 @@ public class YCPDatabase implements IDatabase {
 			
 			stmt4.execute();
 			
+			stmt5 = conn.prepareStatement(
+					"update projects" + 
+					"	set project_id_copy1 = ?" +
+					"	set project_id_copy2 = ?" +
+					"	set project_id_copy3 = ?" +
+					"	set project_id_copy4 = ?" +
+					"	set project_id_copy5 = ?" +
+					"	set project_id_copy6 = ?" 
+					);
+			stmt5.setInt(1, project_id);
+			stmt5.setInt(2, project_id);
+			stmt5.setInt(3, project_id);
+			stmt5.setInt(4, project_id);
+			stmt5.setInt(5, project_id);
+			stmt5.setInt(6, project_id);
+			
+			stmt5.execute();
 			return project_id;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
@@ -1514,6 +1584,7 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(stmt3);
 			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(stmt5);
 			DBUtil.closeQuietly(conn);
 		}
 	}

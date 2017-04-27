@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 <html>
-	<head>
-		<title>Home</title>
-		<link rel="stylesheet" href="TestCSS.css">
-	</head>
+<head>
+	<link rel = "stylesheet" href = "Style.css"/>
+	<title> FacultyHome </title>
 	
-	<body>
-	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-	</c:if>
-	
-	<h1 id="webpageTitle">Home</h1>
-	
-	<div id="Context">
-		<div class= "info"> 
-			<h4 id="Info">
-			<p>Discipline/Disciplines</p>
-				<p>email</p>
-			</h4>
+</head> 
+<body>
+
+	<div id = "header">
+		<div id="logo">
+			<img src ="Logo.png"/>
 		</div>
-		<div class= "sections">
-		<h3 id="sectionSubtitle">Projects</h3>
-		<form action= "${pageContext.servletContext.contextPath}/studentHome" method="post">
-			<input name = "projectSolicitation" type= "submit" value="Project Search"/>
-			<input name="projectProposal" type="submit" value="Project Proposal" />
-		</form>
-			<ul>
-				<li>Project 1</li>
-				<li>Project 2</li>
-				<li>Project 3</li>
+		<form>
+			<ul id = "navbarFaculty">
+				<li><a><input type="Submit" name="submit" value="Home" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="submit" value="Approvals" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="submit" value="MyProjects" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="submit" value="New Project" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="submit" value="Search" class = "navButtons"></a></li>
+				<li><a><input type="Submit" name="submit" value="Logout" class = "navButtons"></a></li>	
 			</ul>
-		</div>
+		</form>
 	</div>
-	</body>
+	
+
+
+</body>
 </html>

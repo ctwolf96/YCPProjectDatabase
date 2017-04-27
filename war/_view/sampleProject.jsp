@@ -35,6 +35,9 @@
 			<li>Computer Engineering</li>
 			<li>Computer Science</li>
 		</ul>
+	<div class = "search">
+		<input name="search" type= "submit" value="Search Projects"> 
+	</div>
 	<h3 id="sectionSubtitle">Student Class</h3>
 		<p>Sophomores</p>
 		</div>

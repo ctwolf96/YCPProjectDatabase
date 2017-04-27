@@ -43,17 +43,18 @@
 				<option value="9">9</option>
 				<option value="10">10</option>
 		</select><br>
-		<label><a>Start Date (mm/dd/yyyy)</a></label><br>
-		<input type="text" name="startDate"><br><br>
+		<label><a>Start Date</a></label><br>
+		<input type="date" name="startDate"><br><br>
 		
-			<p>Majors/Disciplines: </p>
+			<label><a>Majors/Disciplines:</a></label><br>
 			<input type="checkbox" name="CE" value="CE">Computer Engineering<br>
 			<input type="checkbox" name="CS" value="CS">Computer Science<br>
 			<input type="checkbox" name="EE" value="EE">Electrical Engineering<br>
 			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br>
+			<input type="checkbox" name="CivE" value="CivE">Civil Engineering<br>
 			<br>
 			
-			<p>Student Class</p>
+			<label><a>Student Year(s)</a></label><br>
 			<input type="checkbox" name="freshman" value="FR">Freshman<br>
 			<input type="checkbox" name="sophomore" value="SO">Sophomore<br>
 			<input type="checkbox" name="junior" value="JR">Junior<br>

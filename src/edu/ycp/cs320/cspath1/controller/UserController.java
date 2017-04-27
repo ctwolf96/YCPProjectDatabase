@@ -60,7 +60,6 @@ public class UserController {
 	
 	public void proposeProject() {
 		//create a new proposal a send to admin/faculty
-		
 	}
 
 	public AccountCreationModel getModel() {

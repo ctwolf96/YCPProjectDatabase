@@ -24,7 +24,6 @@ public interface IDatabase {
 	//USERS
 	//tested
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
-
 	//tested
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException;
 	//tested
