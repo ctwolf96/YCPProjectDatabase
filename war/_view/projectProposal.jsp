@@ -27,12 +27,14 @@
 	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
 	<h1 style = "text-align: center">Project Proposal</h1>
-		<label><a>Project Title</a></label><br>
-		<input type="text" name="title"><br>
-		<label><a>Description</a></label>
+		<label><a>Project Title:</a></label><br>
+		<input type="text" name="title"><br><br>
+		
+		<label><a>Description:</a></label>
 		<textarea name="message" class="description" rows="10" cols="30">
 		</textarea><br><br>
-		<label><a>Duration (Semesters)</a></label><br>
+		
+		<label><a>Duration (Semesters):</a></label><br>
 		<select name="duration">
 				<option value="1"selected>1</option>
 				<option value="2">2</option>
@@ -44,29 +46,22 @@
 				<option value="8">8</option>
 				<option value="9">9</option>
 				<option value="10">10</option>
-		</select>
-		<br>
-		<label><a>Start Date</a></label><br>
+		</select><br><br>
+		
+		<label><a>Start Date:</a></label><br>
 		<input type="date" name="startTime"><br><br>
 		
-		<label><a>Funding</a></label><br>
+		<label><a>Deadline:</a></label><br>
+		<input type="date" name="startDate"><br><br>
+		
+		<label><a>Funding:</a></label><br>
 		<select name="isFunded">
 			<option value="true"selected>Yes</option>	
 			<option value="false">No</option>
-		</select><br>
-		<labeL><a>Number of Students</a></labeL><br>
-		<select name="numStudents">
-			<option value="1"selected>1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>	
 		</select><br><br>
+		
+		<labeL><a>Number of Students:</a></labeL><br>
+		<input type="text" name="numStudents"><br><br>
 			
 			<labeL><a>Majors Involved</a></labeL><br>
 			<input type="checkbox" name="CE" value="CE">Computer Engineering
@@ -79,9 +74,11 @@
 			<input type="checkbox" name="freshman" value="FR">Freshman
 			<input type="checkbox" name="sophomore" value="SO">Sophomore
 			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior
-			<br>
-			<br>
+			<input type="checkbox" name="senior" value="SR">Senior<br><br>
+			
+			<label><a>Cost:</a></label><br>
+			<input type="text" name="cost"><br><br>
+			
 			<div>
 			<input type="Submit" name="submit" value="Create Project" class = "button button5">
 			

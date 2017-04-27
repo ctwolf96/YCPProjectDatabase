@@ -425,7 +425,7 @@ public class YCPDatabase implements IDatabase {
 						"create table users (" +
 						"	user_id integer primary key " +
 						"	generated always as identity (start with 1, increment by 1), " +
-						"	user_id_copy integer not null," +
+						"	user_id_copy integer," +
 						"	username varchar(40) not null," +
 						"	password varchar(40) not null," +
 						"	email varchar(60) not null," +
@@ -2307,46 +2307,157 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
-
 	@Override
 	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, title);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 		
 	}
 
 	@Override
 	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set description = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, description);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 		
 	}
 
 	@Override
 	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set start = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, start);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 		
 	}
 
 	@Override
 	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set duration = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, duration);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
 		
 	}
 
 	@Override
 	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, numStudents);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 		
 	}
 
 	@Override
 	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set cost = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setDouble(1, cost);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 		
 	}
 
 	@Override
 	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set deadline = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, deadline);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}	
 	}
 }

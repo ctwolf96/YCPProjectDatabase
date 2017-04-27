@@ -44,19 +44,13 @@ private IDatabase db;
 		username = req.getParameter("username");
 		password = req.getParameter("password");
 			
-		
-		
-		
-			
 		if (username == null || password == null || username.equals("")||password.equals("")) {
 			errorMessage = "Please specify username and password";
-		}
-		else{
-			
-			
-			
+		} else {
 			try {
 				user = db.findUserByUsernameAndPassword(username, password);
+				System.out.println(user.getUsername() + ", " + user.getPassword());
+				System.out.println(username + ", " + password);
 				
 				if(user.getEmail() != null && user.getPassword() != null){
 					validLogin = true;
@@ -68,14 +62,7 @@ private IDatabase db;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			
-		
-			
 		}
-		
-		
-		
 		
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
@@ -102,10 +89,7 @@ private IDatabase db;
 			}
 			else if(userType == UserType.FACULTY){
 				resp.sendRedirect(req.getContextPath() + "/facultyHome");
-			}
-	
-			
-			
+			}			
 			return;
 		}
 

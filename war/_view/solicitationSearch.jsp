@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="Solicitation.css">
+	<header>
+		<title>Solicited Project Search</title>
+		<link rel="stylesheet" href="Search.css">
 		<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
@@ -20,8 +20,10 @@
 	</c:if>
 	
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
-	<h1 style = "text-align: center">Project Solicitation</h1>
+	<form action="${pageContext.servletContext.contextPath}/solicitationSearch" method="post">
+	<h1 style = "text-align: center">Solicited Project Search</h1>
+		<p>Select a field to search by and click "Search"</p><br>
+		
 		<label><a>Project Title:</a></label><br>
 		<input type="text" name="title"><br><br>
 		

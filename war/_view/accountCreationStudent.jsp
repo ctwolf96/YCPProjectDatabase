@@ -15,11 +15,6 @@
 				<img src="Logo.png"/>			
 			</div>
 		</div>
-	
-	
-	
-	
-
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 	<div class=container>
 	<h1 style = "text-align: center">Student Account Creation</h1><br>

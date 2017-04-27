@@ -22,11 +22,16 @@ private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//moving around the page
-		if (req.getParameter("projectSolicitation")!= null){
-			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
-		}
-		else if (req.getParameter("projectProposal") != null){
+		if (req.getParameter("logout")!= null) {
+			resp.sendRedirect(req.getContextPath() + "/loginn");
+		} else if (req.getParameter("search") != null) {
+			resp.sendRedirect(req.getContextPath() + "/search");
+		} else if (req.getParameter("proposal") != null) {
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
+		} else if (req.getParameter("myProjects") != null) {
+			resp.sendRedirect(req.getContextPath() + "/myProjects"); 
+		} else {
+			req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
 		}
 	}
 }

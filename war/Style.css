@@ -44,7 +44,7 @@ body{
 }
 .navButtons{
 	
-	 background-color: rgba(254, 254, 254, 0); 
+    background-color: rgba(254, 254, 254, 0); 
     border: none;
     color: Black;
     padding: 5px 5px;
@@ -112,4 +112,59 @@ li>a:hover{
 .button5:hover {
     background-color: white;
     color: black;
+}
+
+
+.dropdownContent {
+	width: 175px;
+	height: 160px;
+	 display: none;
+    position: absolute;
+    background-color: rgba(254, 254, 254, 0);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdownButtons {
+    background-color: rgba(254, 254, 254, 0); 
+    display: inline-block;
+    position: relative;
+    border: none;
+    color: Black;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    
+    font-size: 22px;
+	cursor: pointer;
+}
+
+/* Links inside the dropdown */
+.dropdownContent a {
+    display:block;
+	color:black;
+	line-height:80px;
+	text-align: center;
+	font-family: cursive;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+/* Change color of dropdown links on hover */
+.dropdownContent a:hover {
+background-color: white;
+    color: black;
+	cursor: pointer;
+}
+
+/* Show the dropdown menu on hover */
+.dropdownButtons:hover .dropdownContent {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: white;
+    color: black;
+	cursor: pointer;
 }
