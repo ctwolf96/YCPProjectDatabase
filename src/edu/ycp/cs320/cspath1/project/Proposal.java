@@ -1,6 +1,5 @@
 package edu.ycp.cs320.cspath1.project;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;

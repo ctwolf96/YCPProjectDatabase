@@ -13,6 +13,12 @@ public class AccountCreationModel {
 	private MajorType majortype;
 	private ClassType classtype;
 	private EmailValidator emailValidator;
+	private String name;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String contactNum;
+	
 	
 	//tested
 	public ClassType getClasstype() {
@@ -80,6 +86,23 @@ public class AccountCreationModel {
 
 	public void setEmailValidator(EmailValidator emailValidator) {
 		this.emailValidator = emailValidator;
+	}
+	
+	//the following string functions need to be tested
+	public String getName() {
+		return name;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public String getContactNum() {
+		return contactNum;
+	}
+	public String getAddress() {
+		return address;
 	}
 	
 	//this will change soon...ignore for now

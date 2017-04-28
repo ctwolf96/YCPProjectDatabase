@@ -340,7 +340,7 @@ public class YCPDatabaseTests {
 		System.out.println("\n*** Testing insertUser***");
 		
 		Integer user_id = 0;
-		user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT);
+		user_id = db.insertUser("cspath2", "password", "cspath2@ycp.edu", UserType.STUDENT, "Charles", "Spath", MajorType.EE, ClassType.FRESHMAN, null, null, null);
 		
 		System.out.println(user_id);
 		
@@ -385,9 +385,14 @@ public class YCPDatabaseTests {
 	@Test
 	public void testInsertProject() throws IOException, SQLException {
 		System.out.println("\n*** Testing insertProject ***");
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		majors.add(MajorType.CIV);
 		
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		classes.add(ClassType.JUNIOR);
 		int project_id = 0;
-		project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.PROPOSAL);
+		project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.SOLICITATION, SolicitationType.CivE_CAPSTONE, majors, classes
+				, 2, 8000, true, "5/16/17");
 		
 		System.out.println(project_id);
 		
@@ -411,8 +416,14 @@ public class YCPDatabaseTests {
 	@Test
 	public void testDeleteProject() throws IOException, SQLException {
 		System.out.println("\n*** Testing deleteProject ***");
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
 		
-		int project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.PROPOSAL);
+		majors.add(MajorType.CS);
+		classes.add(ClassType.SOPHOMORE);
+		
+		int project_id = db.insertProject(1, "Test", "description", "4/20/17", 1, ProjectType.PROPOSAL, null, majors, classes, 2, 3000, false, "4/21/17");
+		
 		db.deleteProject(project_id);
 		project = db.findProjectByProjectID(project_id);
 		
@@ -822,6 +833,88 @@ public class YCPDatabaseTests {
 		}
 
 		
+	}
+	
+	@Test
+	public void testEditCost() throws IOException, SQLException {
+		System.out.println("\n ***Testing editCost***");
+		
+		Integer project_id = 2;
+		double cost = 100000;
+		db.editCost(project_id, cost);
+		
+		projects = db.findProjectByCost(cost);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getTitle());
+		}
+		
+	}
+	
+	@Test 
+	public void testEditNumStudents() throws IOException, SQLException {
+		System.out.println("\n ***Testing editNumStudents***");
+		
+		Integer project_id = 3;
+		Integer numStudents = 15;
+		
+		db.editNumStudents(project_id, numStudents);
+		
+		projects = db.findProjectByNumStudents(numStudents);
+		
+		if(projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDuration() + ", " + projects.get(0).getProjectID());
+		}
+	}
+	
+	@Test
+	public void testEditFunded() throws IOException, SQLException {
+		System.out.println("\n ***Testing editFunding***");
+		
+		Integer project_id = 2;
+		Boolean isFunded = false;
+		
+		db.editFunding(project_id, isFunded);
+		
+		projects = db.findProjectByIsFunded(isFunded);
+		
+		if(projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getDuration());
+		}
+	}
+	
+	@Test
+	public void testEditSolicitationType() throws IOException, SQLException {
+		System.out.println("\n ***Testing editSolicitationType***");
+		
+		Integer project_id = 4;
+		SolicitationType solicitationType = SolicitationType.CS_INTERNSHIP;
+		db.editSolicitationType(project_id, solicitationType);
+		
+		projects = db.findProjectBySolicitationType(solicitationType);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		else {
+			System.out.println(projects.get(0).getDuration() + ", " + projects.get(0).getProjectID());
+		}
 	}
 	
 }

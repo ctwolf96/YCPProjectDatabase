@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
-	<head>
-		<title>Home</title>
-		<link rel="stylesheet" href="TestCSS.css">
-	</head>
-	
-	<body>
-	<h1 id="webpageTitle">Home</h1>
-	<div id="Context">
-		<div class= "info"> 
-			<h4 id="Info">
-			<table>
-				<tr>
-					<td>Major</td>
-					<td>Year</td>
-				</tr>
-				<tr>
-					<th>email</th>
-					<th>expected grad date</th>
-				</tr>
-			</table>
-			</h4>
+<head>
+<link rel="stylesheet" href="Style.css" />
+<title>StudentHome</title>
+
+</head>
+<body>
+
+	<div id="header">
+		<div id="logo">
+			<img src="Logo.png" />
 		</div>
-		<div class= "sections">
-		<h3 id="sectionSubtitle">Projects</h3>
-		<form action= "${pageContext.servletContext.contextPath}/studentHome" method="post">
-			<input name = "projectSolicitation" type= "submit" value="Project Search"/>
-			<input name="projectProposal" type="submit" value="Project Proposal" />
-		</form>
-			<ul>
-				<li>Project 1</li>
-				<li>Project 2</li>
-				<li>Project 3</li>
+		<form action="${pageContext.servletContext.contextPath}/studentHome"
+			method="post">
+			<ul id="navbar">
+				<li><a><input type="Submit" name="home" value="Home"
+						class="navButtons"></a></li>
+				<li><a><input type="Submit" name="myProjects"
+						value="My Projects" class="navButtons"></a></li>
+				<li><input type="button" name="newProject" value="New Project"
+					class="dropdownButtons"></li>
+				<div class="dropdownContent">
+					<a><input type="Submit" name="proposal" value="New Proposal"
+						class="navButtons"></a> <a><input type="Submit"
+						name="solicitation" value="New Solicitation" class="navButtons"></a>
+				</div>
+				<li><a><input type="Submit" name="search" value="Search"
+						class="navButtons"></a></li>
+				<li><a><input type="Submit" name="logout" value="Logout"
+						class="navButtons"></a></li>
 			</ul>
-		</div>
+		</form>
 	</div>
-	</body>
+
+
+
+</body>
 </html>

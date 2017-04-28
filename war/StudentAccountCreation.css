@@ -55,13 +55,17 @@ li>a:hover {
 
 div.container {
 	width: 650px;
-	height: 635px;
+	height: 850px;
 	border: 2px solid #ccc;
-	padding: 10px;
-	position: relative;
+	padding: 15px;
 	margin: auto;
-	margin-top: 100px;
+	margin-top: 75px;
+	position: relative;
 	background-color: #fff;
+}
+
+label>a {
+	font-family: cursive;
 }
 
 input[type=text], input[type=password] {
@@ -76,12 +80,19 @@ input[type=text], input[type=password] {
 }
 
 #newLogin {
-	margin: 10px;
+	margin-top: 3px;
+	margin-left: 30px;
 }
 
-label>a {
+label>b {
 	font-family: cursive;
 	padding-left: 10px;
+}
+
+#UserType {
+	height: 10px;
+	width: 550px;
+	margin: 15px;
 }
 
 .button {
@@ -97,6 +108,7 @@ label>a {
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;
 	cursor: pointer;
+	margin: 3px;
 }
 
 .button5 {
@@ -108,20 +120,4 @@ label>a {
 .button5:hover {
 	background-color: white;
 	color: black;
-}
-
-input[type=submit] {
-	background-color: #028C52; /* Green */
-	border: none;
-	color: white;
-	padding: 16px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	align: center;
-	-webkit-transition-duration: 0.4s; /* Safari */
-	transition-duration: 0.4s;
-	cursor: pointer;
-	border: 2px solid black;
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
-
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 import edu.ycp.cs320.cspath1.controller.InsertProjectController;
 
@@ -23,19 +23,19 @@ private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		String user = (String) req.getSession().getAttribute("user");
-		if (user == null) {
-			System.out.println("   User: <" + user + "> not logged in or session timed out");
-			
-			// user is not logged in, or the session expired
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
+//		String user = (String) req.getSession().getAttribute("user");
+//		if (user == null) {
+//			System.out.println("   User: <" + user + "> not logged in or session timed out");
+//			
+//			// user is not logged in, or the session expired
+//			resp.sendRedirect(req.getContextPath() + "/login");
+//			return;
+//		}
 
 		// now we have the user's User object,
 		// proceed to handle request...
 		
-		System.out.println("   User: <" + user + "> logged in");
+		//System.out.println("   User: <" + user + "> logged in");
 		
 		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 	}
@@ -58,9 +58,12 @@ private static final long serialVersionUID = 1L;
 		//Until we make a model, these will be considered unused
 		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
 		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
-		String numStudents = req.getParameter("numStudents");
+		int numStudents = Integer.parseInt(req.getParameter("numStudents"));
 		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
 		String struserID = req.getParameter("userID");
+		int cost = Integer.parseInt(req.getParameter("cost"));
+		SolicitationType solicitType = getSolicitTypeFromParameter(req.getParameter("solicitType"));
+		String deadline = req.getParameter("endDate");
 			
 		model.setTitle(title);
 		model.setStartTime(startTime);
@@ -68,7 +71,6 @@ private static final long serialVersionUID = 1L;
 		model.setDescription(description);
 		model.setClasses(classtypes);
 		model.setMajors(majortypes);
-		
 		
 		/*I had to hard code the boolea for the "isFunded" variable because
 		the program would crash. Some reason it was reading the input from
@@ -93,7 +95,8 @@ private static final long serialVersionUID = 1L;
 				int duration = Integer.parseInt(strduration);
 				
 				try {
-					if(controller.insertProjectIntoDatabase(userID, title, description, startTime, duration, ProjectType.PROPOSAL)){
+					if(controller.insertProjectIntoDatabase(userID, title, description, startTime, duration, ProjectType.PROPOSAL, solicitType,
+						majortypes, classtypes, numStudents, (double)cost, isFunded, deadline)){
 						successMessage = title;
 					}
 					else{
@@ -226,5 +229,46 @@ private static final long serialVersionUID = 1L;
 			classtypes.add(SR);
 		}
 		return classtypes;
+	}
+	
+	private SolicitationType getSolicitTypeFromParameter(String s){
+		SolicitationType solicitType = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s == "ME_CAPSTONE"){
+			solicitType = SolicitationType.ME_CAPSTONE;
+		}
+		else if (s == "ECE_CAPSTONE"){
+			solicitType = SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s == "CivE_CAPSTONE"){
+			solicitType = SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s == "ME_ECE_CAPSTONE"){
+			solicitType = SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s == "SW_ENGINEERING"){
+			solicitType = SolicitationType.SW_ENGINEERING;
+		}
+		else if (s == "CS_SENIOR_DESIGN_I"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s == "CS_SENIOR_DESIGN_II"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s == "INDEPENDENT_STUDY"){
+			solicitType = SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s == "CS_INTERNSHIP"){
+			solicitType =SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s == "ENGINEERING_COOP"){
+			solicitType = SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s == "CLASS_PROJECT"){
+			solicitType = SolicitationType.CLASS_PROJECT;
+		}
+		return solicitType;
 	}
 }

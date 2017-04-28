@@ -54,10 +54,13 @@ public class ProjectModelTest {
 	
 	@Test
 	public void testSetNumStudents(){
-		model.setNumStudents("8");
-		assertEquals("8", model.getNumStudents());
-		model.setNumStudents("4");
-		assertEquals("4", model.getNumStudents());
+		int test1, test2;
+		test1 = 8;
+		model.setNumStudents(test1);
+		assertEquals(8, model.getNumStudents());
+		test2 = 4;
+		model.setNumStudents(test2);
+		assertEquals(4, model.getNumStudents());
 	}
 	
 	@Test
