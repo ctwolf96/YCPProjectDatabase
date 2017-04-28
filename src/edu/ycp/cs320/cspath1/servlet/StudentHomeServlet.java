@@ -13,7 +13,14 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
+		String username = (String) req.getSession().getAttribute("username");
+		String password = (String) req.getSession().getAttribute("password");
+		if (username == null || password == null)
+		{
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/_view/studentHome.jsp").forward(req, resp);
+		}
 	}
 	
 	@Override

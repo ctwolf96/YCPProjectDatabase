@@ -59,10 +59,10 @@
 				</tr>
 				
 			</table>
-			<div id="newLogin" Style = "padding: 3px">
+			<div id="newLogin">
 			<input type="Submit" name="submit" value="Create Account" class = "button button5">
-			<input type="Submit" name="student" value="Student Account Link" class = "button button5">
-			<input type="Submit" name="faculty" value="Faculty Account Link" class = "button button5">
+			<input type="Submit" name="student" value="Student Account" class = "button button5">
+			<input type="Submit" name="faculty" value="Faculty Account" class = "button button5">
 			</div>
 			</div>
 		</form>

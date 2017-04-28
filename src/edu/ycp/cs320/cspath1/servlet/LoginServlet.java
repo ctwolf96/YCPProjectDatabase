@@ -64,7 +64,7 @@ private IDatabase db;
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
-		req.setAttribute("errorMessage",errorMessage);
+		req.setAttribute("errorMessage", errorMessage);
 		
 		
 		// Add result objects as request attributes
@@ -80,9 +80,7 @@ private IDatabase db;
 			System.out.println(user.getUsername() + ", " + user.getPassword());
 			UserType userType = user.getUsertype();
 			System.out.println(userType);
-			
-			
-			
+					
 			if(userType == UserType.STUDENT){
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
