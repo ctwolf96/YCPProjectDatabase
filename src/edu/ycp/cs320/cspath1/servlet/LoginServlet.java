@@ -85,6 +85,8 @@ private IDatabase db;
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
 			
+			
+			
 			resp.sendRedirect(req.getContextPath() + "/index");
 			
 			return;
