@@ -361,7 +361,7 @@ public class YCPDatabase implements IDatabase {
 	proposal.setProjectType(project.getProjectType());
 	proposal.setMajors(getMajorListFromString(resultSet.getString(11)));
 	proposal.setClasses(getClassListFromString(resultSet.getString(12)));
-	proposal.setNumStudents(resultSet.getInt(13));
+	proposal.setNumStudents(resultSet.getInt(16));
 	proposal.setCost(resultSet.getInt(17));
 	proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(18)));
 	proposal.setDeadline(resultSet.getString(19));
@@ -824,7 +824,8 @@ public class YCPDatabase implements IDatabase {
 
 	//IN PROGRESS
 	@Override
-	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException {
+	public Integer insertUser(String username, String password, String email, UserType usertype, String firstname, String lastname
+			, MajorType major, ClassType classtype, String name, String address, String contactNum) throws IOException, SQLException {
 	Connection conn = connect();
 	ResultSet resultSet = null;
 	ResultSet resultSet2 = null;
@@ -846,18 +847,38 @@ public class YCPDatabase implements IDatabase {
 	resultSet = stmt.executeQuery();
 	
 	if(resultSet.next()) {
-	user_id = resultSet.getInt(1);
+		user_id = resultSet.getInt(1);
 	}
 	else {
 	stmt2 = conn.prepareStatement(
 	"insert into users " +
-	"	(username, password, email, usertype)" +
-	"	values (?, ?, ?, ?)"
+	"	(username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
+	"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	);
 	stmt2.setString(1, username);
 	stmt2.setString(2, password);
 	stmt2.setString(3, email);
 	stmt2.setString(4, usertype.toString());
+	if (!usertype.equals(UserType.BUSINESS)) {
+		stmt2.setString(5, firstname);
+		stmt2.setString(6, lastname);
+		stmt2.setString(7, major.toString());
+		stmt2.setString(9, null);
+		stmt2.setString(10, null);
+		stmt2.setString(11, null);
+	}
+	if (usertype.equals(UserType.STUDENT)) {
+		stmt2.setString(8, classtype.toString());
+	}
+	if(usertype.equals(UserType.BUSINESS)) {
+		stmt2.setString(5, null);
+		stmt2.setString(6, null);
+		stmt2.setString(7, null);
+		stmt2.setString(8, null);
+		stmt2.setString(9, name);
+		stmt2.setString(10, address);
+		stmt2.setString(11, contactNum);
+	}
 	
 	stmt2.executeUpdate();
 	
@@ -897,6 +918,9 @@ public class YCPDatabase implements IDatabase {
 	PreparedStatement stmt4 = null;
 	PreparedStatement stmt5 = null;
 	PreparedStatement stmt6 = null;
+	PreparedStatement stmt7 = null;
+	PreparedStatement stmt8 = null;
+	PreparedStatement stmt9 = null;
 	
 	ResultSet resultSet1 = null;
 	ResultSet resultSet2 = null;
@@ -948,28 +972,32 @@ public class YCPDatabase implements IDatabase {
 	
 	stmt4.executeUpdate();
 	//NOW I AM CONFUSED
-	/*for (int i = 0; i < users.size(); i++){
-	stmt5 = conn.prepareStatement(
-	"select projects.project_id from projects, projectUsers" +
-	"	where projectUsers.user_id = ?"
-	);
-	stmt5.setInt(1, projects.get(i).getUserID());
-	resultSet3 = stmt5.executeQuery();
+	if (!projects.isEmpty()) {
+		for (int i = 0; i < projects.size(); i++){
+			stmt5 = conn.prepareStatement(
+			"select projects.project_id from projects, projectUsers" +
+			"	where projectUsers.user_id = ?"
+			);
+			stmt5.setInt(1, user_id);
+			resultSet3 = stmt5.executeQuery();
+			
+	}
 	
 	if(!resultSet3.next()){
-	stmt6 = conn.prepareStatement(
-	"delete from users " +
-	"	where user_id = ?"
-	);
-	
-	stmt6.setInt(1, users.get(i).getUserID());
-	stmt6.executeUpdate();
-	
-	DBUtil.closeQuietly(stmt6);
-	} 
+		stmt6 = conn.prepareStatement(
+		"delete from users " +
+		"	where user_id = ?"
+		);
+		
+		stmt6.setInt(1, user_id);
+		stmt6.executeUpdate();
+		
+		DBUtil.closeQuietly(stmt6);
+		} 
 	DBUtil.closeQuietly(resultSet3);
 	DBUtil.closeQuietly(stmt5);
-	}*/
+	}
+	//ONCE WE HAVE QUERIES FOR THE NEW TABLES, WE MUST ADD TO THIS.........
 	
 	} finally {
 	DBUtil.closeQuietly(stmt1);
@@ -1547,8 +1575,8 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public Integer insertProject(int UserID, String title, String description, String start, int duration,
-	ProjectType type) throws IOException, SQLException {
+	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type
+			, SolicitationType solicitationType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline) throws IOException, SQLException {
 	Connection conn = connect();
 	ResultSet resultSet = null;
 	ResultSet resultSet2 = null;
@@ -1579,14 +1607,41 @@ public class YCPDatabase implements IDatabase {
 	System.out.println("project must be created");
 	stmt2 = conn.prepareStatement(
 	"insert into projects" +
-	"	(title, description, start, duration, projectType)" +
-	"	values (?, ?, ?, ?, ?)"
+	"	(title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, cost, isFunded, deadline)" +
+	"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	);
 	stmt2.setString(1, title);
 	stmt2.setString(2, description);
 	stmt2.setString(3, start);
 	stmt2.setInt(4, duration);
 	stmt2.setString(5, type.toString());
+	if (solicitationType != null) {
+		stmt2.setString(6, solicitationType.toString());
+	}
+	else {
+		stmt2.setString(6, null);
+	}
+	if (!majors.isEmpty()) {
+		stmt2.setString(7, majors.toString());
+	}
+	else {
+		stmt2.setString(7, null);
+	}
+	if (!classes.isEmpty()) {
+		stmt2.setString(8, classes.toString());
+	}
+	else {
+		stmt2.setString(8, null);
+	}
+	stmt2.setInt(9, numStudents);
+	stmt2.setDouble(10, cost);
+	stmt2.setString(11, Boolean.toString(isFunded));
+	if (deadline == null) {
+		stmt2.setString(12, null);
+	}
+	else {
+		stmt2.setString(12, deadline);
+	}
 	
 	stmt2.execute();
 	
@@ -1616,12 +1671,13 @@ public class YCPDatabase implements IDatabase {
 	
 	stmt5 = conn.prepareStatement(
 	"update projects" + 
-	"	set project_id_copy1 = ?" +
-	"	set project_id_copy2 = ?" +
-	"	set project_id_copy3 = ?" +
-	"	set project_id_copy4 = ?" +
-	"	set project_id_copy5 = ?" +
-	"	set project_id_copy6 = ?" 
+	"	set project_id_copy1 = ?," +
+	"	project_id_copy2 = ?," +
+	"	project_id_copy3 = ?," +
+	"	project_id_copy4 = ?," +
+	"	project_id_copy5 = ?," +
+	"	project_id_copy6 = ?" + 
+	"	where project_id = ?"
 	);
 	stmt5.setInt(1, project_id);
 	stmt5.setInt(2, project_id);
@@ -1629,6 +1685,7 @@ public class YCPDatabase implements IDatabase {
 	stmt5.setInt(4, project_id);
 	stmt5.setInt(5, project_id);
 	stmt5.setInt(6, project_id);
+	stmt5.setInt(7, project_id);
 	
 	stmt5.execute();
 	return project_id;
