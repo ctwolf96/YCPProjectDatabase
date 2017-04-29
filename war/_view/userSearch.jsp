@@ -22,56 +22,22 @@
 	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/userSearch" method="post">
 	<h1 style = "text-align: center">User Search</h1>
-		<p>Select a field to search by and click "Search"</p><br>
-		
-		<label><a>Username:</a></label><br>
-		<input type="text" name="username"><br><br>
-		
-		<label><a>Email:</a></label>
-		<input type="text" name="email"><br><br>
-		
-		<label><a>User Type:</a></label><br>
-		<select name="usertype">
-				<option value="Student"selected>Student</option>
-				<option value="Faculty">Faculty</option>
-				<option value="Business">Business</option>
+		<label><a>Select a field to search by:</a></label><br>
+		<select name="attribute">
+				<option value="username"selected>Username</option>
+				<option value="email">Email</option>
+				<option value="usertype">User Type</option>
+				<option value="firstname">First Name</option>
+				<option value="lastname">Last Name</option>
+				<option value="name">Business Name</option>
+				<option value="address">Business Address</option>
+				<option value="number">Business Number</option>
+				
+		<input type="text" name="keyword"><br><br>
+			
+		<input type="Submit" name="submit" value="Search" class = "button button5">
 		</select><br><br>
-		
-		<label><a>Firstname:</a></label><br>
-		<input type="text" name="firstname"><br><br>
-		
-		<label><a>Lastname:</a></label><br>
-		<input type="text" name="lastname"><br><br>
-		
-			<label><a>Major/Discipline:</a></label><br>
-			<select name="major">
-			<option value="CE">Computer Engineering</option>
-			<option value="CS">Computer Science</option>
-			<option value="EE">Electrical Engineering</option>
-			<option value="ME">Mechanical Engineering</option>
-			<option value="CivE">Civil Engineering</option>
-			</select><br><br>
-			
-			<label><a>Student Year:</a></label><br>
-			<select name="class">
-			<option value="Freshman">Freshman</option>
-			<option value="Sophomore">Sophomore</option>
-			<option value="Junior">Junior</option>
-			<option value="Senior">Senior</option>
-			</select><br><br>
-			
-			<label><a>Business Name:</a></label><br>
-			<input type="text" name="name"><br><br>
-			
-			<label><a>Business Address:</a></label><br>
-			<input type="text" name="address"><br><br>
-			
-			<label><a>Business Number:</a></label><br>
-			<input type="text" name="number"><br><br>
-			
-			<input type="Submit" name="submit" value="Search" class = "button button5">
-			
-		</form>
-		</div>
+	</form>
+	</div>
 	</body>
 </html>

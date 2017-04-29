@@ -22,22 +22,14 @@ private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		String user = (String) req.getSession().getAttribute("user");
-//		if (user == null) {
-//			System.out.println("   User: <" + user + "> not logged in or session timed out");
-//			
-//			// user is not logged in, or the session expired
-//			resp.sendRedirect(req.getContextPath() + "/login");
-//			return;
-//		}
-
-		// now we have the user's User object,
-		// proceed to handle request...
-		
-		System.out.println("   User: <" + user + "> logged in");
-		
-		req.getRequestDispatcher("/_view/userSearch.jsp").forward(req, resp);
+		String username = (String) req.getSession().getAttribute("username");
+		String password = (String) req.getSession().getAttribute("password");
+		if (username == null || password == null)
+		{
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/_view/userSearch.jsp").forward(req, resp);
+		}
 	}
 	
 	@Override

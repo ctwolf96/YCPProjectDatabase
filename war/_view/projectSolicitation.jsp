@@ -44,21 +44,22 @@
 		</select><br><br>
 		
 		<label><a>Start Date:</a></label><br>
-		<input type="date" name="startDate"><br><br>
+		<input type="date" name="start"><br><br>
 		
 			<label><a>Majors/Disciplines:</a></label><br>
-			<input type="checkbox" name="CE" value="CE">Computer Engineering
-			<input type="checkbox" name="CS" value="CS">Computer Science
-			<input type="checkbox" name="EE" value="EE">Electrical Engineering
-			<input type="checkbox" name="ME" value="ME">Mechanical Engineering
-			<input type="checkbox" name="CivE" value="CivE">Civil Engineering
+			<input type="checkbox" name="majora" value="CE">Computer Engineering
+			<input type="checkbox" name="majora" value="CS">Computer Science
+			<input type="checkbox" name="majors" value="EE">Electrical Engineering
+			<input type="checkbox" name="majors" value="ME">Mechanical Engineering
+			<input type="checkbox" name="majors" value="CIV">Civil Engineering
+			<input type="checkbox" name="majors" value="UN">Undeclared
 			<br><br>
 			
 			<label><a>Student Year(s):</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior
+			<input type="checkbox" name="classes" value="FR">Freshman
+			<input type="checkbox" name="classes" value="SO">Sophomore
+			<input type="checkbox" name="classes" value="JR">Junior
+			<input type="checkbox" name="classes" value="SR">Senior
 			<br><br>
 			
 			<label><a>Solicitation Type:</a></label><br>
@@ -84,7 +85,7 @@
 			
 			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
 			
-			<input type="Submit" name="project" value="Propose Project Form" class = "button button5">
+			<input type="Submit" name="proposal" value="Propose Project Form" class = "button button5">
 			
 		</form>
 		</div>
