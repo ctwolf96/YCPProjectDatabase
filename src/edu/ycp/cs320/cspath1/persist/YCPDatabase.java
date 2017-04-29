@@ -90,7 +90,6 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-
 	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/jbady/workspace/project_database.db;create=true");
 
 
@@ -1950,7 +1949,7 @@ public class YCPDatabase implements IDatabase {
 	stmt = conn.prepareStatement(
 	"select projects.*" +
 	"	from projects" +
-	"	where title = ?"
+	"	where title like '%' || ? || '%'"
 	);
 	stmt.setString(1, title);
 	
@@ -1959,6 +1958,34 @@ public class YCPDatabase implements IDatabase {
 	loadProject(project, resultSet);
 	}
 	return project;
+	} finally {
+	DBUtil.closeQuietly(resultSet);
+	DBUtil.closeQuietly(stmt);
+	DBUtil.closeQuietly(conn);
+	}
+	}
+	
+	@Override
+	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException {
+	Connection conn = connect();
+	PreparedStatement stmt = null;
+	ResultSet resultSet = null;
+	List<Project> projectList = new ArrayList<Project>();
+	Project project = new Proposal();
+	try {
+	stmt = conn.prepareStatement(
+	"select projects.*" +
+	"	from projects" +
+	"	where title like '%' || ? || '%'"
+	);
+	stmt.setString(1, title);
+	
+	resultSet = stmt.executeQuery();
+	while (resultSet.next()) {
+	project = loadProject(project, resultSet);
+	projectList.add(project);
+	}
+	return projectList;
 	} finally {
 	DBUtil.closeQuietly(resultSet);
 	DBUtil.closeQuietly(stmt);

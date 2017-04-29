@@ -124,5 +124,6 @@ public interface IDatabase {
 	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException;
 	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException;
 	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException;
+	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException;
 	
  }

@@ -4,6 +4,7 @@
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
+<<<<<<< HEAD
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
@@ -53,6 +54,57 @@
 		<servlet-name>UserSearchServlet</servlet-name>
 		<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSearchServlet</servlet-class>
 	</servlet>
+=======
+  <!-- Servlets -->
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AccountCreationBusinessServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationBusinessServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AccountCreationFacultyServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationFacultyServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AccountCreationStudentServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.AccountCreationStudentServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>StudentHomeServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.StudentHomeServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>FacultyHomeServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.FacultyHomeServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>BusinessHomeServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.BusinessHomeServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProjectSolicitationServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ProjectSolicitationServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProjectProposalServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ProjectProposalServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewProjectsServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ViewProjectsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SampleProjectServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.SampleProjectServlet</servlet-class>
+  </servlet>
+   <servlet>
+  	<servlet-name>UserSearchServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSearchServlet</servlet-class>
+  </servlet>
+>>>>>>> refs/remotes/cwolf11/master
 
 	<!-- AJAX servlets. -->
 	<servlet>
@@ -92,6 +144,7 @@
 		<servlet-class>edu.ycp.cs320.cspath1.servlet.ajax.ViewProjectsAjaxServlet</servlet-class>
 	</servlet>
 
+<<<<<<< HEAD
 	<!-- Servlet mappings -->
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
@@ -141,7 +194,59 @@
 		<servlet-name>UserSearchServlet</servlet-name>
 		<url-pattern>/userSearch</url-pattern>
 	</servlet-mapping>
+=======
+  <!-- Servlet mappings -->
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationBusinessServlet</servlet-name>
+  	<url-pattern>/accountCreationBusiness</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationFacultyServlet</servlet-name>
+  	<url-pattern>/accountCreationFaculty</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationStudentServlet</servlet-name>
+  	<url-pattern>/accountCreationStudent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>StudentHomeServlet</servlet-name>
+  	<url-pattern>/studentHome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>FacultyHomeServlet</servlet-name>
+  	<url-pattern>/facultyHome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BusinessHomeServlet</servlet-name>
+  	<url-pattern>/businessHome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectSolicitationServlet</servlet-name>
+  	<url-pattern>/projectSolicitation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectProposalServlet</servlet-name>
+  	<url-pattern>/projectProposal</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewProjectsServlet</servlet-name>
+  	<url-pattern>/viewProjects</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SampleProjectServlet</servlet-name>
+  	<url-pattern>/sampleProject</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserSearchServlet</servlet-name>
+  	<url-pattern>/userSearch</url-pattern>
+  </servlet-mapping>
+>>>>>>> refs/remotes/cwolf11/master
 
+<<<<<<< HEAD
 	<!-- AJAX servlet mappings. -->
 	<servlet-mapping>
 		<servlet-name>LoginAjaxServlet</servlet-name>
@@ -179,8 +284,49 @@
 		<servlet-name>ViewProjectsAjaxServlet</servlet-name>
 		<url-pattern>/ajax/viewProjects</url-pattern>
 	</servlet-mapping>
+=======
+  <!--  AJAX servlet mappings. -->
+  <servlet-mapping>
+  	<servlet-name>AccountCreationStudentAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationStudent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationFacultyAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationFaculty</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AccountCreationBusinessAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/accountCreationBusiness</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>FacultyHomeAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/facultyHome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BusinessHomeAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/businessHome</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectSolicitationAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/projectSolicitation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectProposalAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/projectProposal</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewProjectsAjaxServlet</servlet-name>
+  	<url-pattern>/ajax/viewProjects</url-pattern>
+  </servlet-mapping>
+>>>>>>> refs/remotes/cwolf11/master
 
+<<<<<<< HEAD
 	<welcome-file-list>
 		<welcome-file>login.html</welcome-file>
 	</welcome-file-list>
+=======
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+>>>>>>> refs/remotes/cwolf11/master
 </web-app>

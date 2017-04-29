@@ -64,7 +64,7 @@ private IDatabase db;
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
-		req.setAttribute("errorMessage",errorMessage);
+		req.setAttribute("errorMessage", errorMessage);
 		
 		
 		// Add result objects as request attributes
@@ -74,14 +74,12 @@ private IDatabase db;
 			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 		}
 		else if(validLogin){
-			
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
 			System.out.println(user.getUsername() + ", " + user.getPassword());
 			UserType userType = user.getUsertype();
 			System.out.println(userType);
-			
-			
+
 			if(userType == UserType.STUDENT){
 				resp.sendRedirect(req.getContextPath() + "/studentHome");
 			}
