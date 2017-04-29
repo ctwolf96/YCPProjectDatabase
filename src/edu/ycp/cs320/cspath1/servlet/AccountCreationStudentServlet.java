@@ -14,9 +14,6 @@ import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
-import edu.ycp.cs320.cspath1.user.Student;
-
-
 
 public class AccountCreationStudentServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
@@ -41,39 +38,29 @@ private IDatabase db;
 		String password1 = req.getParameter("password1");
 		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
-		String firstName = req.getParameter("firstName");
-		String lastName = req.getParameter("lastName");
-		String address = null;
-		String contactNum = null;
+
+		String firstname = req.getParameter("firstname");
+		String lastname = req.getParameter("lastname");
 		String name = null;
+		String number = null;
+		String address = null;
+		int user_id = 0;
+
 			
-		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null|| firstName==null || lastName==null) {
+		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null || firstname == null || lastname == null) {
+
 			errorMessage = "Please specify required fields";
-		} else if (password != password1) {
+		} else if (!password.equals(password1)) {
 			errorMessage = "Passwords do not match";
 		} else {
 			try {
-				db.insertUser(username, password1, email, UserType.STUDENT, firstName, lastName, majortype,
-						classtype, name, address, contactNum);
+				user_id = db.insertUser(username, password, email, UserType.STUDENT, firstname, lastname, majortype, classtype, name, address, number);
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-			
-		
-		// Add parameters as request attributes
-		req.setAttribute("username", req.getParameter("username"));
-		req.setAttribute("password", req.getParameter("password"));
-		req.setAttribute("email", req.getParameter("email"));
-		req.setAttribute("classtype", req.getParameter("classtype"));
-		req.setAttribute("majortype", req.getParameter("majortype"));
-		req.setAttribute("password1", req.getParameter("password1"));
-		req.setAttribute("firstName", req.getParameter("firstName"));
-		req.setAttribute("lastName", req.getParameter("lastName"));
-		req.setAttribute("address", req.getParameter("address"));
-		req.setAttribute("contactNum", req.getParameter("contactNum"));
-		req.setAttribute("name", req.getParameter("name"));
-		
+
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		
@@ -84,7 +71,9 @@ private IDatabase db;
 		else if (req.getParameter("faculty") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationFaculty");
 		}
-		else if(req.getParameter("submit") != null){
+		else if(req.getParameter("submit") != null && user_id > 0){
+			req.getSession().setAttribute("username", username);
+			req.getSession().setAttribute("password", password);
 			resp.sendRedirect(req.getContextPath() + "/studentHome");
 		}
 		else {
@@ -95,21 +84,26 @@ private IDatabase db;
 	//Translate parameter to MajorType
 	private MajorType getMajorTypeFromParameter(String s){
 		MajorType majortype = null;
-		if (s == null || s.equals("")){
+		if (s == null || s.equals("")) {
 			return null;
 		}
-		else if (s.equals("ME")){
+		else if (s.equals("ME")) {
 			majortype = MajorType.ME;
-			
 		}
-		else if (s.equals("CE")){
+		else if (s.equals("CE")) {
 			majortype = MajorType.CE;
 		}
-		else if(s.equals("CS")){
+		else if(s.equals("CS")) {
 			majortype = MajorType.CS;
 		}
-		else if(s.equals("EE")){
+		else if(s.equals("EE")) {
 			majortype = MajorType.EE;
+		}
+		else if (s.equals("CIV")) {
+			majortype = MajorType.CIV;
+		}
+		else if (s.equals("UN")) {
+			majortype = MajorType.UN;
 		}
 		return majortype;
 	}
@@ -120,20 +114,18 @@ private IDatabase db;
 		if(s == null || s.equals("")){
 			return null;
 		}
-		else if (s == "FRESHMAN"){
+		else if (s.equals("FRESHMAN")){
 			classtype = ClassType.FRESHMAN;
 		}
-		else if (s == "SOPHOMORE"){
+		else if (s.equals("SOPHOMORE")){
 			classtype = ClassType.SOPHOMORE;
 		}
-		else if (s == "JUNIOR"){
+		else if (s.equals("JUNIOR")){
 			classtype = ClassType.JUNIOR;
 		}
-		else if (s == "SENIOR"){
+		else if (s.equals("SENIOR")){
 			classtype = ClassType.SENIOR;
 		}
 		return classtype;
 	}
-	
-
 }

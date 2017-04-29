@@ -13,125 +13,77 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
+
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
+import edu.ycp.cs320.cspath1.persist.IDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 import edu.ycp.cs320.cspath1.controller.InsertProjectController;
 
 public class ProjectProposalServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
+private IDatabase db;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-//		String user = (String) req.getSession().getAttribute("user");
-//		if (user == null) {
-//			System.out.println("   User: <" + user + "> not logged in or session timed out");
-//			
-//			// user is not logged in, or the session expired
-//			resp.sendRedirect(req.getContextPath() + "/login");
-//			return;
-//		}
-
-		// now we have the user's User object,
-		// proceed to handle request...
-		
-		//System.out.println("   User: <" + user + "> logged in");
-		
-		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+		String username = (String) req.getSession().getAttribute("username");
+		String password = (String) req.getSession().getAttribute("password");
+		if (username == null || password == null)
+		{
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		DatabaseProvider.setInstance(new YCPDatabase());
+		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
-		String successMessage = null;
-		ProjectModel model = new ProjectModel();
 		
-		
-
-		//All fields needed for project solicitation
-		String solicit =req.getParameter("solicit");
-		String strduration = req.getParameter("duration");
-		String startTime = req.getParameter("startTime");
+		int project_id = -1;
+		int user_id = 0;
 		String title = req.getParameter("title");
-		String description= req.getParameter("description");
-		//Until we make a model, these will be considered unused
-		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
-		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
+
+		String description = req.getParameter("description");
+		String start = req.getParameter("start");
+		int duration = Integer.parseInt(req.getParameter("duration"));
+		ProjectType type = ProjectType.PROPOSAL;
+		SolicitationType solicitationType = null;
+		ArrayList<MajorType> majors = getMajorTypesFromParameters(req, resp);
+		ArrayList<ClassType> classes = getClassTypesFromParameters(req, resp); 
 		int numStudents = Integer.parseInt(req.getParameter("numStudents"));
-		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
-		String struserID = req.getParameter("userID");
-		int cost = Integer.parseInt(req.getParameter("cost"));
-		SolicitationType solicitType = getSolicitTypeFromParameter(req.getParameter("solicitType"));
-		String deadline = req.getParameter("endDate");
-			
-		model.setTitle(title);
-		model.setStartTime(startTime);
-		model.setDuration(strduration);
-		model.setDescription(description);
-		model.setClasses(classtypes);
-		model.setMajors(majortypes);
-		
-		/*I had to hard code the boolea for the "isFunded" variable because
-		the program would crash. Some reason it was reading the input from
-		is funded as null*/
-		
-		
-		model.setFunded(true);
-		model.setNumStudents(numStudents);
-		//Placeholder until I get all fields down
-			if (title 		 == null || title.equals("") ||
-				description  == null || description.equals("")  ||
-				startTime    == null || startTime.equals("")     ||
-				strduration     == null || strduration.equals("") ||
-				struserID 	 == null || struserID.equals("")) {
-				
-				errorMessage = "Please fill in all of the required fields";
-			}else {
-				InsertProjectController controller = new InsertProjectController();
-				
-				//convert userID into a int for the controller
-				int userID = Integer.parseInt(struserID);
-				int duration = Integer.parseInt(strduration);
-				
-				try {
-					if(controller.insertProjectIntoDatabase(userID, title, description, startTime, duration, ProjectType.PROPOSAL, solicitType,
-						majortypes, classtypes, numStudents, (double)cost, isFunded, deadline)){
-						successMessage = title;
-					}
-					else{
-						errorMessage = "Failed to sumbit project"+title;
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		double cost = Integer.parseInt(req.getParameter("cost"));
+		boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
+		String deadline = req.getParameter("deadline");
+
+
+		if (user_id == 0 || title == null || description == null || start == null || duration == 0 || type == null) {
+			errorMessage = "Please specify required fields";
+		} else {
+			try {
+				project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
+			} catch (SQLException e) {
+				e.printStackTrace();
+
 			}
-			
-		// Add parameters as request attributes
-		//Pretty certain this is used to put things into a model or controller
-		req.setAttribute("duration", req.getParameter("duration"));
-		req.setAttribute("startTime", req.getParameter("startTime"));
-		req.setAttribute("title", req.getParameter("title"));
-		req.setAttribute("description", req.getParameter("description"));
-		
-		
-		
+		}
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("model", model);
-	
 		
-		// Forward to view to render the result HTML document
-		
-		if (req.getParameter("solicit") != null){
+		//See if the user clicked either of the other account types, redirect accordingly
+		if (req.getParameter("solicitation") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
-		else if(req.getParameter("submit") != null){
-			resp.sendRedirect(req.getContextPath() + "/sampleProject");
+		else if(req.getParameter("submit") != null && project_id > 0){
+			resp.sendRedirect(req.getContextPath() + "/idk");
 		}
 		else {
-		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 		}
 	}
 	

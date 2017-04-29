@@ -55,7 +55,7 @@ li>a:hover {
 
 div.container {
 	width: 650px;
-	height: 745px;
+	height: 740px;
 	border: 2px solid #ccc;
 	padding: 15px;
 	position: relative;
@@ -75,11 +75,9 @@ input[type=text], input[type=password] {
 	border: 2px solid black;
 }
 
-#newLogin {
-	padding: 4px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 5px;
+#newLogin{
+	padding: 3px;
+	margin-left: 35px;
 }
 
 label>a {

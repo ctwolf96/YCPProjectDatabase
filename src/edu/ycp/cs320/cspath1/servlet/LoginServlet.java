@@ -60,13 +60,6 @@ private IDatabase db;
 				e.printStackTrace();
 			}
 		}
-		
-		// Add parameters as request attributes
-		req.setAttribute("username", req.getParameter("username"));
-		req.setAttribute("password", req.getParameter("password"));
-		req.setAttribute("errorMessage", errorMessage);
-		
-		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		System.out.println(validLogin);
@@ -91,7 +84,6 @@ private IDatabase db;
 			}			
 			
 		} else {
-			// Forward to view to render the result HTML document
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 	}

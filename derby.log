@@ -1,15 +1,8 @@
 ----------------------------------------------------------------
-<<<<<<< HEAD
-Fri Apr 28 13:30:57 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-b59d-9a92-000006b9d778 
+Sat Apr 29 06:45:13 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-b950-83e0-000006a0a228 
 on database directory C:\Users\jbady\workspace\project_database.db with class loader sun.misc.Launcher$AppClassLoader@c387f44 
 Loaded from file:/C:/Users/jbady/workspace/CS320_Derby/lib/derby.jar
-=======
-Fri Apr 28 13:25:25 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-b598-8b17-000002f868a0 
-on database directory C:\Users\radio shack\workspace\project_database.db with class loader sun.misc.Launcher$AppClassLoader@c387f44 
-Loaded from file:/C:/Users/radio%20shack/workspace/CS320_Derby/lib/derby.jar
->>>>>>> refs/remotes/cwolf11/master
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_51-b16
 user.dir=H:\git\YCPProjectDatabase

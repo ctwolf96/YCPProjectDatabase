@@ -13,20 +13,21 @@
 		<div id="logo">
 			<img src="Logo.png" />
 		</div>
-		<form action="${pageContext.servletContext.contextPath}/businessHome"
-			method="post">
-			<ul id="navbar">
-				<li><a><input type="Submit" name="home" value="Home"
-						class="navButtons"></a></li>
-				<li><a><input type="Submit" name="myProjects"
-						value="My Proposals" class="navButtons"></a></li>
-				<li><a><input type="Submit" name="proposal"
-						value="New Proposal" class="navButtons"></a></li>
-				<li><a><input type="Submit" name="search" value="Search"
-						class="navButtons"></a></li>
-				<li><a><input type="Submit" name="login" value="Logout"
-						class="navButtons"></a></li>
-			</ul>
+		<div id = "text">
+			<h1> Hello, ${username} </h1>
+		</div>
+		<form action="${pageContext.servletContext.contextPath}/businessHome" method="post">
+		<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				  	<a><input type="Submit" name="home" value="Home" class = "buttonDrop" ></a>				  
+					<a><input type="Submit" name="myProjects" value="My Projects" class = "buttonDrop" ></a>				 
+					<a><input type="Submit" name="proposal" value="New Project" class = "buttonDrop" ></a>	
+					<a><input type="Submit" name="userSearch" value="User Search" class = "buttonDrop" ></a>
+					<a><input type="Submit" name="solicitationSearch" value="Project Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
+			</div>
+			</div>
 		</form>
 	</div>
 

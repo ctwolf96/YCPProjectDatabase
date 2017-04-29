@@ -852,7 +852,7 @@ public class YCPDatabase implements IDatabase {
 	stmt2 = conn.prepareStatement(
 	"insert into users " +
 	"	(username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
-	"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	);
 	stmt2.setString(1, username);
 	stmt2.setString(2, password);
@@ -1133,9 +1133,7 @@ public class YCPDatabase implements IDatabase {
 	
 	while (resultSet.next()){
 	found = true;
-	
 	user = loadUser(user, resultSet);
-	
 	}
 	
 	if(!found){
@@ -1543,7 +1541,7 @@ public class YCPDatabase implements IDatabase {
 	try { 
 	stmt = conn.prepareStatement(
 	"select * from users " + 
-	"	order by username asc"
+	"	order by user_id asc"
 	);
 	
 	List<User> result = new ArrayList<User>();

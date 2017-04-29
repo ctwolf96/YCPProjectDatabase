@@ -75,16 +75,16 @@ public class SearchUsers {
 		}
 		return users;
 	}
-	public ArrayList<User> getUserByUsername(String username) throws IOException, SQLException{
-		//List<User> userList = db.findAllUsers();
-		ArrayList<User> users = null;
-		users.add(db.findUserByUsername(username));
-		if (users.isEmpty()) {
+	public User getUserByUsername(String username) throws IOException, SQLException {
+		System.out.println("in controller");
+		User user = db.findUserByUsername(username);
+		if (user==null) {
 			System.out.println("No Users found in library");
 			return null;
 		}
 		else {
-			return users;
+			System.out.println(user.getEmail());
+			return user;
 			}
 	}
 	public ArrayList<User> getUsersByMajor(MajorType major) throws IOException, SQLException {
@@ -172,6 +172,18 @@ public class SearchUsers {
 		
 		// return authors for this title
 		return Users;
+	}
+	public User getUserByEmail(String email) throws IOException, SQLException{
+		//List<User> userList = db.findAllUsers();
+		User user = null;
+		user=db.findUserByEmail(email);
+		if (user==null) {
+			System.out.println("No Users found in library");
+			return null;
+		}
+		else {
+			return user;
+			}
 	}
 }
 
