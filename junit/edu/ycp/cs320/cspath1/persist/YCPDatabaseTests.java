@@ -36,6 +36,7 @@ public class YCPDatabaseTests {
 	List<User> users = null;
 	List<Pair<User, Project>> userProjectList = null;
 	List<Pair<User, Project>> projectUserList = null;
+	List<Pair<User, ActiveProject>> activeProjectUsers = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -1359,5 +1360,82 @@ public class YCPDatabaseTests {
 				System.out.println(activeProject.getTitle() + ", " + activeProject.getDuration());
 			}
 		}
+	}
+	
+	@Test
+	public void testFindUserIDByUsernameAndPassword() throws IOException, SQLException {
+		System.out.println("\n ***Testing findUserIDByUsernameAndPassword");
+		
+		int user_id = db.findUserIDByUsernameAndPassword("cspath1", "password");
+		
+		assertEquals(user_id, 30);
+	}
+	
+	@Test 
+	public void testFindAllActiveProjectsByUser() throws IOException, SQLException {
+		System.out.println("\n ***Testing findAllActiveProjectsByUser");
+		
+		int user_id = 17;
+		
+		activeProjectUsers = db.findAllActiveProjectsByUser(user_id);
+		
+		if(activeProjectUsers.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			for(Pair<User, ActiveProject> activeProjectUser : activeProjectUsers) {
+				System.out.println(activeProjectUser.getLeft().getUsername() + ", " + activeProjectUser.getRight().getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindAllUsersByActiveProject() throws IOException, SQLException {
+		System.out.println("\n ***Testing findAllUsersByActiveProject");
+		
+		int active_project_id = 2;
+		
+		activeProjectUsers = db.findAllUsersByActiveProject(active_project_id);
+		
+		if(activeProjectUsers.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			for(Pair<User, ActiveProject> activeProjectUser : activeProjectUsers) {
+				System.out.println(activeProjectUser.getLeft().getUsername() + ", " + activeProjectUser.getRight().getTitle());
+			}
+		}
+	}
+	
+	@Test
+	public void testInsertActiveProject() throws IOException, SQLException {
+		System.out.println("\n ***Testing insertActiveProject");
+		ArrayList<MajorType> majors = new ArrayList<MajorType>();
+		majors.add(MajorType.CIV);
+		
+		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		classes.add(ClassType.JUNIOR);
+		int active_project_id = -1; 
+		active_project_id = db.insertActiveProject(4, 2, "testing", "do a thing", "5/17/17", 3, ProjectType.ACTIVE, majors, classes, 4, 8000, true, "4/20/18", 8500);
+		
+		activeProject = db.findActiveProjectByActiveProjectID(active_project_id);
+		if(active_project_id != -1) {
+			if(activeProject.getDescription() == null) {
+				System.out.println("Something has gone horribly wrong...");
+				fail("No projects returned from db");
+			}
+			else {
+				db.deleteActiveProject(active_project_id);
+			}
+		}
+		else {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
 	}
 }

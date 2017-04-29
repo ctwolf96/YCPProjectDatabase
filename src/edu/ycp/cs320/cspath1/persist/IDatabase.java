@@ -62,6 +62,8 @@ public interface IDatabase {
 	//tested
 	public User findUserByNumber(String number) throws IOException, SQLException;
 	
+	public int findUserIDByUsernameAndPassword(String username, String password) throws IOException, SQLException;
+	
 	
 	//PROJECTS
 	
@@ -70,9 +72,13 @@ public interface IDatabase {
 			, SolicitationType solicitationType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline) throws IOException, SQLException;
 	//IN PROGRESS
 	public void deleteProject(int project_id) throws IOException, SQLException;
+	//tested
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
+	//tested
 	public void editDescription(int ProjectID, String description) throws IOException, SQLException;
+	//tested
 	public void editStart(int ProjectID, String start) throws IOException, SQLException;
+	//tested
 	public void editDuration(int ProjectID, int duration) throws IOException, SQLException;
 
 	//tested
@@ -168,7 +174,7 @@ public interface IDatabase {
 			ProjectType projectType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost,
 			boolean isFunded, String deadline, double budget) throws IOException, SQLException;
 	
-	public void deleteActiveProject(int active_project_id);
+	public void deleteActiveProject(int active_project_id) throws IOException, SQLException;
 	
 	public List<Pair<User, ActiveProject>> findAllUsersByActiveProject(int ProjectID) throws IOException, SQLException;
 	

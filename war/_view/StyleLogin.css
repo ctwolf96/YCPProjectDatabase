@@ -1,0 +1,120 @@
+
+
+html{
+	
+	}
+body{
+	background: url("YCP.png");  
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+	height: 100%;
+	width: 100%;	
+	min-height: 950px;
+	max-width: 1900px;
+	min-width: 900px;
+
+}
+#header{
+    width: 100%;
+	height: 80px;
+	background: #028C52;
+	border: 2px solid black;
+
+	
+	
+	}
+#logo{
+	width: auto;
+	height: auto;
+	float: left;
+	padding-left: 20px;	
+}
+#navbar{
+	width: 880px;
+	height: 80px;
+	float: right;
+}
+#navbar>li{
+	list-style: none;
+	float: left;
+	width: 175px;
+	border-left: 1px solid black;
+	border right: 2px solid black;
+		
+}
+li>a{
+	display:block;
+	color:black;
+	line-height:100px;
+	text-align: center;
+	font-family: cursive;
+	font-size: 20px;
+	text-decoration: none;
+}
+li>a:hover{
+	background-color: white;
+    color: black;
+	cursor: pointer;
+}
+
+div.container{
+	width: 550px;
+	height: 260x;
+	border: 2px solid #ccc;
+	padding: 10px;
+	position: relative;
+	margin: auto;
+	margin-top: 200px;
+	
+	
+	background-color: #fff;
+	
+	
+}
+
+
+
+input[type=text], input[type=password] {
+    width: 500px;
+    padding: 12px 20px;
+    margin:10px;
+	padding-top: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+	border: 2px solid black;
+	
+}
+div.LoginNew{
+	margin: 10px;
+	
+	
+}
+label>a{
+	font-family: cursive;
+	padding-left: 10px;
+}
+.button {
+    background-color: #028C52; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button5 {
+    background-color: #028C52;
+    color: white;
+    border: 2px solid black;
+}
+
+.button5:hover {
+    background-color: white;
+    color: black;
+}

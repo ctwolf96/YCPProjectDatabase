@@ -91,7 +91,7 @@ public class YCPDatabase implements IDatabase {
 
 	private Connection connect() throws SQLException {
 
-	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/radio shack/workspace/project_database.db;create=true");
+	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
 
 
 	
@@ -1179,32 +1179,32 @@ public class YCPDatabase implements IDatabase {
 	User user = new Student();
 	try {
 	stmt = conn.prepareStatement(
-	"select users.*" +
-	"	from users" +
-	"	where username = ? and password = ?"
-	);
-	stmt.setString(1, username);
-	stmt.setString(2, password);
-	
-	resultSet = stmt.executeQuery();
-	
-	Boolean found = false;
-	
-	while (resultSet.next()){
-	found = true;
-	
-	user = loadUser(user, resultSet);
-	
-	}
-	
-	if(!found){
-	System.out.println("<" + username + "> and <" + password + "> were not found in the user table");
-	}
-	return user;
+		"select users.*" +
+		"	from users" +
+		"	where username = ? and password = ?"
+		);
+		stmt.setString(1, username);
+		stmt.setString(2, password);
+		
+		resultSet = stmt.executeQuery();
+		
+		Boolean found = false;
+		
+		while (resultSet.next()){
+			found = true;
+			
+			user = loadUser(user, resultSet);
+			
+		}
+		
+		if(!found){
+			System.out.println("<" + username + "> and <" + password + "> were not found in the user table");
+		}
+		return user;
 	} finally {
-	DBUtil.closeQuietly(resultSet);
-	DBUtil.closeQuietly(stmt);
-	DBUtil.closeQuietly(conn);
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
 	}
 	}
 
@@ -2349,145 +2349,145 @@ public class YCPDatabase implements IDatabase {
 
 	
 	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException {
-	Connection conn = connect();
-	PreparedStatement stmt = null;
-	PreparedStatement stmt2 = null;
-	ResultSet resultSet = null;
-	ResultSet resultSet2 = null;
-	List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
-	User user = new Student();
-	Project project = new Proposal();
-	try {
-	stmt = conn.prepareStatement(
-	"select projects.*" +
-	"	from projects" +
-	"	where project_id = ?"
-	);
-	stmt.setInt(1, ProjectID);
-	
-	resultSet = stmt.executeQuery();
-	
-	stmt2 = conn.prepareStatement(
-	"select users.*" +
-	"	from projects, users, projectUsers" +
-	"	where projects.project_id = projectUsers.project_id and" +
-	"	users.user_id = projectUsers.user_id and" +
-	"	projects.project_id = ?" +
-	"	order by users.user_id"
-	);
-	stmt2.setInt(1, ProjectID);
-	
-	resultSet2 = stmt2.executeQuery();
-	
-	Boolean found = false;
-	
-	if (resultSet.next()) {
-	found = true;
-	
-	project = loadProject(project, resultSet);
-	}
-	while (resultSet2.next()) {
-	found = true;
-	
-	user = loadUser(user, resultSet2);
-	
-	list.add(new Pair<User, Project>(user, project));
-	}
-	
-	if (!found) {
-	System.out.println("No project with project id <" + ProjectID + "> was found in the database");
-	}
-	
-	return list;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
+		User user = new Student();
+		Project project = new Proposal();
+		try {
+			stmt = conn.prepareStatement(
+				"select projects.*" +
+				"	from projects" +
+				"	where project_id = ?"
+			);
+			stmt.setInt(1, ProjectID);
+			
+			resultSet = stmt.executeQuery();
+			
+			stmt2 = conn.prepareStatement(
+				"select users.*" +
+				"	from projects, users, projectUsers" +
+				"	where projects.project_id = projectUsers.project_id and" +
+				"	users.user_id = projectUsers.user_id and" +
+				"	projects.project_id = ?" +
+				"	order by users.user_id"
+				);
+			stmt2.setInt(1, ProjectID);
+			
+			resultSet2 = stmt2.executeQuery();
+			
+			Boolean found = false;
+			
+			if (resultSet.next()) {
+			found = true;
+			
+			project = loadProject(project, resultSet);
+			}
+			while (resultSet2.next()) {
+				found = true;
+				
+				user = loadUser(user, resultSet2);
+				
+				list.add(new Pair<User, Project>(user, project));
+			}
+			
+			if (!found) {
+				System.out.println("No project with project id <" + ProjectID + "> was found in the database");
+			}
+			
+			return list;
 	} finally { 
-	DBUtil.closeQuietly(resultSet);
-	DBUtil.closeQuietly(resultSet2);
-	DBUtil.closeQuietly(stmt);
-	DBUtil.closeQuietly(stmt2);
-	DBUtil.closeQuietly(conn);
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(resultSet2);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(stmt2);
+		DBUtil.closeQuietly(conn);
 	}
 	}
 
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException {
-	Connection conn = connect();
-	PreparedStatement stmt = null;
-	PreparedStatement stmt2 = null;
-	ResultSet resultSet = null;
-	ResultSet resultSet2 = null;
-	List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
-	User user = new Student();
-	Project project = new Proposal();
-	try {
-	stmt = conn.prepareStatement(
-	"select users.*" +
-	"	from users" +
-	"	where user_id = ?"
-	);
-	stmt.setInt(1, UserID);
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
+		User user = new Student();
+		Project project = new Proposal();
+		try {
+		stmt = conn.prepareStatement(
+		"select users.*" +
+		"	from users" +
+		"	where user_id = ?"
+		);
+		stmt.setInt(1, UserID);
+		
+		resultSet = stmt.executeQuery();
+		
+		stmt2 = conn.prepareStatement(
+		"select projects.*" +
+		"	from projects, users, projectUsers" +
+		"	where projects.project_id = projectUsers.project_id and" +
+		"	users.user_id = projectUsers.user_id and" +
+		"	users.user_id = ?" +
+		"	order by projects.project_id"
+		);
+		stmt2.setInt(1, UserID);
+		
+		resultSet2 = stmt2.executeQuery();
+		
+		Boolean found = false;
+		
+		if (resultSet.next()) {
+		found = true;
+		
+		user = loadUser(user, resultSet);
+		}
+		while (resultSet2.next()) {
+		found = true;
+		
+		project = loadProject(project, resultSet2);
+		
+		list.add(new Pair<User, Project>(user, project));
+		}
+		
+		if (!found) {
+		System.out.println("No user with user id <" + UserID + "> was found in the database");
+		}
+		
+		return list;
+		} finally { 
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(resultSet2);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(stmt2);
+		DBUtil.closeQuietly(conn);
+		}
+		}
 	
-	resultSet = stmt.executeQuery();
-	
-	stmt2 = conn.prepareStatement(
-	"select projects.*" +
-	"	from projects, users, projectUsers" +
-	"	where projects.project_id = projectUsers.project_id and" +
-	"	users.user_id = projectUsers.user_id and" +
-	"	users.user_id = ?" +
-	"	order by projects.project_id"
-	);
-	stmt2.setInt(1, UserID);
-	
-	resultSet2 = stmt2.executeQuery();
-	
-	Boolean found = false;
-	
-	if (resultSet.next()) {
-	found = true;
-	
-	user = loadUser(user, resultSet);
-	}
-	while (resultSet2.next()) {
-	found = true;
-	
-	project = loadProject(project, resultSet2);
-	
-	list.add(new Pair<User, Project>(user, project));
-	}
-	
-	if (!found) {
-	System.out.println("No user with user id <" + UserID + "> was found in the database");
-	}
-	
-	return list;
-	} finally { 
-	DBUtil.closeQuietly(resultSet);
-	DBUtil.closeQuietly(resultSet2);
-	DBUtil.closeQuietly(stmt);
-	DBUtil.closeQuietly(stmt2);
-	DBUtil.closeQuietly(conn);
-	}
-	}
-
-	@Override
-	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
-	Connection conn = connect();
-	PreparedStatement  stmt = null;
-	try {
-	stmt = conn.prepareStatement(
-	"update activeProjects" +
-	"	set title = ?" +
-	"	where active_project_id = ?"
-	);
-	
-	stmt.setString(1, title);
-	stmt.setInt(2, project_id);
-	
-	stmt.executeUpdate();
-	} finally {
-	DBUtil.closeQuietly(stmt);
-	DBUtil.closeQuietly(conn);
-	}
-	
+		@Override
+		public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+		stmt = conn.prepareStatement(
+		"update activeProjects" +
+		"	set title = ?" +
+		"	where active_project_id = ?"
+		);
+		
+		stmt.setString(1, title);
+		stmt.setInt(2, project_id);
+		
+		stmt.executeUpdate();
+		} finally {
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
+		}
+		
 	}
 
 	@Override
@@ -3145,26 +3145,287 @@ public class YCPDatabase implements IDatabase {
 			String start, int duration, ProjectType projectType, ArrayList<MajorType> majors,
 			ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline,
 			double budget) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteActiveProject(int active_project_id) {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		try {
+			stmt1 = conn.prepareStatement(
+					"insert into activeProjects" +
+					"	(project_id_copy1, project_id_copy2, title, description, start, duration," +
+					"	projectType, majors, classes, numStudents, cost, isFunded, deadline, budget)" +
+					"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" 
+					);
+			stmt1.setInt(1, project_id_copy1);
+			stmt1.setInt(2, project_id_copy2);
+			stmt1.setString(3, title);
+			stmt1.setString(4, description);
+			stmt1.setString(5, start);
+			stmt1.setInt(6, duration);
+			stmt1.setString(7, projectType.toString());
+			stmt1.setString(8, majors.toString());
+			stmt1.setString(9,  classes.toString());
+			stmt1.setInt(10, numStudents);
+			stmt1.setDouble(11, cost);
+			stmt1.setString(12, Boolean.toString(isFunded));
+			stmt1.setString(13, deadline);
+			stmt1.setDouble(14, budget);
+			
+			stmt1.executeUpdate();
+			
+			stmt2 = conn.prepareStatement(
+					"select active_project_id" +
+					"	from activeProjects" +
+					"	where project_id_copy1 = ? and " +
+					"	project_id_copy2 = ? and" +
+					"	title = ?"
+					);
+			stmt2.setInt(1, project_id_copy1);
+			stmt2.setInt(2, project_id_copy2);
+			stmt2.setString(3, title);
+			
+			resultSet1 = stmt2.executeQuery();
+			int active_project_id = -1;
+			if(resultSet1.next()) {
+				active_project_id = resultSet1.getInt(1);
+			}
+			
+			else {
+				System.out.println("Something has gone horribly wrong");
+			}
+			
+			return active_project_id;
+			/*stmt3 = conn.prepareStatement(
+					"select from project_projects" + 
+					"	from activeProjects, project_projects" +
+					"	where (activeProjects.project_id_copy1 = project_projects.project_id_copy3 or" +
+					"	activeProjects.project_id_copy1 = project_projects.project_id_copy4) and" +
+					"	(activeProjects.project_id_copy2 = project_projects.project_id_copy3 or" +
+					"	activeProjects.project_id_copy2 = project_projects.project_id_copy4) and " +
+					"	activeProjects.project_id_copy1 = ? and" +
+					"	activeProjects.project_id_copy2 = ?"
+					);
+			
+			stmt3.setInt(1, project_id_copy1);
+			stmt3.setInt(2, project_id_copy2);
+			
+			resultSet2 = stmt3.executeQuery();
+			
+			if (resultSet2.next()) {
+				stmt4 = conn.prepareStatement(
+						)
+			}*/
+		} finally {
+			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(resultSet1);
+		}
 		
 	}
 
 	@Override
+	public void deleteActiveProject(int active_project_id) throws IOException, SQLException {
+		Connection conn = connect();
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+		List<ActiveProject> activeProjects = new ArrayList<ActiveProject>();
+		List<User> users = new ArrayList<User>();
+		try {
+			stmt1 = conn.prepareStatement(
+					"select users.*" +
+					"	from activeProjects, activeProjectUsers, users" +
+					"	where activeProjects.active_project_id = activeProjectUsers.active_project_id" +
+					"	and users.user_id_copy = activeProjectUsers.user_id" +
+					"	and activeProjects.active_project_id = ?"
+					);
+			stmt1.setInt(1, active_project_id);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			while (resultSet1.next()) {
+				User user = new Student();
+				loadUser(user, resultSet1);
+				users.add(user);
+			}
+			
+			if (users.size() == 0) {
+				System.out.println("This should not have happened...");
+				}
+			
+			stmt2 = conn.prepareStatement(
+					"select activeProjects.*" +
+					"	from activeProjects" +
+					"	where active_project_id = ?"
+					);
+			
+			stmt2.setInt(1, active_project_id);
+			
+			resultSet2 = stmt2.executeQuery();
+			
+			while (resultSet2.next()) {
+				ActiveProject activeProject = new ActiveProject();
+				loadActiveProject(activeProject, resultSet2);
+				activeProjects.add(activeProject);
+			}
+			
+			for(User user : users) {
+				stmt3 = conn.prepareStatement(
+						"delete from activeProjectUsers" +
+						"	where user_id = ?"
+					);
+				
+				stmt3.setInt(1, user.getUserID());
+				
+				stmt3.executeUpdate();
+			}
+			
+			stmt4 = conn.prepareStatement(
+					"delete from activeProjects" +
+					"	where active_project_id = ?"
+					);
+			
+			stmt4.setInt(1, active_project_id);
+			
+			stmt4.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
 	public List<Pair<User, ActiveProject>> findAllUsersByActiveProject(int ProjectID) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, ActiveProject>> list = new ArrayList<Pair<User, ActiveProject>>();
+		User user = new Student();
+		ActiveProject project = new ActiveProject();
+		try {
+			stmt = conn.prepareStatement(
+				"select activeProjects.*" +
+				"	from activeProjects" +
+				"	where active_project_id = ?"
+			);
+			stmt.setInt(1, ProjectID);
+			
+			resultSet = stmt.executeQuery();
+			
+			stmt2 = conn.prepareStatement(
+				"select users.*" +
+				"	from activeProjects, users, activeProjectUsers" +
+				"	where activeProjects.active_project_id = activeProjectUsers.active_project_id and" +
+				"	users.user_id_copy = activeProjectUsers.user_id and" +
+				"	activeProjects.active_project_id = ?" +
+				"	order by users.user_id"
+				);
+			stmt2.setInt(1, ProjectID);
+			
+			resultSet2 = stmt2.executeQuery();
+			
+			Boolean found = false;
+			
+			if (resultSet.next()) {
+				found = true;
+				
+				project = loadActiveProject(project, resultSet);
+			}
+			while (resultSet2.next()) {
+				found = true;
+				
+				user = loadUser(user, resultSet2);
+				
+				list.add(new Pair<User, ActiveProject>(user, project));
+			}
+			
+			if (!found) {
+				System.out.println("No project with project id <" + ProjectID + "> was found in the database");
+			}
+			
+			return list;
+	} finally { 
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(resultSet2);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(stmt2);
+		DBUtil.closeQuietly(conn);
+	}
 	}
 
 	@Override
 	public List<Pair<User, ActiveProject>> findAllActiveProjectsByUser(int UserID) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet resultSet = null;
+		ResultSet resultSet2 = null;
+		List<Pair<User, ActiveProject>> list = new ArrayList<Pair<User, ActiveProject>>();
+		User user = new Student();
+		ActiveProject project = new ActiveProject();
+		try {
+		stmt = conn.prepareStatement(
+		"select users.*" +
+		"	from users" +
+		"	where user_id_copy = ?"
+		);
+		stmt.setInt(1, UserID);
+		
+		resultSet = stmt.executeQuery();
+		
+		stmt2 = conn.prepareStatement(
+		"select activeProjects.*" +
+		"	from activeProjects, users, activeProjectUsers" +
+		"	where activeProjects.active_project_id = activeProjectUsers.active_project_id and" +
+		"	users.user_id_copy = activeProjectUsers.user_id and" +
+		"	users.user_id = ?" +
+		"	order by activeProjects.active_project_id"
+		);
+		stmt2.setInt(1, UserID);
+		
+		resultSet2 = stmt2.executeQuery();
+		
+		Boolean found = false;
+		
+		if (resultSet.next()) {
+		found = true;
+		
+		user = loadUser(user, resultSet);
+		}
+		while (resultSet2.next()) {
+		found = true;
+		
+		project = loadActiveProject(project, resultSet2);
+		
+		list.add(new Pair<User, ActiveProject>(user, project));
+		}
+		
+		if (!found) {
+		System.out.println("No user with user id <" + UserID + "> was found in the database");
+		}
+		
+		return list;
+		} finally { 
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(resultSet2);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(stmt2);
+		DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
@@ -3172,6 +3433,42 @@ public class YCPDatabase implements IDatabase {
 			throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int findUserIDByUsernameAndPassword(String username, String password) throws IOException, SQLException {
+		Connection conn = connect();
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		int user_id = -1;
+		//Placeholder since we can't instantiate the super
+		try {
+		stmt = conn.prepareStatement(
+			"select user_id" +
+			"	from users" +
+			"	where username = ? and password = ?"
+			);
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				user_id = resultSet.getInt(1);
+			}
+			
+			if(!found){
+				System.out.println("<" + username + "> and <" + password + "> were not found in the user table");
+			}
+			return user_id;
+		} finally {
+			DBUtil.closeQuietly(resultSet);
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	

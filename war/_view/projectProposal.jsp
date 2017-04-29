@@ -17,9 +17,7 @@
 			<img src="Logo.png">
 		</div>
 	</div>
-	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-	</c:if>
+	
 	
 	
 	
@@ -31,7 +29,7 @@
 		<input type="text" name="title"><br><br>
 		
 		<label><a>Description:</a></label>
-		<textarea name="message" class="description" rows="10" cols="30">
+		<textarea name="description" class="description" rows="10" cols="30">
 		</textarea><br><br>
 		
 		<label><a>Duration (Semesters):</a></label><br>
@@ -84,7 +82,12 @@
 			
 			<input type="Submit" name="solicitation" value="Solicit Project Form" class = "button button5">
 			</div>
-
+			<c:if test="${! empty errorMessage}">
+			<div class="error" Style = "Color: red">${errorMessage}</div>
+			</c:if>
+			<c:if test="${! empty successMessage}">
+			<div class="error" Style = "Color: green">${successMessage}</div>
+			</c:if>
 		</form>
 		</div>
 	</body>

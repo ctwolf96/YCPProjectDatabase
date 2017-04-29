@@ -19,6 +19,7 @@ import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
 //import edu.ycp.cs320.cspath1.persist.FakeDatabase;
 import edu.ycp.cs320.cspath1.project.Solicitation;
+import edu.ycp.cs320.cspath1.user.User;
 
 public class ProjectSolicitationServlet extends HttpServlet{
 private static final long serialVersionUID = 1L;
@@ -44,65 +45,106 @@ private IDatabase db;
 		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
 		
-		int project_id = -1;
-		int user_id = 0;
-		String title = req.getParameter("title");
-		String description = req.getParameter("description");
-		String start = req.getParameter("start");
-		String duration = req.getParameter("duration");
-		ProjectType type = ProjectType.PROPOSAL;
-		SolicitationType solicitationType = req.getParameter("solicitationType");
-		ArrayList<MajorType> majors;
-		ArrayList<ClassType> classes; 
-		int numStudents = req.getParameter("numStudents");
-		double cost = req.getParameter("cost");
-		boolean isFunded = null;
-		String deadline = null;
-			
-		if (user_id == 0 || title == null || description == null || start == null || duration == null || type == null) {
-			errorMessage = "Please specify required fields";
-		} else {
-			try {
-				project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
-		
-		//See if the user clicked either of the other account types, redirect accordingly
 		if (req.getParameter("proposal") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
 		}
-		else if(req.getParameter("submit") != null && project_id > 0){
-			resp.sendRedirect(req.getContextPath() + "/idk");
-		}
-		else {
-			req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+		else{
+		
+			User user = null;
+			int project_id = -1;
+			int user_id = 0;
+			String title = req.getParameter("title");
+			String description = req.getParameter("description");
+			String start = req.getParameter("start");
+			String Duration = req.getParameter("duration");
+			ProjectType type = ProjectType.SOLICITATION;
+			String SolicitationType = req.getParameter("solicitationType");//
+			String[] Majors = req.getParameterValues("majors");
+			String[] Classes = req.getParameterValues("classes");
+			ArrayList<MajorType> majors = new ArrayList<MajorType>();
+			ArrayList<ClassType> classes = new ArrayList<ClassType>();
+			String NumStudents = req.getParameter("numStudents");//
+			String Cost = req.getParameter("cost");//
+			boolean isFunded = false;
+			String deadline = null;
+			
+			
+			String username = (String) req.getSession().getAttribute("username");
+			String password = (String) req.getSession().getAttribute("password");
+			try {
+				user = db.findUserByUsernameAndPassword(username, password);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			user_id = user.getUserID();
+			
+			for(int i = 0; i<Majors.length;i++){
+				majors.add(getMajorTypeFromParameter(Majors[i]));
+			}
+			for(int i = 0; i<Classes.length;i++){
+				classes.add(getClassTypeFromParameter(Classes[i]));
+			}
+				
+			double cost = Double.parseDouble(Cost);
+			int numStudents = Integer.parseInt(NumStudents);
+			int duration = Integer.parseInt(Duration);
+			
+			SolicitationType solicitationType = getSolicitationTypeFromParameter(SolicitationType);
+			System.out.println(title + " " + description + " " + start + " " + duration + " " + type);
+			if (user_id == 0 || title == null || description == null || start == null || duration == 0 || type == null) {
+				errorMessage = "Please specify required fields";
+			} else {
+				try {
+					
+					
+					project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			// Add result objects as request attributes
+			req.setAttribute("errorMessage", errorMessage);
+			
+			//See if the user clicked either of the other account types, redirect accordingly
+			
+			if(req.getParameter("submit") != null && project_id > 0){
+				resp.sendRedirect(req.getContextPath() + "/projectProposal");
+			}
+			else {
+				req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+			}
 		}
 	}
 	
 	//Translate parameter to MajorType
-	private MajorType getMajorTypeFromParameter(String s){
-		MajorType majortype = null;
+	private SolicitationType getSolicitationTypeFromParameter(String s){
+		SolicitationType type = null;
 		if (s == null || s.equals("")){
 			return null;
 		}
-		else if (s.equals("ME")){
-			majortype = MajorType.ME;
-			
-		}
-		else if (s.equals("CE")){
-			majortype = MajorType.CE;
-		}
-		else if(s.equals("CS")){
-			majortype = MajorType.CS;
-		}
-		else if(s.equals("EE")){
-			majortype = MajorType.EE;
-		}
-		return majortype;
+		else if (s.equals("ME Capstone")){
+			type = SolicitationType.ME_CAPSTONE;		}
+		else if (s.equals("ECE Capstone")){
+			type = SolicitationType.ECE_CAPSTONE;		}
+		else if(s.equals("CivE Capstone")){
+			type = SolicitationType.CivE_CAPSTONE;		}
+		else if(s.equals("ME/ECE Capstone")){
+			type = SolicitationType.ME_ECE_CAPSTONE;		}
+		else if(s.equals("Software Engineering")){
+			type = SolicitationType.SW_ENGINEERING;		}
+		else if(s.equals("CS Senior Design 1")){
+			type = SolicitationType.CS_SENIOR_DESIGN_I;		}
+		else if(s.equals("CS Senior Design 2")){
+			type = SolicitationType.CS_SENIOR_DESIGN_II;		}
+		else if(s.equals("Independent Study")){
+			type = SolicitationType.INDEPENDENT_STUDY;		}
+		else if(s.equals("CS Internship")){
+			type = SolicitationType.CS_INTERNSHIP;		}
+		else if(s.equals("Engineering Co-op")){
+			type = SolicitationType.ENGINEERING_COOP;		}
+		else if(s.equals("Class Project")){
+			type = SolicitationType.CLASS_PROJECT;		}
+		return type;
 	}
 	
 	//Translate parameter to MajorType

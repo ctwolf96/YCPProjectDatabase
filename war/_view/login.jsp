@@ -13,14 +13,11 @@
 			<img src ="Logo.png"/>
 		</div>
 	</div>
-	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-	</c:if>
 	<div class="container">
 	<form action="${pageContext.servletContext.contextPath}/login" method="post">
 			<table style = "margin: 10px">
 				<tr>
-					<td class="label">Username: ${errorMessage}</td>
+					<td class="label">Username: <div Style = "color: red">${errorMessage}</div></td>
 				</tr>
 				
 				<tr>
