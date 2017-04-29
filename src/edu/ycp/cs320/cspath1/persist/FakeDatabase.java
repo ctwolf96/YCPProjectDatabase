@@ -264,4 +264,71 @@ public class FakeDatabase implements IDatabase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void editCost(int project_id, double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editSolicitationType(int project_id, SolicitationType solicitationType)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

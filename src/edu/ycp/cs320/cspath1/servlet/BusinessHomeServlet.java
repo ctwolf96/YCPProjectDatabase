@@ -7,29 +7,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 public class BusinessHomeServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
+		String username = (String) req.getSession().getAttribute("username");
+		String password = (String) req.getSession().getAttribute("password");
+		if (username == null || password == null)
+		{
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
+		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//moving around the page
-		if (req.getParameter("logout")!= null) {
-			resp.sendRedirect(req.getContextPath() + "/loginn");
-		} else if (req.getParameter("search") != null) {
-			resp.sendRedirect(req.getContextPath() + "/search");
+		if (req.getParameter("logout") != null) {
+			resp.sendRedirect(req.getContextPath() + "/login");
+		} else if (req.getParameter("userSearch") != null) {
+			resp.sendRedirect(req.getContextPath() + "/userSearch");
+		} else if (req.getParameter("solicitationSearch") != null) {
+			resp.sendRedirect(req.getContextPath() + "/solicitationSearch");
 		} else if (req.getParameter("proposal") != null) {
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
 		} else if (req.getParameter("myProjects") != null) {
-			resp.sendRedirect(req.getContextPath() + "/myProjects"); 
+			resp.sendRedirect(req.getContextPath() + "/viewProjects");
 		} else {
 			req.getRequestDispatcher("/_view/businessHome.jsp").forward(req, resp);
 		}

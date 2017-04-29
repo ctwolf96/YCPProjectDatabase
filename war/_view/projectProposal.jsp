@@ -49,10 +49,10 @@
 		</select><br><br>
 		
 		<label><a>Start Date:</a></label><br>
-		<input type="date" name="startTime"><br><br>
+		<input type="date" name="start"><br><br>
 		
 		<label><a>Deadline:</a></label><br>
-		<input type="date" name="startDate"><br><br>
+		<input type="date" name="deadline"><br><br>
 		
 		<label><a>Funding:</a></label><br>
 		<select name="isFunded">
@@ -64,17 +64,17 @@
 		<input type="text" name="numStudents"><br><br>
 			
 			<labeL><a>Majors Involved</a></labeL><br>
-			<input type="checkbox" name="CE" value="CE">Computer Engineering
-			<input type="checkbox" name="CS" value="CS">Computer Science
-			<input type="checkbox" name="EE" value="EE">Electrical Engineering
-			<input type="checkbox" name="CivE" value="CivE">Civil Engineering
-			<input type="checkbox" name="ME" value="ME">Mechanical Engineering<br><br>
+			<input type="checkbox" name="majors" value="CE">Computer Engineering
+			<input type="checkbox" name="majors" value="CS">Computer Science
+			<input type="checkbox" name="majors" value="EE">Electrical Engineering
+			<input type="checkbox" name="majors" value="CivE">Civil Engineering
+			<input type="checkbox" name="majors" value="ME">Mechanical Engineering<br><br>
 			
 			<label><a>Student Year(s)</a></label><br>
-			<input type="checkbox" name="freshman" value="FR">Freshman
-			<input type="checkbox" name="sophomore" value="SO">Sophomore
-			<input type="checkbox" name="junior" value="JR">Junior
-			<input type="checkbox" name="senior" value="SR">Senior<br><br>
+			<input type="checkbox" name="classes" value="FR">Freshman
+			<input type="checkbox" name="classes" value="SO">Sophomore
+			<input type="checkbox" name="classes" value="JR">Junior
+			<input type="checkbox" name="classes" value="SR">Senior<br><br>
 			
 			<label><a>Cost:</a></label><br>
 			<input type="text" name="cost"><br><br>
@@ -82,7 +82,7 @@
 			<div>
 			<input type="Submit" name="submit" value="Create Project" class = "button button5">
 			
-			<input type="Submit" name="solicit" value="Solicit Project Form" class = "button button5">
+			<input type="Submit" name="solicitation" value="Solicit Project Form" class = "button button5">
 			</div>
 
 		</form>

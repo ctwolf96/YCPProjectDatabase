@@ -7,10 +7,6 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>IndexServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.cspath1.servlet.IndexServlet</servlet-class>
-  </servlet>
-  <servlet>
   	<servlet-name>LoginServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.LoginServlet</servlet-class>
   </servlet>
@@ -99,10 +95,6 @@
 
   <!-- Servlet mappings -->
   <servlet-mapping>
-    <servlet-name>IndexServlet</servlet-name>
-    <url-pattern>/index</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
   	<url-pattern>/login</url-pattern>
   </servlet-mapping>
@@ -153,10 +145,6 @@
 
   <!--  AJAX servlet mappings. -->
   <servlet-mapping>
-  	<servlet-name>LoginAjaxServlet</servlet-name>
-  	<url-pattern>/ajax/login</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
   	<servlet-name>AccountCreationStudentAjaxServlet</servlet-name>
   	<url-pattern>/ajax/accountCreationStudent</url-pattern>
   </servlet-mapping>
@@ -190,6 +178,6 @@
   </servlet-mapping>
 
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>login.html</welcome-file>
   </welcome-file-list>
 </web-app>

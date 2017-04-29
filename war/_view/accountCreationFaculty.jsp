@@ -18,12 +18,6 @@
 				<img src="Logo.png"/>
 			</div>
 		</div>
-	
-	
-	
-	
-	
-	
 	<form action="${pageContext.servletContext.contextPath}/accountCreationFaculty" method="post">
 		<div class="container">
 			<h1 style = "text-align: center">Faculty Account Creation</h1><br>
@@ -31,6 +25,14 @@
 				<div class="error">${errorMessage}</div>
 			</c:if>
 				<table>
+					<tr>
+						<td class="label">First Name:</td>
+						<td><input type="text" placeholder="Enter First Name" name="firstname" size="12" value="${model.firstname}"/></td>
+					</tr>
+					<tr>
+						<td class="label">Last Name:</td>
+						<td><input type="text" placeholder="Enter Last Name" name="lastname" size="12" value="${model.lastname}"/></td>
+					</tr>
 					<tr>
 						<td class="label">Email:</td>
 						<td><input type="text" placeholder="Enter Email" name="email" size="12" value="${model.email}" /></td>
@@ -53,7 +55,8 @@
 				<input type="radio" name="majortype" value="CS"> Computer Science<br>
 				<input type="radio" name="majortype" value="EE"> Electrical Engineering<br>
 				<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br>
-				<input type="radio" name="majortype" value="CivE"> Civil Engineering<br><br>
+				<input type="radio" name="majortype" value="CIV"> Civil Engineering<br>
+				<input type="radio" name="majortype" value="UN"> Undeclared<br><br>
 				
 				<div id="newLogin">
 				<input type="Submit" name="submit" value="Create Account"class = "button button5">

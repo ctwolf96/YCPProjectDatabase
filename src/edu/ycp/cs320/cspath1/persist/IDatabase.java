@@ -162,6 +162,7 @@ public interface IDatabase {
 	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException;
 	//tested
 	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException;
+	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException;
 	
 	public Integer insertActiveProject(int project_id_copy1, int project_id_copy2, String title, String description, String start, int duration,
 			ProjectType projectType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost,
