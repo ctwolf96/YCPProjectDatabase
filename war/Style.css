@@ -27,6 +27,13 @@ body{
 	padding-left: 20px;
 	
 }
+#text{
+	position: absolute;
+ 	top: 25px;
+	left: 200px;
+	color: white;
+	
+}
 #navbar{
 	width: 880px;
 	height: 80px;
