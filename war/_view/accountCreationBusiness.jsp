@@ -31,7 +31,7 @@
 			<table style = "margin: 10px">
 			<tr>
 					<td class="label">Business Name:</td>
-					<td><input type="password" placeholder="Business Name" name="businessName" size="12" value="${model.businessName}" /></td>
+					<td><input type="password" placeholder="Business Name" name="name" size="12" value="${model.businessName}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Email:</td>
@@ -55,7 +55,7 @@
 				</tr>
 				<tr>
 					<td class="label">Phone Number:</td>
-					<td><input type="password" placeholder="Phone Number" name="phoneNumber" size="12" value="${model.phone}" /></td>
+					<td><input type="password" placeholder="Phone Number" name="number" size="12" value="${model.phone}" /></td>
 				</tr>
 				
 			</table>

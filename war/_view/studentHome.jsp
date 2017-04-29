@@ -14,17 +14,19 @@
 			<img src ="Logo.png"/>
 		</div>
 		<form action="${pageContext.servletContext.contextPath}/studentHome" method="post">
-			<ul id = "navbar">
-				<li><a><input type="Submit" name="home" value="Home" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="myProjects" value="My Projects" class = "navButtons"></a></li>
-				<li><input type="button" name="newProject" value="New Project" class = "dropdownButtons"></li>
-					<div class = "dropdownContent">
-						<a><input type="Submit" name="proposal" value="New Proposal" class = "navButtons"></a>
-						<a><input type="Submit" name="solicitation" value="New Solicitation" class = "navButtons"></a>
-					</div>
-				<li><a><input type="Submit" name="search" value="Search" class = "navButtons"></a></li>
-				<li><a><input type="Submit" name="logout" value="Logout" class = "navButtons"></a></li>	
-			</ul>
+			<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				  	<a><input type="Submit" name="home" value="Home" class = "buttonDrop" ></a>				  
+					<a><input type="Submit" name="myProjects" value="My Projects" class = "buttonDrop" ></a>				 
+					<a><input type="Submit" name="proposal" value="New Proposal" class = "buttonDrop" ></a>	
+					<a><input type="Submit" name="solicitation" value= "New Solicitation" class = "buttonDrop" ></a>
+					<a><input type="Submit" name="userSearch" value="User Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="proposalSearch" value="Proposal Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="solicitationSearch" value="Solicitation Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
+			</div>
+			</div>
 		</form>
 	</div>
 	
