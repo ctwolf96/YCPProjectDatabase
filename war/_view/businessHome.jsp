@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
-	<link rel = "stylesheet" href = "Style.css"/>
-	<title> BusinessHome </title>
-	
-</head> 
+<link rel="stylesheet" href="Style.css" />
+<title>BusinessHome</title>
+
+</head>
 <body>
 
-	<div id = "header">
+	<div id="header">
 		<div id="logo">
-			<img src ="Logo.png"/>
+			<img src="Logo.png" />
 		</div>
 		<div id = "text">
 			<h1> Hello, ${username} </h1>
@@ -30,7 +30,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 
 
 </body>

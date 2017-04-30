@@ -1,4 +1,4 @@
-#webpageTitle { 
+#webpageTitle {
 	margin-left: 25px;
 	margin-right: 25px;
 	margin-top: 15px;
@@ -15,71 +15,72 @@
 	font-variant: small-caps;
 }
 
-#webpageSubtitle{
-	
+#webpageSubtitle {
 	margin-left: 15px;
 	border-top: none;
 	border-bottom: thick solid black;
 	border-width: 1px;
 	color: blue;
 	width: 450px;
-	
-	}
-	
-#sectionSubtitle{
-	
+}
+
+#sectionSubtitle {
 	margin-left: 15px;
 	border-width: 1px;
 	color: blue;
 	width: 450px;
 	text-decoration: underline;
-	}
-	
-#loginPart{
-	
+}
+
+#loginPart {
 	padding-top: 5px;
 	padding-left: 10px;
 	background-color: lightgreen;
 	border: 2px solid black;
 	max-width: 500px;
 	margin: auto;
-	
-	}
-#ProjectList{
+}
+
+#ProjectList {
 	margin-top: 10px;
 	margin-left: 10px;
 	border: 2px solid black;
 	width: 300px;
-	}
+}
 
-.sections{
+.sections {
 	margin-left: 25px;
 	margin-right: 25px;
 	background-color: lightgreen;
 	float: left;
 	border: solid black;
 	width: 300px;
-}	
-.search{
+}
+
+.search {
 	float: right;
 }
-.info{
+
+.info {
 	float: right;
 	text-align: center;
 	background-color: lightgreen;
 	border: solid black;
 	width: 300px;
-}	
+}
+
 .error {
 	color: red;
-		}
-		
+}
+
 td.label {
 	text-align: right;
-		}
-table{
+}
+
+table {
 	border-collapse: collapse;
 }
-th, td{
+
+th, td {
 	border-right: 1px solid black;
 }

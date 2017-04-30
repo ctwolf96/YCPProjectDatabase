@@ -1199,7 +1199,7 @@ public class YCPDatabaseTests {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void testEditActiveProjectDescription() throws IOException, SQLException {
 		System.out.println("\n ***Testing editActiveProjectDescription");
 		
@@ -1222,7 +1222,7 @@ public class YCPDatabaseTests {
 			}
 			
 		}
-	}
+	}*/
 	
 	@Test
 	public void testEditActiveProjectStart() throws IOException, SQLException {

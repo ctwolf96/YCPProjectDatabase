@@ -17,12 +17,12 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class FakeDatabase implements IDatabase {
 
-	@Override
+	/*@Override
 	public Integer insertUser(String username, String password, String email, UserType usertype)
 			throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
@@ -126,12 +126,12 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public Integer insertProject(int UserID, String title, String description, String start, int duration,
 			ProjectType type) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public void deleteProject(int project_id) throws IOException, SQLException {
@@ -330,5 +330,28 @@ public class FakeDatabase implements IDatabase {
 	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Integer insertUser(String username, String password, String email, UserType usertype, String firstname,
+			String lastname, MajorType major, ClassType classtype, String name, String address, String contactNum)
+					throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer insertProject(int UserID, String title, String description, String start, int duration,
+			ProjectType type, SolicitationType solicitationType, ArrayList<MajorType> majors,
+			ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline)
+					throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

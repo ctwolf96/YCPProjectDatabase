@@ -45,6 +45,7 @@ private IDatabase db;
 		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
 		
+
 		if (req.getParameter("proposal") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
 		}
@@ -114,6 +115,7 @@ private IDatabase db;
 				req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
 			}
 		}
+
 	}
 	
 	//Translate parameter to MajorType
@@ -145,6 +147,7 @@ private IDatabase db;
 		else if(s.equals("Class Project")){
 			type = SolicitationType.CLASS_PROJECT;		}
 		return type;
+
 	}
 	
 	//Translate parameter to MajorType
@@ -243,18 +246,44 @@ private IDatabase db;
 		return classtypes;
 	}
 	
-	/*public ArrayList<Solicitation> getFoundProjects(ClassType classtype){
-		ArrayList<Solicitation> result = new ArrayList<Solicitation>();
-		FakeDatabase fb = new FakeDatabase();
-		//result.addAll(fb.findSolicitationsByMajorType(majortype));
-		//result.addAll(fb.findSolicitationsByMajorTypes(majors));
-		//result.addAll(fb.findSolicitationsByClassType(classtype));
-		//result.addAll(fb.findSolicitationsByClassTypes(classtypes));
-		//result.addAll(fb.findSolicitationsByStartTime(startTime));
-		//result.addAll(fb.findSolicitationsByDuration(duration));
-		//result.addAll(fb.findSolicitationsByNumStudents(numStudents));
-		//result.addAll(fb.findSolicitationsBySolicitationType(solicitationType));
-		//result.add(fb.findSolicitationByProjectID(projectID));
-		return result;
-	}*/
+	private SolicitationType getSolicitTypeFromParameter(String s){
+		SolicitationType solicitType = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s == "ME_CAPSTONE"){
+			solicitType = SolicitationType.ME_CAPSTONE;
+		}
+		else if (s == "ECE_CAPSTONE"){
+			solicitType = SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s == "CivE_CAPSTONE"){
+			solicitType = SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s == "ME_ECE_CAPSTONE"){
+			solicitType = SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s == "SW_ENGINEERING"){
+			solicitType = SolicitationType.SW_ENGINEERING;
+		}
+		else if (s == "CS_SENIOR_DESIGN_I"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s == "CS_SENIOR_DESIGN_II"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s == "INDEPENDENT_STUDY"){
+			solicitType = SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s == "CS_INTERNSHIP"){
+			solicitType =SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s == "ENGINEERING_COOP"){
+			solicitType = SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s == "CLASS_PROJECT"){
+			solicitType = SolicitationType.CLASS_PROJECT;
+		}
+		return solicitType;
+	}
 }

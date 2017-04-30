@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
-	<head>
-		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="Solicitation.css">
-		<meta name="viewport" content="width = device-width initial-scale=1">
-	</head>
-	
-	<body>
+<head>
+<title>Project Solicitation</title>
+<link rel="stylesheet" href="Solicitation.css">
+<meta name="viewport" content="width = device-width initial-scale=1">
+</head>
+
+<body>
 	<div id="header">
 		<div id="logo">
 			<img src="Logo.png">
 		</div>
 	</div>
 	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
+		<div class="error">${errorMessage}</div>
 	</c:if>
-	
+
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
-	<h1 style = "text-align: center">Project Solicitation</h1>
-		<label><a>Project Title:</a></label><br>
-		<input type="text" name="title"><br><br>
-		
-		<label><a>Description:</a></label>
-		<textarea name="message" class="description" rows="10" cols="30">
-		</textarea><br><br>
-		
-		<label><a>Duration (Semesters):</a></label><br>
-		<select name="duration">
-				<option value="1"selected>1</option>
+		<form
+			action="${pageContext.servletContext.contextPath}/projectSolicitation"
+			method="post">
+			<h1 style="text-align: center">Project Solicitation</h1>
+			<label><a>Project Title:</a></label><br> <input type="text"
+				name="title"><br>
+			<br> <label><a>Description:</a></label>
+			<textarea name="message" class="description" rows="10" cols="30">
+		</textarea>
+			<br>
+			<br> <label><a>Duration (Semesters):</a></label><br> <select
+				name="duration">
+				<option value="1" selected>1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
@@ -88,6 +89,6 @@
 			<input type="Submit" name="proposal" value="Propose Project Form" class = "button button5">
 			
 		</form>
-		</div>
-	</body>
+	</div>
+</body>
 </html>

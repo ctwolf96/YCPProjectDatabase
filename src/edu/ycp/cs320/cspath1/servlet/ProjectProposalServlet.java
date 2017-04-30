@@ -14,6 +14,7 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
+
 import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
@@ -44,7 +45,9 @@ private IDatabase db;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		DatabaseProvider.setInstance(new YCPDatabase());
-		db = DatabaseProvider.getInstance();
+
+		db = DatabaseProvider.getInstance();	
+		
 		if (req.getParameter("solicitation") != null){
 			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
 		}
@@ -224,5 +227,46 @@ private IDatabase db;
 			classtypes.add(SR);
 		}
 		return classtypes;
+	}
+	
+	private SolicitationType getSolicitTypeFromParameter(String s){
+		SolicitationType solicitType = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s == "ME_CAPSTONE"){
+			solicitType = SolicitationType.ME_CAPSTONE;
+		}
+		else if (s == "ECE_CAPSTONE"){
+			solicitType = SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s == "CivE_CAPSTONE"){
+			solicitType = SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s == "ME_ECE_CAPSTONE"){
+			solicitType = SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s == "SW_ENGINEERING"){
+			solicitType = SolicitationType.SW_ENGINEERING;
+		}
+		else if (s == "CS_SENIOR_DESIGN_I"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s == "CS_SENIOR_DESIGN_II"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s == "INDEPENDENT_STUDY"){
+			solicitType = SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s == "CS_INTERNSHIP"){
+			solicitType =SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s == "ENGINEERING_COOP"){
+			solicitType = SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s == "CLASS_PROJECT"){
+			solicitType = SolicitationType.CLASS_PROJECT;
+		}
+		return solicitType;
 	}
 }

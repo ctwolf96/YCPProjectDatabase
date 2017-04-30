@@ -38,24 +38,29 @@ private IDatabase db;
 		String password1 = req.getParameter("password1");
 		MajorType majortype = getMajorTypeFromParameter(req.getParameter("majortype"));
 		ClassType classtype = getClassTypeFromParameter(req.getParameter("classtype"));
+
 		String firstname = req.getParameter("firstname");
 		String lastname = req.getParameter("lastname");
 		String name = null;
 		String number = null;
 		String address = null;
 		int user_id = 0;
+
 			
 		if (username == null || password == null || password1 == null || email == null || majortype == null || classtype == null || firstname == null || lastname == null) {
+
 			errorMessage = "Please specify required fields";
 		} else if (!password.equals(password1)) {
 			errorMessage = "Passwords do not match";
 		} else {
 			try {
 				user_id = db.insertUser(username, password, email, UserType.STUDENT, firstname, lastname, majortype, classtype, name, address, number);
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		

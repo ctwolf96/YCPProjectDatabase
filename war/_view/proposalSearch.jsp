@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
-	<header>
-		<title>Proposed Project Search</title>
-		<link rel="stylesheet" href="Search.css">
-		<meta name="viewport" content="width = device-width initial-scale=1">
+<header>
+	<title>Proposed Project Search</title>
+	<link rel="stylesheet" href="Search.css">
+	<meta name="viewport" content="width = device-width initial-scale=1">
 	</head>
 	
 	<body>

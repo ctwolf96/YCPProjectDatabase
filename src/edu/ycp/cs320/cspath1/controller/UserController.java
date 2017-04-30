@@ -52,7 +52,8 @@ public class UserController {
 		User user = new Student();
 		boolean check = emailValidator.validate(model.getEmail());
 		if (check == true) {
-			Integer user_id = db.insertUser(model.getUsername(), model.getPassword(), model.getEmail(), model.getUsertype());
+			Integer user_id = db.insertUser(model.getUsername(), model.getPassword(), model.getEmail(), model.getUsertype(), model.getFirstName(),
+					model.getLastName(), model.getMajortype(), model.getClasstype(), model.getName(), model.getAddress(), model.getContactNum());
 			user = db.findUserByUserID(user_id);
 			return user;
 		}

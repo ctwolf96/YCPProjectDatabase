@@ -1153,9 +1153,7 @@ public class YCPDatabase implements IDatabase {
 	
 	while (resultSet.next()){
 	found = true;
-	
 	user = loadUser(user, resultSet);
-	
 	}
 	
 	if(!found){

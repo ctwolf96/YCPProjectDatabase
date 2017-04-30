@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
-	<head>
-		<title>Account Creation</title>
-		<link rel="stylesheet" href="StudentAccountCreation.css">
-		<meta name = "viewport" content = "width = device-width initial-scale =1">
-	</head>
-	
-	<body>
-		<div id="header">
-			<div id="logo">
-				<img src="Logo.png"/>			
-			</div>
+<head>
+<title>Account Creation</title>
+<link rel="stylesheet" href="StudentAccountCreation.css">
+<meta name="viewport" content="width = device-width initial-scale =1">
+</head>
+
+<body>
+	<div id="header">
+		<div id="logo">
+			<img src="Logo.png" />
 		</div>
 	<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
@@ -46,7 +45,7 @@
 					<td class="label">Re-enter Password:</td>
 					<td><input type="password" placeholder="Re-enter Password" name="password1" size="12" value="${model.password1}"/></td>
 				</tr>
-				
+
 			</table>
 			<p></p>
 			<label><a>Major/Discipline</a></label><br>
@@ -61,14 +60,17 @@
 			<input type="radio" name="classtype" value="FRESHMAN">Freshman<br>
 			<input type="radio" name="classtype" value="SOPHOMORE">Sophomore<br>
 			<input type="radio" name="classtype" value="JUNIOR">Junior<br>
-			<input type="radio" name="classtype" value="SENIOR">Senior<br><br>
-			
+			<input type="radio" name="classtype" value="SENIOR">Senior<br>
+			<br>
+
 			<div id="newLogin">
-			<input type="Submit" name="submit" value="Create Account" class = "button button5">
-			<input type="Submit" name="faculty" value="Faculty Account" class = "button button5">
-			<input type="Submit" name="business" value="Business Account" class = "button button5">
+				<input type="Submit" name="submit" value="Create Account"
+					class="button button5"> <input type="Submit" name="faculty"
+					value="Faculty Account" class="button button5"> <input
+					type="Submit" name="business" value="Business Account"
+					class="button button5">
 			</div>
-			</div>
-		</form>
-	</body>
+		</div>
+	</form>
+</body>
 </html>

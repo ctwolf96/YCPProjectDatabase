@@ -1,56 +1,47 @@
-
-
-body{background: url("YCP.png");  
-	background-repeat:no-repeat;
+body {
+	background: url("YCP.png");
+	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	height: 100%;
-	width: 100%;	
+	width: 100%;
 	min-height: 940px;
 	max-width: 1900px;
 	min-width: 900px;
-
-
 }
-#header{
-	
-    width: 100%;
+
+#header {
+	width: 100%;
 	height: 100px;
 	background: #028C52;
 	border: 2px solid black;
-	
-	
-	}
-#logo{
+}
+
+#logo {
 	width: auto;
 	height: auto;
 	float: left;
 	padding-left: 20px;
-	
 }
-#navbar{
+
+#navbar {
 	width: 880px;
 	height: 100px;
 	float: right;
-	
-	
-	
-	
-	
 }
-#navbar>li{
+
+#navbar>li {
 	list-style: none;
 	float: left;
 	width: 175px;
 	border-left: 1px solid black;
 	border right: 2px solid black;
-		
 }
-label>a{
+
+label>a {
 	font-family: cursive;
-	
-	
 }
-div.superContainer{
+
+div.superContainer {
 	width: 800px;
 	height: 850px;
 	border: 2px solid #ccc;
@@ -60,60 +51,56 @@ div.superContainer{
 	margin-top: 50px;
 	background-color: #fff;
 	padding: 10px;
-	
-	
-	
-	
 }
-textarea.description{
+
+textarea.description {
 	resize: none;
-	width:795px;
+	width: 795px;
 	height: 125px;
 }
-li>a{
-	display:block;
-	color:black;
-	line-height:100px;
+
+li>a {
+	display: block;
+	color: black;
+	line-height: 100px;
 	text-align: center;
 	font-family: cursive;
 	font-size: 20px;
 	text-decoration: none;
 }
-li>a:hover{
+
+li>a:hover {
 	background-color: white;
-    color: black;
+	color: black;
 	cursor: pointer;
 }
-
-
-
 
 .button {
-    background-color: #028C52; /* Green */
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+	background-color: #028C52; /* Green */
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
 	font-family: Cursive;
-    align: center;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
+	align: center;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
 }
+
 .button5 {
-    background-color: #028C52;
-    color: white;
-    border: 2px solid black;
-	
+	background-color: #028C52;
+	color: white;
+	border: 2px solid black;
 	margin-right: 10px;
 	cursor: pointer;
-	
 }
 
 .button5:hover {
-    background-color: white;
-    color: black;
-}}
+	background-color: white;
+	color: black;
+}
+}
