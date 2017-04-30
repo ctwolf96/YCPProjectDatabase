@@ -135,7 +135,7 @@ public interface IDatabase {
 	//tested
 	public List<ActiveProject> findActiveProjectByTitle(String title) throws IOException, SQLException;
 	
-	public List<ActiveProject> findActiveProjectByDescription(String description) throws IOException, SQLException;
+	public List<ActiveProject> findActiveProjectByDescriptionWildcard(String description) throws IOException, SQLException;
 	//tested
 	public List<ActiveProject> findActiveProjectByStart(String start) throws IOException, SQLException;
 	//tested
@@ -168,18 +168,27 @@ public interface IDatabase {
 	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException;
 	//tested
 	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException;
+	//tested
 	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException;
 	
+	public List<User> findUserByNameWildcard(String name) throws IOException, SQLException;
+	public List<User> findUserByAddressWildcard(String address) throws IOException, SQLException;
+	
+	//tested
 	public Integer insertActiveProject(int project_id_copy1, int project_id_copy2, String title, String description, String start, int duration,
 			ProjectType projectType, ArrayList<MajorType> majors, ArrayList<ClassType> classes, int numStudents, double cost,
 			boolean isFunded, String deadline, double budget) throws IOException, SQLException;
-	
+	//tested
 	public void deleteActiveProject(int active_project_id) throws IOException, SQLException;
-	
+	//tested
 	public List<Pair<User, ActiveProject>> findAllUsersByActiveProject(int ProjectID) throws IOException, SQLException;
-	
+	//tested
 	public List<Pair<User, ActiveProject>> findAllActiveProjectsByUser(int UserID) throws IOException, SQLException;
 	
 	public List<Pair<Solicitation, Proposal>> findAllProjectsByProjectID(int project_id) throws IOException, SQLException;
+	
+	public void insertProjectsintoProjectProjects(int project_id_copy3, int project_id_copy4) throws IOException, SQLException;
+	
+	public void deleteProjectFromProjectProjects(int project_id_copy3, int project_id_copy4) throws IOException, SQLException;
 	
  }

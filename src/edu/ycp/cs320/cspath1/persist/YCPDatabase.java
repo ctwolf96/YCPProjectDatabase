@@ -2861,7 +2861,7 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public List<ActiveProject> findActiveProjectByDescription(String description) throws IOException, SQLException {
+	public List<ActiveProject> findActiveProjectByDescriptionWildcard(String description) throws IOException, SQLException {
 		Connection conn = connect();
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
@@ -3469,6 +3469,32 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+
+	@Override
+	public List<User> findUserByNameWildcard(String name) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> findUserByAddressWildcard(String address) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertProjectsintoProjectProjects(int project_id_copy3, int project_id_copy4)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProjectFromProjectProjects(int project_id_copy3, int project_id_copy4)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
