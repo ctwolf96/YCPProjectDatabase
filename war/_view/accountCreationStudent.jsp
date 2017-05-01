@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title>Account Creation</title>
-		<link rel="stylesheet" href="newAccountStyle1.css">
+		<link rel="stylesheet" href="StudentAccountCreation.css">
 		<meta name = "viewport" content = "width = device-width initial-scale =1">
 	</head>
 	
@@ -15,16 +15,17 @@
 				<img src="Logo.png"/>			
 			</div>
 		</div>
-	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-	</c:if>
+	
 	
 	
 	
 
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 	<div class=container>
-	<h1 style = "text-align: center">Student Account Creation</h1>
+	<h1 style = "text-align: center">Student Account Creation</h1><br>
+	<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+	</c:if>
 			<table>
 				<tr>
 					<td class="label">Email:</td>
@@ -38,6 +39,10 @@
 					<td class="label">Password:</td>
 					<td><input type="password" placeholder="Enter Password" name="password" size="12" value="${model.password}" /></td>
 				</tr>
+				<tr>
+					<td class="label">Re-enter Password:</td>
+					<td><input type="password" placeholder="Re-enter Password" name="password1" size="12" value="${model.password1}" /></td>
+				</tr>
 				
 			</table>
 			<p></p>
@@ -45,18 +50,19 @@
 			<input type="radio" name="majortype" value="CE"> Computer Engineering<br>
 			<input type="radio" name="majortype" value="CS"> Computer Science<br>
 			<input type="radio" name="majortype" value="EE"> Electrical Engineering<br>
-			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br><br>
+			<input type="radio" name="majortype" value="ME"> Mechanical Engineering<br>
+			<input type="radio" name="majortype" value="CivE"> Civil Engineering<br><br>
 			
 			<label><a>Current Year</a></label><br>
 			<input type="radio" name="classtype" value="FRESHMAN">Freshman<br>
 			<input type="radio" name="classtype" value="SOPHOMORE">Sophomore<br>
 			<input type="radio" name="classtype" value="JUNIOR">Junior<br>
-			<input type="radio" name="classtype" value="SENIOR">Senior<br>
+			<input type="radio" name="classtype" value="SENIOR">Senior<br><br>
 			
 			<div id="newLogin">
 			<input type="Submit" name="submit" value="Create Account" class = "button button5">
-			<input type="Submit" name="faculty" value="Faculty Account Link" class = "button button5">
-			<input type="Submit" name="guest" value="Guest Account Link" class = "button button5">
+			<input type="Submit" name="faculty" value="Faculty Account" class = "button button5">
+			<input type="Submit" name="buisness" value="Buisness Account" class = "button button5">
 			</div>
 			</div>
 		</form>

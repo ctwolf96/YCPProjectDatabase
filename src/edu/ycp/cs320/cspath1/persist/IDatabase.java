@@ -24,7 +24,6 @@ public interface IDatabase {
 	//USERS
 	//tested
 	public Integer insertUser(String username, String password, String email, UserType usertype) throws IOException, SQLException;
-
 	//tested
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException;
 	//tested
@@ -65,12 +64,22 @@ public interface IDatabase {
 	
 	//tested
 	public Integer insertProject(int UserID, String title, String description, String start, int duration, ProjectType type) throws IOException, SQLException;
-	//IN PROGRESS
+	//tested
 	public void deleteProject(int project_id) throws IOException, SQLException;
+	//tested
 	public void editTitle(int ProjectID, String title) throws IOException, SQLException;
+	//tested
 	public void editDescription(int ProjectID, String description) throws IOException, SQLException;
+	//tested
 	public void editStart(int ProjectID, String start) throws IOException, SQLException;
+	//tested
 	public void editDuration(int ProjectID, int duration) throws IOException, SQLException;
+	
+	public void editCost(int project_id, double cost) throws IOException, SQLException;
+	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException;
+	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException;
+	public void editSolicitationType(int project_id, SolicitationType solicitationType) throws IOException, SQLException;
+	
 	//tested
 	public List<Project> findAllProjects() throws IOException, SQLException;
 	//tested
@@ -104,4 +113,15 @@ public interface IDatabase {
 	
 	public List<Pair<User, Project>> findAllUsersByProject(int ProjectID) throws IOException, SQLException;
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException;
+	
+
+	
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException;
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException;
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException;
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException;
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException;
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException;
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException;
+	
  }

@@ -703,6 +703,7 @@ public class YCPDatabaseTests {
 	}
 	
 	@Test
+
 	public void testFindAllUsersByProject() throws IOException, SQLException {
 		System.out.println("\n*** Testing findAllUsersByProject ***");
 		
@@ -742,6 +743,7 @@ public class YCPDatabaseTests {
 		}
 	}
 		
+
 	public void testEditDescription() throws IOException, SQLException {
 		System.out.println("\n*** Testing editDescription");
 		
@@ -821,5 +823,90 @@ public class YCPDatabaseTests {
 		else {
 			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getProjectID());
 		}
+
+		
 	}
+	
+	@Test
+	public void testEditCost() throws IOException, SQLException {
+		System.out.println("\n ***Testing editCost***");
+		
+		Integer project_id = 2;
+		double cost = 100000;
+		db.editCost(project_id, cost);
+		
+		projects = db.findProjectByCost(cost);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getTitle());
+		}
+		
+	}
+	
+	@Test 
+	public void testEditNumStudents() throws IOException, SQLException {
+		System.out.println("\n ***Testing editNumStudents***");
+		
+		Integer project_id = 3;
+		Integer numStudents = 15;
+		
+		db.editNumStudents(project_id, numStudents);
+		
+		projects = db.findProjectByNumStudents(numStudents);
+		
+		if(projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDuration() + ", " + projects.get(0).getProjectID());
+		}
+	}
+	
+	@Test
+	public void testEditFunded() throws IOException, SQLException {
+		System.out.println("\n ***Testing editFunding***");
+		
+		Integer project_id = 2;
+		Boolean isFunded = false;
+		
+		db.editFunding(project_id, isFunded);
+		
+		projects = db.findProjectByIsFunded(isFunded);
+		
+		if(projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		
+		else {
+			System.out.println(projects.get(0).getDescription() + ", " + projects.get(0).getDuration());
+		}
+	}
+	
+	@Test
+	public void testEditSolicitationType() throws IOException, SQLException {
+		System.out.println("\n ***Testing editSolicitationType***");
+		
+		Integer project_id = 4;
+		SolicitationType solicitationType = SolicitationType.CS_INTERNSHIP;
+		db.editSolicitationType(project_id, solicitationType);
+		
+		projects = db.findProjectBySolicitationType(solicitationType);
+		
+		if (projects.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db");
+		}
+		else {
+			System.out.println(projects.get(0).getDuration() + ", " + projects.get(0).getProjectID());
+		}
+	}
+	
 }

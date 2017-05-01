@@ -11,8 +11,11 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ActiveProjectUsers;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
+import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
+import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
 import edu.ycp.cs320.cspath1.project.Proposal;
 import edu.ycp.cs320.cspath1.project.Solicitation;
@@ -77,7 +80,7 @@ public class InitialData {
 	
 	public static List<Project> getProjects() throws IOException {
 		List<Project> projectList = new ArrayList<Project>();
-		ReadCSV readProject = new ReadCSV("Projects.CSV");
+		ReadCSV readProject = new ReadCSV("projects.csv");
 		try {
 			Integer projectID = 0;
 			while (true) {
@@ -140,7 +143,7 @@ public class InitialData {
 					active.setBudget((double) Integer.parseInt(i.next()));
 					projectList.add(active);
 				}
-			} 
+			}
 			return projectList;
 		} finally {
 				readProject.close();
@@ -166,6 +169,120 @@ public class InitialData {
 			return projectUserList;
 		} finally {
 			readProjectUsers.close();
+		}
+	}
+	
+	public static List<projectProject> getProjectProject() throws IOException {
+		List<projectProject> projectProjectList = new ArrayList<projectProject>();
+		ReadCSV readProjectProject = new ReadCSV("projectProject.csv");
+		try {
+			while (true) {
+				List<String> tuple = readProjectProject.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				projectProject projectRelation = new projectProject();
+				projectRelation.setProject_id_1(Integer.parseInt(i.next()));
+				projectRelation.setProject_id_2(Integer.parseInt(i.next()));
+				projectProjectList.add(projectRelation);
+			}
+			System.out.println("projectProject loaded from CSV file");	
+			return projectProjectList;
+		} finally {
+			readProjectProject.close();
+		}
+	}
+	
+	public static List<ActiveProjectUsers> getActiveProjectUsers() throws IOException {
+		List<ActiveProjectUsers> activeProjectUserList = new ArrayList<ActiveProjectUsers>();
+		ReadCSV readActiveProjectUsers = new ReadCSV("activeProjectUsers.csv");
+		try {
+			while (true) {
+				List<String> tuple = readActiveProjectUsers.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				ActiveProjectUsers activeProjectUser = new ActiveProjectUsers();
+				activeProjectUser.setActiveProjectID(Integer.parseInt(i.next()));
+				activeProjectUser.setUserID(Integer.parseInt(i.next()));
+				activeProjectUserList.add(activeProjectUser);
+			}
+			System.out.println("activeProjectUsers loaded from CSV file");
+			return activeProjectUserList;
+		} finally {
+			readActiveProjectUsers.close();
+		}
+	}
+	
+	public static List<ActiveProject> getActiveProjects() throws IOException {
+		List<ActiveProject> activeProjectList = new ArrayList<ActiveProject>();
+		ReadCSV readActiveProjects = new ReadCSV("activeProjects.csv");
+		try {
+			while (true) {
+				List<String> tuple = readActiveProjects.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator <String> i = tuple.iterator();
+				ActiveProject activeProject = new ActiveProject();
+				activeProject.setProject_id_copy_1(Integer.parseInt(i.next()));
+				activeProject.setProject_id_copy_2(Integer.parseInt(i.next()));
+				activeProject.setUserID(Integer.parseInt(i.next()));
+				activeProject.setTitle(i.next());
+				activeProject.setDescription(i.next());
+				activeProject.setStart(i.next());
+				activeProject.setDuration(Integer.parseInt(i.next()));
+				activeProject.setProjectType(getProjectTypeFromParameter(i.next()));
+				activeProject.setMajors(getMajorListFromString(i.next()));
+				activeProject.setClasses(getClassListFromString(i.next()));
+				activeProject.setNumStudents(Integer.parseInt(i.next()));
+				activeProject.setCost(Double.parseDouble(i.next()));
+				activeProject.setFunded(Boolean.parseBoolean(i.next()));
+				activeProject.setDeadline(i.next());
+				activeProject.setBudget(Integer.parseInt(i.next()));
+				activeProjectList.add(activeProject);
+			}
+			System.out.println("activeProjects loaded from CSV file");
+			return activeProjectList;
+		} finally {
+			readActiveProjects.close();
+		}
+	}
+	
+	public static List<PastProject> getPastProjects() throws IOException {
+		List<PastProject> pastProjectList = new ArrayList<PastProject>();
+		ReadCSV readPastProjects = new ReadCSV("pastProjects.csv");
+		try {
+			while (true) {
+				List<String> tuple = readPastProjects.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator <String> i = tuple.iterator();
+				PastProject pastProject = new PastProject();
+				pastProject.setProject_id_copy_5(Integer.parseInt(i.next()));
+				pastProject.setProject_id_copy_6(Integer.parseInt(i.next()));
+				pastProject.setUserID(Integer.parseInt(i.next()));
+				pastProject.setTitle(i.next());
+				pastProject.setDescription(i.next());
+				pastProject.setStart(i.next());
+				pastProject.setDuration(Integer.parseInt(i.next()));
+				pastProject.setProjectType(getProjectTypeFromParameter(i.next()));
+				pastProject.setMajors(getMajorListFromString(i.next()));
+				pastProject.setClasses(getClassListFromString(i.next()));
+				pastProject.setNumStudents(Integer.parseInt(i.next()));
+				pastProject.setCost(Double.parseDouble(i.next()));
+				pastProject.setFunded(Boolean.parseBoolean(i.next()));
+				pastProject.setDeadline(i.next());
+				pastProject.setBudget(Integer.parseInt(i.next()));
+				pastProjectList.add(pastProject);
+			}
+			System.out.println("pastProjects loaded from CSV file");
+			return pastProjectList;
+		} finally {
+			readPastProjects.close();
 		}
 	}
  	

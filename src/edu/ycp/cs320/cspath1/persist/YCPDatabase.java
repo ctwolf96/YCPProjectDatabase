@@ -15,8 +15,10 @@ import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.ActiveProjectUsers;
 import edu.ycp.cs320.cspath1.model.Pair;
 import edu.ycp.cs320.cspath1.model.ProjectUser;
+import edu.ycp.cs320.cspath1.model.projectProject;
 import edu.ycp.cs320.cspath1.project.ActiveProject;
 import edu.ycp.cs320.cspath1.project.PastProject;
 import edu.ycp.cs320.cspath1.project.Project;
@@ -89,7 +91,10 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
+
 		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/spath/workspace/project_database.db;create=true");
+
+
 		
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -194,6 +199,7 @@ public class YCPDatabase implements IDatabase {
 		return classtype;
 	}
 	
+	
 	private static UserType getUserTypeFromParameter(String s) {
 		if (s == null || s.equals("")){
 			return null;
@@ -275,10 +281,10 @@ public class YCPDatabase implements IDatabase {
 	//Method to create a user from database
 	private User loadUser(User user, ResultSet resultSet) throws SQLException {
 		user.setUserID(resultSet.getInt(1));
-		user.setUsername(resultSet.getString(2));
-		user.setPassword(resultSet.getString(3));
-		user.setEmail(resultSet.getString(4));
-		user.setUsertype(getUserTypeFromParameter(resultSet.getString(5)));
+		user.setUsername(resultSet.getString(3));
+		user.setPassword(resultSet.getString(4));
+		user.setEmail(resultSet.getString(5));
+		user.setUsertype(getUserTypeFromParameter(resultSet.getString(6)));
 		if (user.getUsertype() == UserType.STUDENT) {
 			Student student = new Student();
 			student.setUserID(user.getUserID());
@@ -286,10 +292,10 @@ public class YCPDatabase implements IDatabase {
 			student.setPassword(user.getPassword());
 			student.setEmail(user.getEmail());
 			student.setUsertype(user.getUsertype());
-			student.setFirstname(resultSet.getString(6));
-			student.setLastname(resultSet.getString(7));
-			student.setMajor(getMajorTypeFromParameter(resultSet.getString(8)));
-			student.setClassLevel(getClassTypeFromParameter(resultSet.getString(9)));
+			student.setFirstname(resultSet.getString(7));
+			student.setLastname(resultSet.getString(8));
+			student.setMajor(getMajorTypeFromParameter(resultSet.getString(9)));
+			student.setClassLevel(getClassTypeFromParameter(resultSet.getString(10)));
 			return student;
 		}
 		else if (user.getUsertype() == UserType.FACULTY){
@@ -299,9 +305,9 @@ public class YCPDatabase implements IDatabase {
 			faculty.setPassword(user.getPassword());
 			faculty.setEmail(user.getEmail());
 			faculty.setUsertype(user.getUsertype());
-			faculty.setFirstname(resultSet.getString(6));
-			faculty.setLastname(resultSet.getString(7));
-			faculty.setMajor(getMajorTypeFromParameter(resultSet.getString(8)));
+			faculty.setFirstname(resultSet.getString(7));
+			faculty.setLastname(resultSet.getString(8));
+			faculty.setMajor(getMajorTypeFromParameter(resultSet.getString(9)));
 			return faculty;
 		}
 		else if (user.getUsertype() == UserType.BUSINESS) {
@@ -311,9 +317,9 @@ public class YCPDatabase implements IDatabase {
 			business.setPassword(user.getPassword());
 			business.setEmail(user.getEmail());
 			business.setUsertype(user.getUsertype());
-			business.setName(resultSet.getString(10));
-			business.setAddress(resultSet.getString(11));
-			business.setNumber(resultSet.getString(12));
+			business.setName(resultSet.getString(11));
+			business.setAddress(resultSet.getString(12));
+			business.setNumber(resultSet.getString(13));
 			return business;
 		}
 		return null;
@@ -323,11 +329,11 @@ public class YCPDatabase implements IDatabase {
 	//Method to create a project from database
 	private Project loadProject(Project project, ResultSet resultSet) throws SQLException {
 		project.setProjectID(resultSet.getInt(1));
-		project.setTitle(resultSet.getString(2));
-		project.setDescription(resultSet.getString(3));
-		project.setStart(resultSet.getString(4));
-		project.setDuration(resultSet.getInt(5));
-		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(6)));
+		project.setTitle(resultSet.getString(6));
+		project.setDescription(resultSet.getString(7));
+		project.setStart(resultSet.getString(8));
+		project.setDuration(resultSet.getInt(9));
+		project.setProjectType(getProjectTypeFromParameter(resultSet.getString(10)));
 		if (project.getProjectType() == ProjectType.SOLICITATION) {
 			Solicitation solicitation = new Solicitation();
 			solicitation.setProjectID(project.getProjectID());
@@ -337,11 +343,12 @@ public class YCPDatabase implements IDatabase {
 			solicitation.setStart(project.getStart());
 			solicitation.setDuration(project.getDuration());
 			solicitation.setProjectType(project.getProjectType());
-			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(7)));
-			solicitation.setMajors(getMajorListFromParameters(resultSet.getString(8)));
-			solicitation.setClasses(getClassListFromParameter(resultSet.getString(9)));
-			solicitation.setNumStudents(resultSet.getInt(10));
-			solicitation.setCost(resultSet.getInt(11));
+			solicitation.setSolicitationType(getSolicitationTypeFromParameter(resultSet.getString(11)));
+			solicitation.setMajors(getMajorListFromString(resultSet.getString(12)));
+			solicitation.setClasses(getClassListFromString(resultSet.getString(13)));
+			solicitation.setNumStudents(resultSet.getInt(14));
+			solicitation.setCost(resultSet.getInt(15));
+
 			return solicitation;
 		}
 		else if (project.getProjectType() == ProjectType.PROPOSAL) {
@@ -353,12 +360,12 @@ public class YCPDatabase implements IDatabase {
 			proposal.setStart(project.getStart());
 			proposal.setDuration(project.getDuration());
 			proposal.setProjectType(project.getProjectType());
-			proposal.setMajors(getMajorListFromParameters(resultSet.getString(8)));
-			proposal.setClasses(getClassListFromParameter(resultSet.getString(9)));
-			proposal.setNumStudents(resultSet.getInt(10));
-			proposal.setCost(resultSet.getInt(11));
-			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(12)));
-			proposal.setDeadline(resultSet.getString(13));
+			proposal.setMajors(getMajorListFromString(resultSet.getString(12)));
+			proposal.setClasses(getClassListFromString(resultSet.getString(13)));
+			proposal.setNumStudents(resultSet.getInt(14));
+			proposal.setCost(resultSet.getInt(15));
+			proposal.setIsFunded(Boolean.getBoolean(resultSet.getString(16)));
+			proposal.setDeadline(resultSet.getString(17));
 			return proposal;
 		}
 		else if (project.getProjectType() == ProjectType.ACTIVE) {
@@ -460,12 +467,17 @@ public class YCPDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;
+				PreparedStatement stmt7 = null;
 				
 				try {
 					stmt1 = conn.prepareStatement(
 						"create table users (" +
 						"	user_id integer primary key " +
-						"	generated always as identity (start with 1, increment by 1), " +									
+						"	generated always as identity (start with 1, increment by 1), " +
+						"	user_id_copy integer," +
 						"	username varchar(40) not null," +
 						"	password varchar(40) not null," +
 						"	email varchar(60) not null," +
@@ -485,6 +497,12 @@ public class YCPDatabase implements IDatabase {
 						"create table projects (" +
 						"	project_id integer primary key " +
 						"	generated always as identity (start with 1, increment by 1), " +
+						"	project_id_copy1 integer," +
+						"	project_id_copy2 integer," +
+						"	project_id_copy3 integer," +
+						"	project_id_copy4 integer," +
+						"	project_id_copy5 integer," +
+						"	project_id_copy6 integer," +
 						"	title varchar(30) not null," +
 						"	description varchar(200) not null," +
 						"	start varchar(20) not null," +
@@ -508,14 +526,76 @@ public class YCPDatabase implements IDatabase {
 						"	project_id integer constraint project_id references projects" +
 						")"
 						);
-					
 						stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
+						"create table project_projects (" +
+						"	project_id_copy3 integer constraint project_id_copy3 references projects," +
+						"	project_id_copy4 integer constraint project_id_copy4 references projects" +
+						")"
+						);	
+						stmt4.executeUpdate();
 						
+					stmt5 = conn.prepareStatement(
+						"create table activeProjects (" +
+						"	active_project_id integer primary key " +
+						"	generated always as identity (start with 1, increment by 1), " +
+						"	project_id_copy1 integer constraint project_id_copy1 references projects," +
+						"	project_id_copy2 integer constraint project_id_copy2 references projects," +
+						"	title varchar(30) not null," +
+						"	description varchar(200) not null," +
+						"	start varchar(20) not null," +
+						"	duration integer not null," +
+						"	projectType varchar(20) not null," +
+						"	majors varchar(20) not null," +
+						"	classes varchar(30) not null," +
+						"	numStudents integer not null," + 
+						"	cost integer," + 
+						"	isFunded varchar(5) not null," +
+						"	deadline varchar(20) not null," +
+						"	budget integer" + 
+						")"
+						);	
+					stmt5.executeUpdate();
+					
+					stmt6 = conn.prepareStatement(
+						"create table activeProjectUsers (" +
+						"	user_id integer constraint user_id_copy references users," +
+						"	active_project_id integer constraint active_project_id references activeProjects" +
+						")"
+						);
+					stmt6.executeUpdate();
+					
+					stmt7 = conn.prepareStatement(
+							"create table pastProjects (" +
+							"	active_project_id integer primary key " +
+							"	generated always as identity (start with 1, increment by 1), " +
+							"	project_id_copy5 integer constraint project_id_copy5 references projects," +
+							"	project_id_copy6 integer constraint project_id_copy6 references projects," +
+							"	title varchar(30) not null," +
+							"	description varchar(200) not null," +
+							"	start varchar(20) not null," +
+							"	duration integer not null," +
+							"	projectType varchar(20) not null," +
+							"	majors varchar(20) not null," +
+							"	classes varchar(30) not null," +
+							"	numStudents integer not null," + 
+							"	cost integer," + 
+							"	isFunded varchar(5) not null," +
+							"	deadline varchar(20) not null," +
+							"	budget integer" + 
+							")"
+							);	
+						stmt7.executeUpdate();
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
-					
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
 				}
 			}
 		});
@@ -528,83 +608,99 @@ public class YCPDatabase implements IDatabase {
 				List<User> userList;
 				List<Project> projectList;
 				List<ProjectUser> projectUserList;
+				List<projectProject> projectProjectList;
+				List<ActiveProjectUsers> activeProjectUsersList;
+				List<ActiveProject> activeProjectList;
+				List<PastProject> pastProjectList;
 				try {
 					userList = InitialData.getUsers();
 					projectList = InitialData.getProjects();
 					projectUserList = InitialData.getProjectUsers();
+					projectProjectList = InitialData.getProjectProject();
+					activeProjectUsersList = InitialData.getActiveProjectUsers();
+					activeProjectList = InitialData.getActiveProjects();
+					pastProjectList = InitialData.getPastProjects();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				PreparedStatement insertUser = null;
 				PreparedStatement insertProject = null;
 				PreparedStatement insertProjectUser = null;
+				PreparedStatement insertActiveProjects = null;
+				PreparedStatement insertProjectProject = null;
+				PreparedStatement insertActiveProjectUsers = null;
+				PreparedStatement insertPastProjects = null;
 				try {
 					insertUser = conn.prepareStatement(
 							"insert into users" +
-							"	(username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
-							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" 
+							"	(user_id_copy, username, password, email, usertype, firstname, lastname, major, class, name, address, contactNum)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" 
 							);
 					for (User user : userList) {
-						insertUser.setString(1, user.getUsername());
-						insertUser.setString(2, user.getPassword());
-						insertUser.setString(3, user.getEmail());
-						insertUser.setString(4, user.getUsertype().toString());
+						int index = 1;
+						insertUser.setInt(1, index);
+						insertUser.setString(2, user.getUsername());
+						insertUser.setString(3, user.getPassword());
+						insertUser.setString(4, user.getEmail());
+						insertUser.setString(5, user.getUsertype().toString());
 						if (user.getUsertype().equals(UserType.STUDENT)) {
-							insertUser.setString(5, ((Student) user).getFirstname());
-							insertUser.setString(6, ((Student) user).getLastname());
-							insertUser.setString(7, ((Student) user).getMajor().toString());
-							insertUser.setString(8, ((Student) user).getClassLevel().toString());
+							insertUser.setString(6, ((Student) user).getFirstname());
+							insertUser.setString(7, ((Student) user).getLastname());
+							insertUser.setString(8, ((Student) user).getMajor().toString());
+							insertUser.setString(9, ((Student) user).getClassLevel().toString());
 						} else if (user.getUsertype().equals(UserType.FACULTY)) {
-							insertUser.setString(5, ((Faculty) user).getFirstname());
-							insertUser.setString(6, ((Faculty) user).getLastname());
-							insertUser.setString(7, ((Faculty) user).getMajor().toString());
+							insertUser.setString(6, ((Faculty) user).getFirstname());
+							insertUser.setString(7, ((Faculty) user).getLastname());
+							insertUser.setString(8, ((Faculty) user).getMajor().toString());
 						} else if (user.getUsertype().equals(UserType.BUSINESS)) {
-							insertUser.setString(9, ((Business) user).getName());
-							insertUser.setString(10, ((Business) user).getAddress());
-							insertUser.setString(11, ((Business) user).getNumber());
+							insertUser.setString(10, ((Business) user).getName());
+							insertUser.setString(11, ((Business) user).getAddress());
+							insertUser.setString(12, ((Business) user).getNumber());
 						}
+						index++;
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
 					
 					System.out.println("Users table populated");
 
-
 					insertProject = conn.prepareStatement(
 							"insert into projects" +
-							"	(title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
-							"	cost, isFunded, deadline, budget)" +
-							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							"	(project_id_copy1, project_id_copy2, project_id_copy3, project_id_copy4, project_id_copy5, project_id_copy6, title, description, start, duration, projectType, solicitationType, majors, classes, numStudents, " +
+							"	cost, isFunded, deadline)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 							);
 					for (Project project : projectList) {
-						insertProject.setString(1, project.getTitle());
-						insertProject.setString(2, project.getDescription());
-						insertProject.setString(3, project.getStart());
-						insertProject.setInt(4, project.getDuration());
-						insertProject.setString(5, project.getProjectType().toString());
+						int index = 1;
+						insertProject.setInt(1, index);
+						insertProject.setInt(2, index);
+						insertProject.setInt(3, index);
+						insertProject.setInt(4, index);
+						insertProject.setInt(5, index);
+						insertProject.setInt(6, index);
+						insertProject.setString(7, project.getTitle());
+						insertProject.setString(8, project.getDescription());
+						insertProject.setString(9, project.getStart());
+						insertProject.setInt(10, project.getDuration());
+						insertProject.setString(11, project.getProjectType().toString());
 						if (project.getProjectType().equals(ProjectType.PROPOSAL)) {
-							insertProject.setString(7, ((Proposal) project).getMajors().toString());
-							insertProject.setString(8, ((Proposal) project).getClasses().toString());
-							insertProject.setInt(9, ((Proposal) project).getNumStudents());
-							insertProject.setDouble(10, ((Proposal) project).getCost());
-							insertProject.setString(11, Boolean.toString(((Proposal) project).getIsFunded()));
-							insertProject.setString(12, ((Proposal) project).getDeadline());
+							insertProject.setString(13, ((Proposal) project).getMajors().toString());
+							insertProject.setString(14, ((Proposal) project).getClasses().toString());
+							insertProject.setInt(15, ((Proposal) project).getNumStudents());
+							insertProject.setDouble(16, ((Proposal) project).getCost());
+							insertProject.setString(17, Boolean.toString(((Proposal) project).getIsFunded()));
+							insertProject.setString(18, ((Proposal) project).getDeadline());
 						} else if (project.getProjectType().equals(ProjectType.SOLICITATION)) {
-							insertProject.setString(6, ((Solicitation) project).getSolicitationType().toString());
-							insertProject.setString(7, ((Solicitation) project).getMajors().toString());
-							insertProject.setString(8, ((Solicitation) project).getClasses().toString());
-							insertProject.setInt(9, ((Solicitation) project).getNumStudents());
-							insertProject.setInt(10, ((int) ((Solicitation) project).getCost()));
-						} else if (project.getProjectType().equals(ProjectType.ACTIVE)){
-							insertProject.setInt(9, ((ActiveProject) project).getNumStudents());
-							insertProject.setDouble(10, ((ActiveProject) project).getCost());
-							insertProject.setString(12, ((ActiveProject) project).getDeadline());
-							insertProject.setDouble(13, ((ActiveProject) project).getBudget());
-						}
+							insertProject.setString(12, ((Solicitation) project).getSolicitationType().toString());
+							insertProject.setString(13, ((Solicitation) project).getMajors().toString());
+							insertProject.setString(14, ((Solicitation) project).getClasses().toString());
+							insertProject.setInt(15, ((Solicitation) project).getNumStudents());
+							insertProject.setInt(16, ((int) ((Solicitation) project).getCost()));
+						} 
+						index++;
 						insertProject.addBatch();
 					}
 					insertProject.executeBatch();
-
 					
 					System.out.println("Projects table populated");
 					
@@ -622,12 +718,93 @@ public class YCPDatabase implements IDatabase {
 					
 					System.out.println("ProjectUsers table populated");
 					
-
+					insertProjectProject = conn.prepareStatement(
+							"insert into project_projects" +
+							"	(project_id_copy3, project_id_copy4)" +
+							"	values (?, ?)"
+							);
+					for (projectProject projectRelation : projectProjectList) {
+						insertProjectProject.setInt(1, projectRelation.getProject_id_1());
+						insertProjectProject.setInt(2, projectRelation.getProject_id_2());
+						insertProjectProject.addBatch();
+					}
+					insertProjectProject.executeBatch();
+					
+					System.out.println("ProjectProject table populated");
+					
+					insertActiveProjects = conn.prepareStatement(
+							"insert into activeProjects" +
+							"	(project_id_copy1, project_id_copy2, title, description, start, duration, projectType, majors, classes, numStudents, cost, isFunded, deadline, budget)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					for (ActiveProject activeProject : activeProjectList){
+						insertActiveProjects.setInt(1, activeProject.getProject_id_copy_1());
+						insertActiveProjects.setInt(2, activeProject.getProject_id_copy_2());
+						insertActiveProjects.setString(3, activeProject.getTitle());
+						insertActiveProjects.setString(4, activeProject.getDescription());
+						insertActiveProjects.setString(5, activeProject.getStart());
+						insertActiveProjects.setInt(6, activeProject.getDuration());
+						insertActiveProjects.setString(7, activeProject.getProjectType().toString());
+						insertActiveProjects.setString(8, activeProject.getMajors().toString());
+						insertActiveProjects.setString(9, activeProject.getClasses().toString());
+						insertActiveProjects.setInt(10, activeProject.getNumStudents());
+						insertActiveProjects.setDouble(11, activeProject.getCost());
+						insertActiveProjects.setString(12, Boolean.toString(activeProject.isFunded()));
+						insertActiveProjects.setString(13, activeProject.getDeadline());
+						insertActiveProjects.setDouble(14, activeProject.getBudget());
+						insertActiveProjects.addBatch();
+					}
+					insertActiveProjects.executeBatch();
+					System.out.println("activeProject table populated");
+					
+					insertActiveProjectUsers = conn.prepareStatement(
+							"insert into activeProjectUsers" + 
+							"	(active_project_id, user_id)" + 
+							"	values(?, ?)"
+							);
+					for (ActiveProjectUsers activeProjectUser : activeProjectUsersList) {
+						insertActiveProjectUsers.setInt(1, activeProjectUser.getActiveProjectID());
+						insertActiveProjectUsers.setInt(2, activeProjectUser.getUserID());
+						insertActiveProjectUsers.addBatch();
+					}
+					insertActiveProjectUsers.executeBatch();
+					
+					System.out.println("activeProjectUsers table populated");
+					
+					insertPastProjects = conn.prepareStatement(
+							"insert into pastProjects" +
+							"	(project_id_copy5, project_id_copy6, title, description, start, duration, projectType, majors, classes, numStudents, cost, isFunded, deadline, budget)" +
+							"	values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+							);
+					for (PastProject pastProject : pastProjectList){
+						insertPastProjects.setInt(1, pastProject.getProject_id_copy_5());
+						insertPastProjects.setInt(2, pastProject.getProject_id_copy_6());
+						insertPastProjects.setString(3, pastProject.getTitle());
+						insertPastProjects.setString(4, pastProject.getDescription());
+						insertPastProjects.setString(5, pastProject.getStart());
+						insertPastProjects.setInt(6, pastProject.getDuration());
+						insertPastProjects.setString(7, pastProject.getProjectType().toString());
+						insertPastProjects.setString(8, pastProject.getMajors().toString());
+						insertPastProjects.setString(9, pastProject.getClasses().toString());
+						insertPastProjects.setInt(10, pastProject.getNumStudents());
+						insertPastProjects.setDouble(11, pastProject.getCost());
+						insertPastProjects.setString(12, Boolean.toString(pastProject.isFunded()));
+						insertPastProjects.setString(13, pastProject.getDeadline());
+						insertPastProjects.setDouble(14, pastProject.getBudget());
+						insertPastProjects.addBatch();
+					}
+					insertPastProjects.executeBatch();
+					
+					System.out.println("pastProject table populated");
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertUser);
 					DBUtil.closeQuietly(insertProject);
 					DBUtil.closeQuietly(insertProjectUser);
+					DBUtil.closeQuietly(insertProjectProject);
+					DBUtil.closeQuietly(insertActiveProjects);
+					DBUtil.closeQuietly(insertActiveProjectUsers);
 				}
 			}
 		});
@@ -642,7 +819,7 @@ public class YCPDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		
-		System.out.println("Success!");
+		System.out.println("Success!!");
 	}
 
 	//IN PROGRESS
@@ -1379,6 +1556,7 @@ public class YCPDatabase implements IDatabase {
 		PreparedStatement stmt2 = null;
 		PreparedStatement stmt3 = null;
 		PreparedStatement stmt4 = null;
+		PreparedStatement stmt5 = null;
 		Integer project_id = 0;
 		try {
 			stmt = conn.prepareStatement(
@@ -1436,6 +1614,23 @@ public class YCPDatabase implements IDatabase {
 			
 			stmt4.execute();
 			
+			stmt5 = conn.prepareStatement(
+					"update projects" + 
+					"	set project_id_copy1 = ?" +
+					"	set project_id_copy2 = ?" +
+					"	set project_id_copy3 = ?" +
+					"	set project_id_copy4 = ?" +
+					"	set project_id_copy5 = ?" +
+					"	set project_id_copy6 = ?" 
+					);
+			stmt5.setInt(1, project_id);
+			stmt5.setInt(2, project_id);
+			stmt5.setInt(3, project_id);
+			stmt5.setInt(4, project_id);
+			stmt5.setInt(5, project_id);
+			stmt5.setInt(6, project_id);
+			
+			stmt5.execute();
 			return project_id;
 		} finally {
 			DBUtil.closeQuietly(resultSet);
@@ -1444,6 +1639,7 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt2);
 			DBUtil.closeQuietly(stmt3);
 			DBUtil.closeQuietly(stmt4);
+			DBUtil.closeQuietly(stmt5);
 			DBUtil.closeQuietly(conn);
 		}
 	}
@@ -2167,4 +2363,246 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(conn);
 		}
 	}
+
+	@Override
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, title);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set description = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, description);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set start = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, start);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set duration = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, duration);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+		
+	}
+
+	@Override
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set title = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, numStudents);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set cost = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setDouble(1, cost);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update activeProjects" +
+					"	set deadline = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, deadline);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editCost(int project_id, double cost) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set cost = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setDouble(1, cost);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set numStudents = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setInt(1, numStudents);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set isFunded = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, Boolean.toString(isFunded));
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	@Override
+	public void editSolicitationType(int project_id, SolicitationType solicitationType)
+			throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+					"update projects" +
+					"	set solicitationType = ?" +
+					"	where project_id = ?"
+					);
+			
+			stmt.setString(1, solicitationType.toString());
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+	}
+
+	
 }

@@ -1,4 +1,4 @@
-package edu.ycp.cs320.cspath1.servlet;
+ package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
 
@@ -60,7 +60,7 @@ private static final long serialVersionUID = 1L;
 		req.setAttribute("model", model);
 		
 		//See if the user clicked either of the other account types, redirect accordingly
-		if (req.getParameter("guest") != null){
+		if (req.getParameter("buisness") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("faculty") != null){

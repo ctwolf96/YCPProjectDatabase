@@ -61,7 +61,7 @@ private static final long serialVersionUID = 1L;
 		
 		
 		// Forward to view to render the result HTML document
-		if (req.getParameter("guest") != null){
+		if (req.getParameter("Buisness") != null){
 			resp.sendRedirect(req.getContextPath() + "/accountCreationBusiness");
 		}
 		else if (req.getParameter("student") != null){

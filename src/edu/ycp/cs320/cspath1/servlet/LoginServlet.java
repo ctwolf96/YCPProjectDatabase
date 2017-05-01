@@ -1,3 +1,4 @@
+
 package edu.ycp.cs320.cspath1.servlet;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
@@ -59,6 +61,9 @@ private IDatabase db;
 				if(user.getEmail() != null && user.getPassword() != null){
 					validLogin = true;
 				}
+				else{
+					errorMessage = "Username or Password may be inccorect";
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -75,17 +80,31 @@ private IDatabase db;
 		// Add parameters as request attributes
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
+		req.setAttribute("errorMessage",errorMessage);
 		
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		System.out.println(validLogin);
-		
-		if(validLogin){
+		if(req.getParameter("SignUp") != null){
+			resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
+		}
+		else if(validLogin){
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
+			UserType userType = user.getUsertype();
 			
-			resp.sendRedirect(req.getContextPath() + "/index");
+			if(userType == UserType.STUDENT){
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
+			}
+			else if(userType == UserType.BUSINESS){
+				resp.sendRedirect(req.getContextPath() + "/businessHome");
+			}
+			else if(userType == UserType.FACULTY){
+				resp.sendRedirect(req.getContextPath() + "/facultyHome");
+			}
+	
+			
 			
 			return;
 		}
@@ -95,8 +114,11 @@ private IDatabase db;
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		
+		
+		
 	}
 	
 	
 
 }
+

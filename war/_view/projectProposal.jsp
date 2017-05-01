@@ -21,11 +21,12 @@
 			<div class="error">${errorMessage}</div>
 	</c:if>
 	
-	<h1>Project Proposal</h1>
+	
 	
 	
 	<div class="superContainer">
 	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
+	<h1 style = "text-align: center">Project Proposal</h1>
 		<label><a>Project Title</a></label><br>
 		<input type="text" name="title"><br>
 		<label><a>Description</a></label>
@@ -45,8 +46,8 @@
 				<option value="10">10</option>
 		</select>
 		<br>
-		<label><a>Start Date (mm/dd/yyyy)</a></label><br>
-		<input type="text" name="startTime"><br><br>
+		<label><a>Start Date</a></label><br>
+		<input type="date" name="startTime"><br><br>
 		
 		<label><a>Funding</a></label><br>
 		<select name="isFunded">
