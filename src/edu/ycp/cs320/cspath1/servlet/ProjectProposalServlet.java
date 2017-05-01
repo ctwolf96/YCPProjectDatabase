@@ -3,6 +3,7 @@ package edu.ycp.cs320.cspath1.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,123 +13,123 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
+import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
+import edu.ycp.cs320.cspath1.persist.IDatabase;
+import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.user.User;
 import edu.ycp.cs320.cspath1.controller.InsertProjectController;
 
 public class ProjectProposalServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
+private IDatabase db;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		String user = (String) req.getSession().getAttribute("user");
-		if (user == null) {
-			System.out.println("   User: <" + user + "> not logged in or session timed out");
-			
-			// user is not logged in, or the session expired
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
+		String username = (String) req.getSession().getAttribute("username");
+		String password = (String) req.getSession().getAttribute("password");
+		if (username == null || password == null)
+		{
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 		}
-
-		// now we have the user's User object,
-		// proceed to handle request...
-		
-		System.out.println("   User: <" + user + "> logged in");
-		
-		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
 	}
+	
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String errorMessage = null;
-		String successMessage = null;
-		ProjectModel model = new ProjectModel();
-		
-		
+		DatabaseProvider.setInstance(new YCPDatabase());
 
-		//All fields needed for project solicitation
-		String solicit =req.getParameter("solicit");
-		String strduration = req.getParameter("duration");
-		String startTime = req.getParameter("startTime");
-		String title = req.getParameter("title");
-		String description= req.getParameter("description");
-		//Until we make a model, these will be considered unused
-		ArrayList <MajorType> majortypes = getMajorTypesFromParameters(req, resp);
-		ArrayList <ClassType> classtypes = getClassTypesFromParameters(req, resp);
-		String numStudents = req.getParameter("numStudents");
-		Boolean isFunded = getBooleanFromParameter(req.getParameter("isFunded"));
-		String struserID = req.getParameter("userID");
+		db = DatabaseProvider.getInstance();	
+		
+		if (req.getParameter("solicitation") != null){
+			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
+		}
+		else{
+			String errorMessage = null; 
 			
-		model.setTitle(title);
-		model.setStartTime(startTime);
-		model.setDuration(strduration);
-		model.setDescription(description);
-		model.setClasses(classtypes);
-		model.setMajors(majortypes);
-		
-		
-		/*I had to hard code the boolea for the "isFunded" variable because
-		the program would crash. Some reason it was reading the input from
-		is funded as null*/
-		
-		
-		model.setFunded(true);
-		model.setNumStudents(numStudents);
-		//Placeholder until I get all fields down
-			if (title 		 == null || title.equals("") ||
-				description  == null || description.equals("")  ||
-				startTime    == null || startTime.equals("")     ||
-				strduration     == null || strduration.equals("") ||
-				struserID 	 == null || struserID.equals("")) {
+			int project_id = -1;
+			int user_id = 0;
+			User user = null;
+			String title = req.getParameter("title");
+			String description = req.getParameter("description");
+			String start = req.getParameter("start");
+			String Duration = req.getParameter("duration");
+			ProjectType type = ProjectType.PROPOSAL;
+			SolicitationType solicitationType = null;
+			String[] Majors = req.getParameterValues("majors");
+			String[] Classes = req.getParameterValues("classes");
+			ArrayList<MajorType> majors = new ArrayList<MajorType>();
+			ArrayList<ClassType> classes = new ArrayList<ClassType>();
+			String NumStudents = req.getParameter("numStudents");
+			String Cost = req.getParameter("cost");
+			String Funded = req.getParameter("isFunded");
+			String deadline = req.getParameter("deadline");
+			boolean isFunded;	
+			
+			String username = (String) req.getSession().getAttribute("username");
+			String password = (String) req.getSession().getAttribute("password");
+			
+			try {
+				user = db.findUserByUsernameAndPassword(username, password);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			user_id = user.getUserID();
+			
+			for(int i = 0; i<Majors.length;i++){
+				System.out.println(Majors[i]);
+			}
+			for(int i = 0; i<Majors.length;i++){
+				majors.add(getMajorTypeFromParameter(Majors[i]));
+			}
+			for(int i = 0; i<Classes.length;i++){
+				classes.add(getClassTypeFromParameter(Classes[i]));
+			}
+			System.out.println("test");
+			double cost = Double.parseDouble(Cost);
+			int numStudents = Integer.parseInt(NumStudents);
+			int duration = Integer.parseInt(Duration);
+			if(Funded == "Yes"){
+				isFunded = true;
+			}
+			else{
+				isFunded = false;
+			}
+			System.out.println(title + " " + description + " " + start + " " + duration + " " + type);
+			
+			if(user_id == 0 || title == null || description == null || start == null || duration == 0 || type == null) {
+				errorMessage = "Please specify required fields";
 				
-				errorMessage = "Please fill in all of the required fields";
-			}else {
-				InsertProjectController controller = new InsertProjectController();
-				
-				//convert userID into a int for the controller
-				int userID = Integer.parseInt(struserID);
-				int duration = Integer.parseInt(strduration);
-				
+			} 
+			else {
 				try {
-					if(controller.insertProjectIntoDatabase(userID, title, description, startTime, duration, ProjectType.PROPOSAL)){
-						successMessage = title;
-					}
-					else{
-						errorMessage = "Failed to sumbit project"+title;
-					}
+					project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
+					System.out.println(project_id);
+					System.out.println("");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			
-		// Add parameters as request attributes
-		//Pretty certain this is used to put things into a model or controller
-		req.setAttribute("duration", req.getParameter("duration"));
-		req.setAttribute("startTime", req.getParameter("startTime"));
-		req.setAttribute("title", req.getParameter("title"));
-		req.setAttribute("description", req.getParameter("description"));
-		
-		
-		
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("model", model);
-	
-		
-		// Forward to view to render the result HTML document
-		
-		if (req.getParameter("solicit") != null){
-			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
-		}
-		else if(req.getParameter("submit") != null){
-			resp.sendRedirect(req.getContextPath() + "/sampleProject");
-		}
-		else {
-		req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+			// Add result objects as request attributes
+			req.setAttribute("errorMessage", errorMessage);
+			
+			//See if the user clicked either of the other account types, redirect accordingly
+			
+			if(req.getParameter("submit") != null && project_id > 0){
+				req.setAttribute("successMessage", "Successfull Submission");
+				resp.sendRedirect(req.getContextPath() + "/projectProposal");
+			}
+			else {
+				req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+			}
 		}
 	}
 	
@@ -226,5 +227,46 @@ private static final long serialVersionUID = 1L;
 			classtypes.add(SR);
 		}
 		return classtypes;
+	}
+	
+	private SolicitationType getSolicitTypeFromParameter(String s){
+		SolicitationType solicitType = null;
+		if(s == null || s.equals("")){
+			return null;
+		}
+		else if (s == "ME_CAPSTONE"){
+			solicitType = SolicitationType.ME_CAPSTONE;
+		}
+		else if (s == "ECE_CAPSTONE"){
+			solicitType = SolicitationType.ECE_CAPSTONE;
+		}
+		else if (s == "CivE_CAPSTONE"){
+			solicitType = SolicitationType.CivE_CAPSTONE;
+		}
+		else if (s == "ME_ECE_CAPSTONE"){
+			solicitType = SolicitationType.ME_ECE_CAPSTONE;
+		}
+		else if (s == "SW_ENGINEERING"){
+			solicitType = SolicitationType.SW_ENGINEERING;
+		}
+		else if (s == "CS_SENIOR_DESIGN_I"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_I;
+		}
+		else if (s == "CS_SENIOR_DESIGN_II"){
+			solicitType = SolicitationType.CS_SENIOR_DESIGN_II;
+		}
+		else if (s == "INDEPENDENT_STUDY"){
+			solicitType = SolicitationType.INDEPENDENT_STUDY;
+		}
+		else if (s == "CS_INTERNSHIP"){
+			solicitType =SolicitationType.CS_INTERNSHIP;
+		}
+		else if (s == "ENGINEERING_COOP"){
+			solicitType = SolicitationType.ENGINEERING_COOP;
+		}
+		else if (s == "CLASS_PROJECT"){
+			solicitType = SolicitationType.CLASS_PROJECT;
+		}
+		return solicitType;
 	}
 }

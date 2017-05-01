@@ -14,7 +14,7 @@ public class ProjectModel {
 	private String duration;
 	private String title;
 	private String startTime;
-	private String numStudents;
+	private int numStudents;
 	private boolean isFunded;
 	private boolean hardware;
 	private boolean software;
@@ -59,11 +59,11 @@ public class ProjectModel {
 		this.duration = duration;
 	}
 
-	public String getNumStudents() {
+	public int getNumStudents() {
 		return numStudents;
 	}
 
-	public void setNumStudents(String numStudents) {
+	public void setNumStudents(int numStudents) {
 		this.numStudents = numStudents;
 	}
 

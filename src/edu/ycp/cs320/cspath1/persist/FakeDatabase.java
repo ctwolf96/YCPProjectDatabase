@@ -17,12 +17,12 @@ import edu.ycp.cs320.cspath1.user.User;
 
 public class FakeDatabase implements IDatabase {
 
-	@Override
+	/*@Override
 	public Integer insertUser(String username, String password, String email, UserType usertype)
 			throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public void deleteUserAndProjects(int user_id) throws IOException, SQLException {
@@ -126,12 +126,12 @@ public class FakeDatabase implements IDatabase {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public Integer insertProject(int UserID, String title, String description, String start, int duration,
 			ProjectType type) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	@Override
 	public void deleteProject(int project_id) throws IOException, SQLException {
@@ -261,6 +261,96 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public List<Pair<User, Project>> findAllProjectsByUser(int UserID) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void editCost(int project_id, double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editFunding(int project_id, boolean isFunded) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editSolicitationType(int project_id, SolicitationType solicitationType)
+			throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectTitle(int project_id, String title) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDescription(int project_id, String description) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectStart(int project_id, String start) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDuration(int project_id, int duration) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectNumStudents(int project_id, int numStudents) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectCost(int project_id, double cost) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editActiveProjectDeadline(int project_id, String deadline) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer insertUser(String username, String password, String email, UserType usertype, String firstname,
+			String lastname, MajorType major, ClassType classtype, String name, String address, String contactNum)
+					throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer insertProject(int UserID, String title, String description, String start, int duration,
+			ProjectType type, SolicitationType solicitationType, ArrayList<MajorType> majors,
+			ArrayList<ClassType> classes, int numStudents, double cost, boolean isFunded, String deadline)
+					throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Project> findProjectsByTitle(String title) throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
