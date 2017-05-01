@@ -91,7 +91,7 @@ public class YCPDatabase implements IDatabase {
 
 	private Connection connect() throws SQLException {
 
-	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
+	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/jbady/workspace/project_database.db;create=true");
 
 
 	
