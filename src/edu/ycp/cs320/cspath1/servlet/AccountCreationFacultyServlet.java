@@ -51,7 +51,7 @@ private IDatabase db;
 				errorMessage = "Passwords do not match";
 			} else {
 				try {
-					user_id = db.insertUser(username, password, email, UserType.STUDENT, firstname, lastname, majortype, classtype, name, address, number);
+					user_id = db.insertUser(username, password, email, UserType.FACULTY, firstname, lastname, majortype, classtype, name, address, number);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
