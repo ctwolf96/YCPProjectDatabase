@@ -7,15 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.user.User;
+
 public class BusinessHomeServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String username = (String) req.getSession().getAttribute("username");
-		String password = (String) req.getSession().getAttribute("password");
-		if (username == null || password == null)
+		User user = (User) req.getSession().getAttribute("user");
+		if (user == null)
 		{
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		} else {

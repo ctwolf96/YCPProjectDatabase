@@ -8,16 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.controller.UserController;
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.UserType;
+import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.user.User;
 
 public class AccountCreationFacultyServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
-private IDatabase db;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,8 +31,8 @@ private IDatabase db;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-			DatabaseProvider.setInstance(new YCPDatabase());
-			db = DatabaseProvider.getInstance();	
+			AccountCreationModel model = new AccountCreationModel();
+			UserController controller = new UserController();
 			String errorMessage = null;
 			
 			String email = req.getParameter("email");
@@ -43,7 +46,22 @@ private IDatabase db;
 			String name = null;
 			String number = null;
 			String address = null;
+			
+			model.setEmail(email);
+			model.setUsername(username);
+			model.setPassword(password1);
+			model.setName(name);
+			model.setAddress(address);
+			model.setContactNum(number);
+			model.setUsertype(UserType.FACULTY);
+			model.setMajortype(majortype);
+			model.setClasstype(classtype);
+			model.setFirstName(firstname);
+			model.setLastName(lastname);
+			controller.setModel(model);
+			
 			int user_id = 0;
+			User user = null;
 				
 			if (username == null || password == null || password1 == null || email == null || majortype == null || firstname == null || lastname == null) {
 				errorMessage = "Please specify required fields";
@@ -51,8 +69,10 @@ private IDatabase db;
 				errorMessage = "Passwords do not match";
 			} else {
 				try {
-					user_id = db.insertUser(username, password, email, UserType.FACULTY, firstname, lastname, majortype, classtype, name, address, number);
+					user_id = controller.createAcct();
+					user = controller.login();
 				} catch (SQLException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -67,8 +87,7 @@ private IDatabase db;
 				resp.sendRedirect(req.getContextPath() + "/accountCreationStudent");
 			}
 			else if(req.getParameter("submit") != null && user_id > 0){
-				req.getSession().setAttribute("username", username);
-				req.getSession().setAttribute("password", password);
+				req.getSession().setAttribute("user", user);
 				resp.sendRedirect(req.getContextPath() + "/facultyHome");
 			}
 			else {
