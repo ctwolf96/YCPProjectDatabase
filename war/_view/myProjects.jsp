@@ -20,7 +20,7 @@
 	</c:if>
 
 	<div class="superContainer">
-		<form action="${pageContext.servletContext.contextPath}/userSearch" method="post">
+		<form action="${pageContext.servletContext.contextPath}/myProjects" method="post">
 		<h1 style = "text-align: center">My Projects</h1>
 					
 			<table>

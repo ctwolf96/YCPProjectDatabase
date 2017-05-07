@@ -93,6 +93,7 @@ public class YCPDatabase implements IDatabase {
 
 	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/radio shack/workspace/project_database.db;create=true");
 
+
 	
 	// Set autocommit to false to allow multiple the execution of
 	// multiple queries/statements as part of the same transaction.
@@ -3426,10 +3427,80 @@ public class YCPDatabase implements IDatabase {
 	}
 
 	@Override
-	public List<Pair<Solicitation, Proposal>> findAllProjectsByProjectID(int project_id)
+	public List<Pair<Project, Project>> findAllProjectsByProjectID(int project_id)
 			throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		ResultSet resultSet3 = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		Project project1 = new Proposal();
+		Project project2 = new Proposal();
+		Integer project_id1 = null;
+		Integer project_id2 = null;
+		int index = 1;
+		List<Pair<Project, Project>> projectsList = new ArrayList<Pair<Project, Project>>();
+		try {
+			stmt1 = conn.prepareStatement(
+					"select * from project_projects " +
+					"	where project_id_copy3 = ? or " +
+					"	project_id_copy4 = ?"
+					);
+			
+			stmt1.setInt(1, project_id);
+			stmt1.setInt(2, project_id);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			while (resultSet1.next()) {
+				project_id1 = resultSet1.getInt(index++);
+				project_id2 = resultSet1.getInt(index++);	
+				
+				stmt2 = conn.prepareStatement(
+						"select * from projects " +
+						"	where project_id = ?"
+						);
+				stmt2.setInt(1, project_id1);
+				
+				resultSet2 = stmt2.executeQuery();
+				
+				if (resultSet2.next()) {
+					loadProject(project1, resultSet2);
+				}
+				else {
+					System.out.println("Something went wrong boys...");
+				}
+				
+				stmt3 = conn.prepareStatement(
+						"select * from projects " +
+						"	where project_id = ?"
+						);
+				stmt3.setInt(1, project_id2);
+				
+				resultSet3 = stmt3.executeQuery();
+				
+				if (resultSet3.next()) {
+					loadProject(project2, resultSet3);
+				}
+				else {
+					System.out.println("Something went wrong boys...");
+				}
+				Pair<Project, Project> projects = new Pair<Project, Project>(project1, project2);
+				projectsList.add(projects);
+			}
+			return projectsList;
+			
+		} finally {
+			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(resultSet3);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+		}
 	}
 
 	@Override
@@ -3470,28 +3541,249 @@ public class YCPDatabase implements IDatabase {
 
 	@Override
 	public List<User> findUserByNameWildcard(String name) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		List<User> users = new ArrayList<User>();
+		try {
+			stmt = conn.prepareStatement(
+				"select users.*" +
+				"	from users" +
+				"	where name like '%' || ? || '%'"
+				);
+			stmt.setString(1, name);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				user = loadUser(user, resultSet);
+				users.add(user);
+			}
+			
+			if(!found){
+				System.out.println("No business with the name <" + name + "> was found in the user table");
+			}
+			return users;
+		} finally {
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
 	public List<User> findUserByAddressWildcard(String address) throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = connect();
+		ResultSet resultSet = null;
+		PreparedStatement stmt = null;
+		//Placeholder since we can't instantiate the super
+		User user = new Student();
+		List<User> users = new ArrayList<User>();
+		try {
+			stmt = conn.prepareStatement(
+				"select users.*" +
+				"	from users" +
+				"	where address like '%' || ? || '%'"
+				);
+			stmt.setString(1, address);
+			
+			resultSet = stmt.executeQuery();
+			
+			Boolean found = false;
+			
+			while (resultSet.next()){
+				found = true;
+				user = loadUser(user, resultSet);
+				users.add(user);
+			}
+			
+			if(!found){
+				System.out.println("No business with the name <" + address + "> was found in the user table");
+			}
+			return users;
+		} finally {
+		DBUtil.closeQuietly(resultSet);
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
+		}
 	}
 
 	@Override
-	public void insertProjectsintoProjectProjects(int project_id_copy3, int project_id_copy4)
+	public Integer insertProjectsintoProjectProjects(int project_id_copy3, int project_id_copy4)
 			throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
+		int project_id = -1;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		try {
+			stmt1 = conn.prepareStatement(
+					"select * from project_projects " +
+					"	where (project_id_copy3 = ? and " +
+					"	project_id_copy4 = ?) or (project_id_copy3 = ? " +
+					"	and project_id_copy4 = ?)"
+					);
+			
+			stmt1.setInt(1, project_id_copy3);
+			stmt1.setInt(2, project_id_copy4);
+			stmt1.setInt(3, project_id_copy4);
+			stmt1.setInt(4, project_id_copy3);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			if(resultSet1.next()) {
+				System.out.println("Those projects are already paired...");
+				project_id = resultSet1.getInt(1);
+			}
+			
+			else {
+				stmt2 = conn.prepareStatement(
+						"insert into project_projects(project_id_copy3, project_id_copy4) " +
+						"	values(?, ?)"
+						);
+				stmt2.setInt(1, project_id_copy3);
+				stmt2.setInt(2, project_id_copy4);
+				
+				stmt2.executeUpdate();
+				
+				stmt3 = conn.prepareStatement(
+						"select project_id_copy3 from project_projects " +
+							"	where (project_id_copy3 = ? and " +
+							"	project_id_copy4 = ?) or (project_id_copy3 = ? " +
+							"	and project_id_copy4 = ?)"
+					);
+				
+				stmt3.setInt(1, project_id_copy3);
+				stmt3.setInt(2, project_id_copy4);
+				stmt3.setInt(3, project_id_copy4);
+				stmt3.setInt(4, project_id_copy3);
+			
+				resultSet2 = stmt3.executeQuery();
+				
+				if (resultSet2.next()) {
+					project_id = resultSet2.getInt(1);
+				}
+				else {
+					System.out.println("Something has gone horribly wrong...");
+				}
+			}
+			
+			return project_id;
+			
+		} finally {
+			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(resultSet1);
+			DBUtil.closeQuietly(resultSet2);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(stmt3);
+		}
+		
+		
+		
 		
 	}
 
 	@Override
 	public void deleteProjectFromProjectProjects(int project_id_copy3, int project_id_copy4)
 			throws IOException, SQLException {
-		// TODO Auto-generated method stub
+		Connection conn = connect();
+		ResultSet resultSet1 = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
 		
+		try {
+			stmt1 = conn.prepareStatement(
+					"select * from project_projects " +
+					"	where (project_id_copy3 = ? and " +
+					"	project_id_copy4 = ?) or (project_id_copy3 = ? " +
+					"	and project_id_copy4 = ?)"
+					);
+			
+			stmt1.setInt(1, project_id_copy3);
+			stmt1.setInt(2, project_id_copy4);
+			stmt1.setInt(3, project_id_copy4);
+			stmt1.setInt(4, project_id_copy3);
+			
+			resultSet1 = stmt1.executeQuery();
+			
+			if (resultSet1.next()) {
+				stmt2 = conn.prepareStatement(
+						"delete from project_projects " +
+							"	where (project_id_copy3 = ? and " +
+							"	project_id_copy4 = ?) or (project_id_copy3 = ? " +
+							"	and project_id_copy4 = ?)"
+						);
+				stmt2.setInt(1, project_id_copy3);
+				stmt2.setInt(2, project_id_copy4);
+				stmt2.setInt(3, project_id_copy4);
+				stmt2.setInt(4, project_id_copy3);
+				
+				stmt2.executeUpdate();
+				
+			}
+			
+			
+			else {
+				System.out.println("Relation does not exist in the database...");
+			}
+		} finally {
+			DBUtil.closeQuietly(conn);
+			DBUtil.closeQuietly(stmt1);
+			DBUtil.closeQuietly(stmt2);
+			DBUtil.closeQuietly(resultSet1);
+		}
+		
+	}
+
+	@Override
+	public void editMajorType(int user_id, MajorType major) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+				"update users" +
+				"	set major = ?" +
+				"	where user_id = ?"
+			);
+			
+			stmt.setString(1, major.toString());
+			stmt.setInt(2, user_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editClassType(int user_id, ClassType classtype) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+				"update users" +
+				"	set class = ?" +
+				"	where user_id = ?"
+			);
+			
+			stmt.setString(1, classtype.toString());
+			stmt.setInt(2, user_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
+		}
 	}
 
 	

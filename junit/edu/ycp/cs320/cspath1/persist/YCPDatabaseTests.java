@@ -37,6 +37,7 @@ public class YCPDatabaseTests {
 	List<Pair<User, Project>> userProjectList = null;
 	List<Pair<User, Project>> projectUserList = null;
 	List<Pair<User, ActiveProject>> activeProjectUsers = null;
+	List<Pair<Project, Project>> projectsPair = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -1437,5 +1438,113 @@ public class YCPDatabaseTests {
 			fail("No projects returned from db");
 		}
 		
+	}
+	
+	@Test
+	public void testFindUserByNameWildcard() throws IOException, SQLException {
+		System.out.println("\n ***Testing findUserByNameWildcard***");
+		String name = "ss7";
+		
+		users = db.findUserByNameWildcard(name);
+		
+		if (users.get(0).getEmail() == null) {
+			System.out.println("Something has gone horribly wrong");
+			fail("No users returned from db");
+		}
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getUserID());
+			}
+		}
+	}
+	
+	@Test
+	public void testFindUserByAddressWildcard() throws IOException, SQLException {
+		System.out.println("\n ***Testing findUserByAddressWildcard***");
+		
+		String address = "Avenue";
+
+		users = db.findUserByAddressWildcard(address);
+		
+		if (users.get(0).getEmail() == null) {
+			System.out.println("Something has gone horribly wrong");
+			fail("No users returned from db");
+		}
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getUserID());
+			}
+		}
+	}
+	
+	@Test
+	public void testInsertProjectsToProjectProjects() throws IOException, SQLException {
+		System.out.println("\n ***Testing insertProjectsIntoProjectProjects***");
+		
+		Integer project_id = db.insertProjectsintoProjectProjects(3, 2);
+		
+		projectsPair = db.findAllProjectsByProjectID(3);
+		
+		if(projectsPair.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No projects returned from db.");
+			
+		}
+		else {
+			for (Pair<Project, Project> projectPair : projectsPair) {
+				System.out.println(projectPair.getLeft().getProjectID() + ", " + projectPair.getRight().getProjectID());
+			}
+		}
+		
+		db.deleteProjectFromProjectProjects(3, 2);
+		
+		projectsPair = db.findAllProjectsByProjectID(3);
+		
+		if(!projectsPair.isEmpty()) {
+			System.out.println("Relation was not successfully deleted.");
+			fail("Relation not deleted in table");
+		}
+		else {
+			System.out.println("Project relation was inserted and deleted successfully.");
+		}
+	}
+	
+	@Test
+	public void testEditMajorType() throws IOException, SQLException {
+		System.out.println("\n ***Testing editMajorType***");
+		
+		
+		db.editMajorType(32, MajorType.CE);
+		
+		users = db.findUserByMajorType(MajorType.CE);
+		
+		if(users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from database");
+		}
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getUsername());
+			}
+		}
+	}
+	
+	@Test
+	public void testEditClassType() throws IOException, SQLException {
+		System.out.println("\n ***Testing editClassType");
+		
+		db.editClassType(32, ClassType.SOPHOMORE);
+		
+		users = db.findUserByClassType(ClassType.SOPHOMORE);
+		
+		if(users.isEmpty()) {
+			System.out.println("Something has gone horribly wrong...");
+			fail("No users returned from database");
+		}
+		else {
+			for (User user : users) {
+				System.out.println(user.getEmail() + ", " + user.getUsername());
+			}
+		}
 	}
 }

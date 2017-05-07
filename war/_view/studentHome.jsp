@@ -27,6 +27,7 @@
 					<a><input type="Submit" name="userSearch" value="User Search" class = "buttonDrop"></a>
 					<a><input type="Submit" name="proposalSearch" value="Proposal Search" class = "buttonDrop"></a>
 					<a><input type="Submit" name="solicitationSearch" value="Solicitation Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
 					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
 			</div>
 			</div>

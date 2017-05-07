@@ -23,8 +23,8 @@
 	
 	
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
-	<h1 style = "text-align: center">My Proposal</h1>
+	<form action="${pageContext.servletContext.contextPath}/viewProject" method="post">
+	<h1 style = "text-align: center">Proposal</h1>
 		<label><a>Project Title:</a></label><br>
 		<p>${project.title}</p><br><br>
 		
@@ -41,7 +41,7 @@
 		<p>${project.deadline}</p><br><br>
 		
 		<label><a>Funding:</a></label><br>
-		<p>${project.funding}</p><br><br>
+		<p>${project.isFunded}</p><br><br>
 		
 		<labeL><a>Number of Students:</a></labeL><br>
 		<p>${project.numStudents}</p><br><br>
@@ -50,7 +50,7 @@
 		<p>${project.majors}</p><br><br>
 			
 		<label><a>Student Year(s)</a></label><br>
-		<p>${project.year}</p><br><br>
+		<p>${project.classes}</p><br><br>
 			
 		<label><a>Cost:</a></label><br>
 		<p>${project.cost}</p><br><br>

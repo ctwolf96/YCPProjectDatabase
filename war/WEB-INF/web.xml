@@ -61,6 +61,18 @@
   	<servlet-name>SolicitationSearchServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.SolicitationSearchServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UserSettingsStudentServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSettingsStudentServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UserSettingsFacultyServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSettingsFacultyServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UserSettingsBusinessServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSettingsBusinessServlet</servlet-class>
+  </servlet>
 
 	<!-- AJAX servlets. -->
 	<servlet>
@@ -156,6 +168,18 @@
   <servlet-mapping>
   	<servlet-name>SolicitationSearchServlet</servlet-name>
   	<url-pattern>/solicitationSearch</url-pattern>
+  </servlet-mapping>
+ <servlet-mapping>
+  	<servlet-name>UserSettingsStudentServlet</servlet-name>
+  	<url-pattern>/userSettingsStudent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserSettingsFacultyServlet</servlet-name>
+  	<url-pattern>/userSettingsFaculty</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserSettingsBusinessServlet</servlet-name>
+  	<url-pattern>/userSettingsBusiness</url-pattern>
   </servlet-mapping>
 
   <!--  AJAX servlet mappings. -->
