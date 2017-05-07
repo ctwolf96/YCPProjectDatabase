@@ -881,6 +881,7 @@ public class YCPDatabase implements IDatabase {
 		stmt2.setString(5, firstname);
 		stmt2.setString(6, lastname);
 		stmt2.setString(7, major.toString());
+		stmt2.setString(8, null);
 		stmt2.setString(9, null);
 		stmt2.setString(10, null);
 		stmt2.setString(11, null);
