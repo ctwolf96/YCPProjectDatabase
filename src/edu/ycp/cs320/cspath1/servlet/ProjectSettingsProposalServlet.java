@@ -53,6 +53,8 @@ public class ProjectSettingsProposalServlet extends HttpServlet {
 		String[] Classes = req.getParameterValues("classes");
 		ArrayList<MajorType> majors = new ArrayList<MajorType>();
 		ArrayList<ClassType> classes = new ArrayList<ClassType>();
+		String funding = req.getParameter("funding");
+		String deadline = req.getParameter("deadline");
 		
 		if (!(Majors == null)) {
 			for (int i = 0; i < Majors.length; i++) {
@@ -69,6 +71,7 @@ public class ProjectSettingsProposalServlet extends HttpServlet {
 		model.setTitle(newTitle);
 		model.setDescription(newDescription);
 		model.setStartTime(newStart);
+		model.setDeadline(deadline);
 		model.setProject_id(project.getProjectID());
 		if (!newNumStudents.equals("")) {
 			model.setNumStudents(Integer.parseInt(newNumStudents));
@@ -81,11 +84,23 @@ public class ProjectSettingsProposalServlet extends HttpServlet {
 		}
 		model.setMajors(majors);
 		model.setClasses(classes);
+		System.out.println("funding: " + funding);
+		if(funding == null){
+			funding = "false";
+		}
+		if (!funding.equals("") || funding != null) {
+			if (funding.equals("true")) {
+				model.setFunded(true);
+			} else {
+				model.setFunded(false);
+			}
+		}
 		controller.setModel(model);
 		
 		
 		if (req.getParameter("changeTitle") != null && newTitle != null) {
 			try {
+				System.out.println("new Title: " + newTitle);
 				controller.editTitle();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -131,7 +146,26 @@ public class ProjectSettingsProposalServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		} else if (req.getParameter("changeNumStudents") != null) {
+			try {
+				controller.editNumStudents();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (req.getParameter("changeFunding") != null) {
+			try {
+				controller.editFunding();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (req.getParameter("changeDeadline") != null) {
+			try {
+				controller.editDeadline();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if (req.getParameter("done") != null) {
 			resp.sendRedirect(req.getContextPath() + "/myProjects");
 		}

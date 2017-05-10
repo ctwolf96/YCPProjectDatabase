@@ -16,9 +16,6 @@
 			<img src="Logo.png" />
 		</div>
 	</div>
-	<c:if test="${! empty errorMessage}">
-		<div class="error">${errorMessage}</div>
-	</c:if>
 
 
 
@@ -29,8 +26,8 @@
 			<h1 style="text-align: center">Business Account Creation</h1>
 			<br>
 			<c:if test="${! empty errorMessage}">
-				<div class="error">${errorMessage}</div>
-			</c:if>
+			<div style = " text-align: center; color: red">${errorMessage}</div>
+	</c:if>
 			<table style="margin: 10px">
 				<tr>
 					<td class="label">Business Name:</td>

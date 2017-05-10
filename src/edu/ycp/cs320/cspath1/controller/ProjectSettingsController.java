@@ -49,7 +49,15 @@ public class ProjectSettingsController {
 	public void editClasses() throws IOException, SQLException {
 		db.editClassTypes(model.getProject_id(), model.getClasses());
 	}
+	
+	public void editFunding() throws IOException, SQLException {
+		db.editFunding(model.getProject_id(), model.isFunded());
+	}
 
+	public void editDeadline() throws IOException, SQLException {
+		db.editDeadline(model.getProject_id(), model.getDeadline());
+	}
+	
 	public ProjectModel getModel() {
 		return model;
 	}

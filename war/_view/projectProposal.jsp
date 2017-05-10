@@ -16,11 +16,10 @@
 		<div id="logo">
 			<img src="Logo.png">
 		</div>
-	</div>
-	
-	
-	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
-	<div class="dropdown">
+		
+		<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
+		
+		<div class="dropdown">
 			<button class="dropbtn">Menu</button>
 			<div class="dropdown-content">
 				  	<a><input type="Submit" name="home" value="Home" class = "buttonDrop" ></a>				  
@@ -33,10 +32,19 @@
 					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
 					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
 			</div>
+			</div>
 	</div>
 	
+	
+	
+	
+	
 	<div class="superContainer">
+	
 	<h1 style = "text-align: center">Project Proposal</h1>
+			<c:if test="${! empty errorMessage}">
+				<div class="error" style = " text-align: center; color: red">${errorMessage}</div>
+			</c:if>
 		<label><a>Project Title:</a></label><br>
 		<input type="text" name="title"><br><br>
 		
@@ -93,9 +101,6 @@
 			<input type="Submit" name="submit" value="Create Project" class = "button button5">
 			</div>
 			
-			<c:if test="${! empty errorMessage}">
-			<div class="error" Style = "Color: red">${errorMessage}</div>
-			</c:if>
 			<c:if test="${! empty successMessage}">
 			<div class="error" Style = "Color: green">${successMessage}</div>
 			</c:if>

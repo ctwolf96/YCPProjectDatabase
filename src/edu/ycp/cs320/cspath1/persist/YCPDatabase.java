@@ -1198,6 +1198,7 @@ public class YCPDatabase implements IDatabase {
 		
 		if(!found){
 			System.out.println("<" + username + "> and <" + password + "> were not found in the user table");
+			return null;
 		}
 		return user;
 	} finally {
@@ -2356,7 +2357,7 @@ public class YCPDatabase implements IDatabase {
 		ResultSet resultSet2 = null;
 		List<Pair<User, Project>> list = new ArrayList<Pair<User, Project>>();
 		User user = new Student();
-		Project project = new Proposal();
+		Project project = null;
 		try {
 			stmt = conn.prepareStatement(
 				"select projects.*" +
@@ -2445,13 +2446,19 @@ public class YCPDatabase implements IDatabase {
 		found = true;
 		
 		user = loadUser(user, resultSet);
+		
 		}
 		while (resultSet2.next()) {
 		found = true;
 		
+		project = new Proposal();
 		project = loadProject(project, resultSet2);
 		
 		list.add(new Pair<User, Project>(user, project));
+		for(int i = 0; i<list.size(); i++){
+			System.out.println(list.get(i).getRight().getTitle());
+		}
+		System.out.println();
 		}
 		
 		if (!found) {
@@ -3828,6 +3835,27 @@ public class YCPDatabase implements IDatabase {
 		} finally {
 		DBUtil.closeQuietly(stmt);
 		DBUtil.closeQuietly(conn);
+		}
+		
+	}
+	@Override
+	public void editDeadline(int project_id, String deadline) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+			stmt = conn.prepareStatement(
+				"update projects" +
+				"	set deadline = ?" +
+				"	where project_id = ?"
+			);
+			
+			stmt.setString(1, deadline);
+			stmt.setInt(2, project_id);
+			
+			stmt.executeUpdate();
+		} finally {
+			DBUtil.closeQuietly(stmt);
+			DBUtil.closeQuietly(conn);
 		}
 		
 	}

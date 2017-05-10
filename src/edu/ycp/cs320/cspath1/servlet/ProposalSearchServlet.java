@@ -41,6 +41,32 @@ public class ProposalSearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+User user = (User) req.getSession().getAttribute("user");
+		
+		if (req.getParameter("logout") != null) {
+			req.getSession().invalidate();
+			resp.sendRedirect(req.getContextPath() + "/login");
+		} else if (req.getParameter("userSearch") != null) {
+			resp.sendRedirect(req.getContextPath() + "/userSearch");
+		} else if (req.getParameter("proposalSearch") != null) {
+			resp.sendRedirect(req.getContextPath() + "/proposalSearch");
+		} else if (req.getParameter("solicitationSearch") != null) {
+			resp.sendRedirect(req.getContextPath() + "/solicitationSearch");
+		} else if (req.getParameter("solicitation") != null) {
+			resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
+		} else if (req.getParameter("proposal") != null) {
+			resp.sendRedirect(req.getContextPath() + "/projectProposal");
+		} else if (req.getParameter("myProjects") != null) {
+			resp.sendRedirect(req.getContextPath() + "/myProjects");
+		} else if (req.getParameter("settings") != null) {
+			resp.sendRedirect(req.getContextPath() + "/userSettingsStudent");
+		} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.STUDENT)) {
+			resp.sendRedirect(req.getContextPath() + "/studentHome");
+		} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.FACULTY)) {
+			resp.sendRedirect(req.getContextPath() + "/facultyHome");
+		} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.BUSINESS)) {
+			resp.sendRedirect(req.getContextPath() + "/businessHome");
+		}
 
 		Project project			 	=null;
 		ArrayList<Project> projects	=null;

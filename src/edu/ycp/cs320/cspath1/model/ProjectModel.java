@@ -20,6 +20,7 @@ public class ProjectModel {
 	private int numStudents;
 	private boolean isFunded;
 	private SolicitationType solicitationType;
+	private String deadline;
 	
 	
 	public User getCreator() {
@@ -116,6 +117,14 @@ public class ProjectModel {
 
 	public void setSolicitationType(SolicitationType solicitationType) {
 		this.solicitationType = solicitationType;
+	}
+
+	public String getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 	
 	

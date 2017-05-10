@@ -67,6 +67,8 @@ private IDatabase db;
 			boolean isFunded = false;
 			String deadline = null;
 			
+			System.out.println("Title1:" + title);
+			
 			User user = (User) req.getSession().getAttribute("user");
 			user_id = user.getUserID();
 			
@@ -98,7 +100,7 @@ private IDatabase db;
 					errorMessage = "Please specify required fields";
 					System.out.println("You have goofed");
 					req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
-				} else {
+				}  else {
 					try {
 						project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
 						System.out.println(project_id);
@@ -108,7 +110,7 @@ private IDatabase db;
 						}
 						else {
 							errorMessage = "Project could not be created";
-							req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+							req.getRequestDispatcher("/_view/projectsSolicitation.jsp").forward(req, resp);
 						}
 					} catch (SQLException e) {
 						e.printStackTrace();

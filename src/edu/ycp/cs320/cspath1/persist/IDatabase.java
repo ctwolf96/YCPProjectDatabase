@@ -198,4 +198,5 @@ public interface IDatabase {
 	public void editMajorTypes(int project_id, ArrayList<MajorType> majors) throws IOException, SQLException;
 	
 	public void editClassTypes(int project_id, ArrayList<ClassType> classes) throws IOException, SQLException;
+	public void editDeadline(int project_id, String deadline) throws IOException, SQLException;
  }

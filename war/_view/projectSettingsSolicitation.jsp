@@ -35,8 +35,7 @@
 				</tr>
 				<tr>
 					<td class="label">Change Description:</td>
-					<td><input type="text" placeholder="Change Description" name="description
-					" size="12" value="${model.description}" /></td>
+					<td><input type="text" placeholder="Change Description" name="description" size="12" value="${model.description}" /></td>
 					<td><input type="Submit" name="changeDescription" value="Change Description" class="button button5" /></td>
 				</tr>
 				<tr>
@@ -84,7 +83,9 @@
 			<input type="checkbox" name="classes" value="JR">Junior
 			<input type="checkbox" name="classes" value="SR">Senior<br><br>
 			<input type="Submit" name="changeClass" value="Change Class" class="button button5" /><br><br>
-			<input type="Submit" name="done" value="finishEditing" class="button button5" />
+			
+			
+			<input type="Submit" name="done" value="Finish Editing" class="button button10" />
 		</div>
 		
 		

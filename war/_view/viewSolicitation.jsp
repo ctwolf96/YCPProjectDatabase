@@ -16,7 +16,6 @@
 		<div id="logo">
 			<img src="Logo.png">
 		</div>
-	</div>
 	
 	<form action="${pageContext.servletContext.contextPath}/viewSolicitation" method="post">
 
@@ -33,6 +32,7 @@
 					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
 					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
 			</div>
+	</div>
 	</div>
 	
 	<div class="superContainer">
@@ -54,12 +54,6 @@
 		
 		<labeL><a>Number of Students:</a></labeL><br>
 		<p>${project.numStudents}</p><br>
-			
-		<labeL><a>Majors Involved</a></labeL><br>
-		<p>${project.majors}</p><br>
-			
-		<label><a>Student Year(s)</a></label><br>
-		<p>${project.classes}</p><br>
 			
 		<label><a>Cost:</a></label><br>
 		<p>${project.cost}</p><br>

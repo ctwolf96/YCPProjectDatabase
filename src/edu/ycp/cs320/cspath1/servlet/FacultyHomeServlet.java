@@ -42,7 +42,7 @@ private static final long serialVersionUID = 1L;
 		} else if (req.getParameter("proposal") != null) {
 			resp.sendRedirect(req.getContextPath() + "/projectProposal");
 		} else if (req.getParameter("myProjects") != null) {
-			resp.sendRedirect(req.getContextPath() + "/viewProjects");
+			resp.sendRedirect(req.getContextPath() + "/myProjects");
 		} else if (req.getParameter("myApprovals") != null) {
 			resp.sendRedirect(req.getContextPath() + "/myApprovals");
 		} else {

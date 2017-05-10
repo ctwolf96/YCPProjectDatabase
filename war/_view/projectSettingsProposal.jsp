@@ -35,8 +35,7 @@
 				</tr>
 				<tr>
 					<td class="label">Change Description:</td>
-					<td><input type="text" placeholder="Change Description" name="description
-					" size="12" value="${model.description}" /></td>
+					<td><input type="text" placeholder="Change Description" name="description" size="12" value="${model.description}" /></td>
 					<td><input type="Submit" name="changeDescription" value="Change Description" class="button button5" /></td>
 				</tr>
 				<tr>
@@ -45,10 +44,16 @@
 					<td><input type="Submit" name="changeStartDate" value="Change Start Date" class="button button5" /></td>
 				</tr>
 				<tr>
+					<td class="label">Change Deadline:</td>
+					<td><input type="date"  name="deadline"/></td>
+					<td><input type="Submit" name="changeDeadline" value="Change Deadline" class="button button5" /></td>
+				</tr>
+				<tr>
 					<td class="label">Change Number of Students:</td>
 					<td><input type="text" name="numStudents"/></td>
 					<td><input type="Submit" name="changeNumStudents" value="Change Number of Students" class="button button5" /></td>
 				</tr>
+				
 				<tr>
 					<td class="label">Change Cost:</td>
 					<td><input type="text" name="cost"/></td>
@@ -67,7 +72,7 @@
 				<option value="8">8</option>
 				<option value="9">9</option>
 				<option value="10">10</option>
-			</select><br>
+			</select><br><br>
 			<input type="Submit" name="changeDuration" value="Change Duration" class="button button5" /><br><br>
 			
 			<labeL><a>Change Majors Involved:</a></labeL><br>
@@ -84,7 +89,16 @@
 			<input type="checkbox" name="classes" value="JR">Junior
 			<input type="checkbox" name="classes" value="SR">Senior<br><br>
 			<input type="Submit" name="changeClass" value="Change Class" class="button button5" /><br><br>
-			<input type="Submit" name="done" value="finishEditing" class="button button5" />
+			
+			<label><a>Change Funding:</a></label><br>
+			<select name="funding">
+				<option value="true"selected>Yes</option>
+				<option value="false">No</option>
+			</select><br><br>
+			<input type="Submit" name="changeFunding" value="Change Funding" class="button button5" /><br><br>
+			
+			
+			<input type="Submit" name="done" value="Finish Editing" class="button button10" />
 		</div>
 		
 		

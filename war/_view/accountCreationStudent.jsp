@@ -14,12 +14,13 @@
 		<div id="logo">
 			<img src="Logo.png" />
 		</div>
-	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-	</c:if>
+	
 	<div class=container>
 	<form action="${pageContext.servletContext.contextPath}/accountCreationStudent" method="post">
 	<h1 style = "text-align: center">Student Account Creation</h1><br>
+	<c:if test="${! empty errorMessage}">
+			<div style = " text-align: center; color: red">${errorMessage}</div>
+	</c:if>
 			<table>
 				<tr>
 					<td class="label">First Name:</td>

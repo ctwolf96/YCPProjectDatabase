@@ -11,13 +11,10 @@
 
 <body>
 	<div id="header">
+		
 		<div id="logo">
 			<img src="Logo.png">
 		</div>
-	</div>
-	<c:if test="${! empty errorMessage}">
-		<div class="error">${errorMessage}</div>
-	</c:if>
 
 	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
 	<div class="dropdown">
@@ -33,14 +30,20 @@
 					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
 					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
 			</div>
+			</div>
 	</div>
 	
 	<div class="superContainer">
 			<h1 style="text-align: center">Project Solicitation</h1>
-			<label><a>Project Title:</a></label><br> <input type="text"
-				name="title"><br>
+			<label><a>Project Title:</a></label><br> 
+			<input type="text" name="title"><br>
+				
+			<c:if test="${! empty errorMessage}">
+		<div class="error" style = " text-align: center; color: red">${errorMessage}</div>
+		</c:if><br>
+		
 			<br> <label><a>Description:</a></label>
-			<textarea name="message" class="description" rows="10" cols="30">
+			<textarea name="description" class="description" rows="10" cols="30">
 		</textarea>
 			<br>
 			<br> <label><a>Duration (Semesters):</a></label><br> <select
@@ -77,7 +80,7 @@
 			<br><br>
 			
 			<label><a>Solicitation Type:</a></label><br>
-			<select> name="solicitationType">
+			<select name="solicitationType">
 				<option value="ME Capstone">ME Capstone</option>
 				<option value="ECE Capstone">ECE Capstone</option>
 				<option value="CivE Capstone">CivE Capstone</option>
@@ -89,7 +92,7 @@
 				<option value="CS Internship">CS Internship</option>
 				<option value="Engineering Co-op">Engineering Co-op</option>
 				<option value="Class Project">Class Project</option>
-			<select><br><br>
+			</select><br><br>
 			
 			<label><a>Number of Students:</a></label><br>
 			<input type="text" name="numStudents"><br><br>

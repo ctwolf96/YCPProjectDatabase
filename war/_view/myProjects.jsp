@@ -6,7 +6,7 @@
 <head>
 
 <title>My Projects</title>
-<link rel="stylesheet" href="Style.css">
+<link rel="stylesheet" href="Search.css">
 </head>
 
 <body>
@@ -14,9 +14,7 @@
 		<div id="logo">
 			<img src="Logo.png">
 		</div>
-	<c:if test="${! empty errorMessage}">
-		<div class="error">${errorMessage}</div>
-	</c:if>
+	
 	<form action="${pageContext.servletContext.contextPath}/myProjects" method="post">
 	<div class="dropdown">
 			<button class="dropbtn">Menu</button>
@@ -37,7 +35,11 @@
 
 	<div class="superContainer">
 		<h1 style = "text-align: center">My Projects</h1>
-					
+		<c:if test="${! empty errorMessage}">
+		<div class="error" style = " text-align: center; color: red">${errorMessage}</div>
+		</c:if><br>
+		<div style = "margin-left: 320px">
+			<input type="Submit" name="submithome" style = "margin-left: 20px" value="Load My Projects" class = ""><br><br>
 			<table>
 				 <c:forEach items="${projects}" var="project">
 					<tr class = "projectRow">
@@ -46,8 +48,8 @@
 						</tr>
 				</c:forEach>
 			</table>
+		</div>
 			
-			<input type="Submit" name="submithome" value="Load My Projects" class = "button button5">
 	</div>
 	</form>
 </body>

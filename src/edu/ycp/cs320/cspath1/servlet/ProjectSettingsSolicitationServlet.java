@@ -137,7 +137,15 @@ public class ProjectSettingsSolicitationServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if (req.getParameter("changeNumStudents") != null) {
+			try {
+				
+				controller.editNumStudents();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		} 
+		
 		if (req.getParameter("done") != null) {
 			resp.sendRedirect(req.getContextPath() + "/myProjects");
 		}

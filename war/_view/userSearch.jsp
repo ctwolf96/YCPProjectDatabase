@@ -14,10 +14,6 @@
 			<div id="logo">
 				<img src="Logo.png">
 			</div>
-		</div>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
 		
 		<form action="${pageContext.servletContext.contextPath}/userSearch" method="post">
 		
@@ -35,11 +31,15 @@
 					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
 			</div>
 	</div>
-	
+	</div>
 	<div class="superContainer">
-	
 	<h1 style = "text-align: center">User Search</h1>
-		<label><a>Select a field to search by:</a></label><br>
+		<c:if test="${! empty errorMessage}">
+			<div class="error" style = "text-align: center">${errorMessage}</div><br>
+		</c:if>
+	<div Style = "margin-left: 210px">
+	
+
 		<select name="attribute">
 				<option value="username"selected>Username</option>
 				<option value="email">Email</option>
@@ -50,21 +50,23 @@
 				<option value="lastname">Last Name</option>
 				<option value="name">Business Name</option>
 				<option value="address">Business Address</option>
-				<option value="number">Business Number</option>
+				<option value="number">Business Number</option><br>
 				
+		
+		</select>
+		&nbsp;
 		<input type="text" name="keyword">
 			
-		<input type="Submit" name="submit" value="Search" class = "button button5">	
-		</select>
-		<table>
+		<input type="Submit" name="submit" value="Search" class = "">
+		<br><br><table style = "margin-left: 110px">
 			 <c:forEach items="${users}" var="user">
 				<tr class = "userRow">
 					<td>${user.username}</td>
-					<td class="choose">Choose this user</td>
-					<td><input type="Submit" name="${user.userID}" value="Choose" /></td>
+					<td><input type="Submit" name="${user.userID}" value="View" /></td>
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
 	</div>
 	</form>
 	</body>

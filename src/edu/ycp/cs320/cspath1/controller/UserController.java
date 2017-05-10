@@ -29,10 +29,13 @@ public class UserController {
 	
 	public User login() throws IOException, SQLException {
 		user = db.findUserByUsernameAndPassword(model.getUsername(), model.getPassword());
-		if (user.getUsername().equals(model.getUsername()) && user.getPassword().equals(model.getPassword())) {
-			return user;
-		}
-		else {
+		if (user != null) {
+			if (user.getUsername().equals(model.getUsername()) && user.getPassword().equals(model.getPassword())) {
+				return user;
+			} else {
+				return null;
+			}
+		} else {
 			return null;
 		}
 		

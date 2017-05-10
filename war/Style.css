@@ -159,6 +159,21 @@ li>a:hover {
 	transition-duration: 0.4s;
 	cursor: pointer;
 }
+.button0 {
+	background-color: #028C52; /* Green */
+	border: none;
+	color: white;
+	padding: 0px 0px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	font-family: Comic Sans;
+	align: center;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+}
 
 .button5 {
 	background-color: #028C52;
