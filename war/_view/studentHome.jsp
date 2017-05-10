@@ -14,7 +14,7 @@
 			<img src="Logo.png" />
 		</div>
 		<div id = "text">
-			<h1> Hello, ${username} </h1>
+			<h1> Hello, ${user.username} </h1>
 		</div>
 		<form action="${pageContext.servletContext.contextPath}/studentHome" method="post">
 			<div class="dropdown">

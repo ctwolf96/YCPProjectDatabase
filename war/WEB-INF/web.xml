@@ -70,6 +70,18 @@
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSettingsFacultyServlet</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>ProjectSettingsProposalServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ProjectSettingsProposalServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProjectSettingsSolicitationServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ProjectSettingsSolicitationServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewSolicitationServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.cspath1.servlet.ViewSolicitationServlet</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>UserSettingsBusinessServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.cspath1.servlet.UserSettingsBusinessServlet</servlet-class>
   </servlet>
@@ -173,9 +185,21 @@
   	<servlet-name>UserSettingsStudentServlet</servlet-name>
   	<url-pattern>/userSettingsStudent</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
+ <servlet-mapping>
+ 	<servlet-name>ViewSolicitationServlet</servlet-name>
+ 	<url-pattern>/viewSolicitation</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
   	<servlet-name>UserSettingsFacultyServlet</servlet-name>
   	<url-pattern>/userSettingsFaculty</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectSettingsProposalServlet</servlet-name>
+  	<url-pattern>/projectSettingsProposal</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectSettingsSolicitationServlet</servlet-name>
+  	<url-pattern>/projectSettingsSolicitation</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>UserSettingsBusinessServlet</servlet-name>

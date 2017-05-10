@@ -29,6 +29,7 @@ private static final long serialVersionUID = 1L;
 			throws ServletException, IOException {
 		//moving around the page
 		if (req.getParameter("logout") != null) {
+			req.getSession().invalidate();
 			resp.sendRedirect(req.getContextPath() + "/login");
 		} else if (req.getParameter("userSearch") != null) {
 			resp.sendRedirect(req.getContextPath() + "/userSearch");

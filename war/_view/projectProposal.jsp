@@ -19,11 +19,23 @@
 	</div>
 	
 	
-	
-	
+	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
+	<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				  	<a><input type="Submit" name="home" value="Home" class = "buttonDrop" ></a>				  
+					<a><input type="Submit" name="myProjects" value="My Projects" class = "buttonDrop" ></a>				 
+					<a><input type="Submit" name="proposal" value="New Proposal" class = "buttonDrop" ></a>	
+					<a><input type="Submit" name="solicitation" value= "New Solicitation" class = "buttonDrop" ></a>
+					<a><input type="Submit" name="userSearch" value="User Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="proposalSearch" value="Proposal Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="solicitationSearch" value="Solicitation Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
+					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
+			</div>
+	</div>
 	
 	<div class="superContainer">
-	<form action="${pageContext.servletContext.contextPath}/projectProposal" method="post">
 	<h1 style = "text-align: center">Project Proposal</h1>
 		<label><a>Project Title:</a></label><br>
 		<input type="text" name="title"><br><br>
@@ -79,16 +91,15 @@
 			
 			<div>
 			<input type="Submit" name="submit" value="Create Project" class = "button button5">
-			
-			<input type="Submit" name="solicitation" value="Solicit Project Form" class = "button button5">
 			</div>
+			
 			<c:if test="${! empty errorMessage}">
 			<div class="error" Style = "Color: red">${errorMessage}</div>
 			</c:if>
 			<c:if test="${! empty successMessage}">
 			<div class="error" Style = "Color: green">${successMessage}</div>
 			</c:if>
-		</form>
 		</div>
+		</form>
 	</body>
 </html>

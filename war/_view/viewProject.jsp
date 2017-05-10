@@ -5,8 +5,8 @@
 <html>
 	<head>
 
-		<title>Project Solicitation</title>
-		<link rel="stylesheet" href="Solicitation.css">
+		<title>Project Proposal</title>
+		<link rel="stylesheet" href="ProposalPage.css">
 		<meta name = "viewport" content = "width = device-width initial-scale =1">
 		
 	</head>
@@ -18,8 +18,8 @@
 		</div>
 	</div>
 	
-	<form action="${pageContext.servletContext.contextPath}/viewSolicitation" method="post">
-
+	<form action="${pageContext.servletContext.contextPath}/viewProject" method="post">
+	
 	<div class="dropdown">
 			<button class="dropbtn">Menu</button>
 			<div class="dropdown-content">
@@ -36,39 +36,45 @@
 	</div>
 	
 	<div class="superContainer">
-	<h1 style = "text-align: center">Solicitation</h1>
+	<h1 style = "text-align: center">Proposal</h1>
 		<label><a>Project Title:</a></label><br>
-		<p>${project.title}</p><br>
+		<p>${project.title}</p><br><br>
 		
 		<label><a>Description:</a></label>
 		<p>${project.description}</p><br>
 		
-		<label><a>Duration (Semesters):</a></label>
-		<p>${project.duration}</p><br><br>
+		<label><a>Duration (Semesters):</a></label><br>
+		<p>${project.duration}</p><br>
 		
-		<label><a>Start Date:</a></label>
-		<p>${project.start}</p><br><br>
+		<label><a>Start Date:</a></label><br>
+		<p>${project.start}</p><br>
 		
-		<label><a>Solicitation Type:</a></label><br>
-		<p>${project.solicitationType}</p><br>
+		<label><a>Deadline:</a></label><br>
+		<p>${project.deadline}</p><br>
+		
+		<label><a>Funding:</a></label><br>
+		<p>${project.isFunded}</p><br>
 		
 		<labeL><a>Number of Students:</a></labeL><br>
 		<p>${project.numStudents}</p><br>
 			
 		<labeL><a>Majors Involved</a></labeL><br>
-		<p>${project.majors}</p><br>
+		<c:forEach items="${project.majors}" var="major">
+			<p>${major.toString}</p>
+		</c:forEach>
 			
 		<label><a>Student Year(s)</a></label><br>
-		<p>${project.classes}</p><br>
+		<c:forEach items="${project.classes}" var="class">
+			<p>${class.toString}</p>
+		</c:forEach>
 			
 		<label><a>Cost:</a></label><br>
-		<p>${project.cost}</p><br>
+		<p>${project.cost}</p><br><br>
 		
 		<div id="newLogin">
 			<input type="Submit" name="editProject" value="Edit Project" class = "button button5">
-		</div>	
-				
+		</div>		
 		</div>
-		</form>
+	</form>
 	</body>
 </html>

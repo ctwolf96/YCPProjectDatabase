@@ -24,9 +24,8 @@ public class UserSettingsStudentServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String username = (String) req.getSession().getAttribute("username");
-		String password = (String) req.getSession().getAttribute("password");
-		if(username == null || password == null) {
+		User user = (User) req.getSession().getAttribute("user");
+		if(user == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {
@@ -41,9 +40,7 @@ public class UserSettingsStudentServlet extends HttpServlet {
 		SettingsController controller = new SettingsController();
 		AccountCreationModel model  = new AccountCreationModel();
 		
-		String username = (String) req.getSession().getAttribute("username");
-		String password = (String) req.getSession().getAttribute("password");
-		int user_id = (int) req.getSession().getAttribute("user_id");
+		User user = (User) req.getSession().getAttribute("user");
 		String errorMessage = null;
 		
 		//Fields to load into database
@@ -57,7 +54,7 @@ public class UserSettingsStudentServlet extends HttpServlet {
 		model.setPassword(newPassword);
 		model.setMajortype(majortype);
 		model.setClasstype(classtype);
-		model.setUser_id(user_id);
+		model.setUser_id(user.getUserID());
 		//Instantiate model in controller
 		controller.setModel(model);
 	

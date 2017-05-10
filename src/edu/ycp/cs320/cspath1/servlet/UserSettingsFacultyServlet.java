@@ -15,6 +15,7 @@ import edu.ycp.cs320.cspath1.model.AccountCreationModel;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
 import edu.ycp.cs320.cspath1.persist.YCPDatabase;
+import edu.ycp.cs320.cspath1.user.User;
 
 public class UserSettingsFacultyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,9 +23,8 @@ public class UserSettingsFacultyServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String username = (String) req.getSession().getAttribute("username");
-		String password = (String) req.getSession().getAttribute("password");
-		if(username == null || password == null) {
+		User user = (User) req.getSession().getAttribute("user");
+		if(user == null) {
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		}
 		else {

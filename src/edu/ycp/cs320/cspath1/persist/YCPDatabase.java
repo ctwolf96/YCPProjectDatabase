@@ -91,7 +91,7 @@ public class YCPDatabase implements IDatabase {
 
 	private Connection connect() throws SQLException {
 
-	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/Cody Spath/workspace/project_database.db;create=true");
+	Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/radio shack/workspace/project_database.db;create=true");
 
 
 	
@@ -1893,6 +1893,7 @@ public class YCPDatabase implements IDatabase {
 	DBUtil.closeQuietly(conn);
 	}
 	}
+	
 
 	@Override
 	public List<Project> findAllProjects() throws IOException, SQLException {
@@ -3785,6 +3786,50 @@ public class YCPDatabase implements IDatabase {
 			DBUtil.closeQuietly(stmt);
 			DBUtil.closeQuietly(conn);
 		}
+	}
+
+	@Override
+	public void editMajorTypes(int project_id, ArrayList<MajorType> majors) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+		stmt = conn.prepareStatement(
+		"update projects" +
+		"	set majors = ?" +
+		"	where project_id = ?"
+		);
+		
+		stmt.setString(1, majors.toString());
+		stmt.setInt(2, project_id);
+		
+		stmt.executeUpdate();
+		} finally {
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
+		}
+		
+	}
+
+	@Override
+	public void editClassTypes(int project_id, ArrayList<ClassType> classes) throws IOException, SQLException {
+		Connection conn = connect();
+		PreparedStatement  stmt = null;
+		try {
+		stmt = conn.prepareStatement(
+		"update projects" +
+		"	set classes = ?" +
+		"	where project_id = ?"
+		);
+		
+		stmt.setString(1, classes.toString());
+		stmt.setInt(2, project_id);
+		
+		stmt.executeUpdate();
+		} finally {
+		DBUtil.closeQuietly(stmt);
+		DBUtil.closeQuietly(conn);
+		}
+		
 	}
 
 	

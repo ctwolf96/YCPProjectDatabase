@@ -7,13 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.cspath1.user.User;
+
 public class ViewUserServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/viewProposal.jsp").forward(req, resp);
+		User user = (User) req.getSession().getAttribute("user");
+		if(user == null) {
+			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		}
+		else {
+			req.getRequestDispatcher("/_view/viewUser.jsp").forward(req, resp);
+		}
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

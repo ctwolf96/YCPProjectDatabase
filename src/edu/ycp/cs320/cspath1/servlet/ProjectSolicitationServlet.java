@@ -13,6 +13,7 @@ import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
 import edu.ycp.cs320.cspath1.enums.ProjectType;
 import edu.ycp.cs320.cspath1.enums.SolicitationType;
+import edu.ycp.cs320.cspath1.enums.UserType;
 import edu.ycp.cs320.cspath1.model.ProjectModel;
 import edu.ycp.cs320.cspath1.persist.DatabaseProvider;
 import edu.ycp.cs320.cspath1.persist.IDatabase;
@@ -28,9 +29,8 @@ private IDatabase db;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String username = (String) req.getSession().getAttribute("username");
-		String password = (String) req.getSession().getAttribute("password");
-		if (username == null || password == null)
+		User user = (User) req.getSession().getAttribute("user");
+		if (user == null)
 		{
 			req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		} else {
@@ -44,78 +44,105 @@ private IDatabase db;
 		DatabaseProvider.setInstance(new YCPDatabase());
 		db = DatabaseProvider.getInstance();	
 		String errorMessage = null;
+		String successMessage = null;
 		
-
-		if (req.getParameter("proposal") != null){
-			resp.sendRedirect(req.getContextPath() + "/projectProposal");
-		}
-		else{
-		
-			User user = null;
 			int project_id = -1;
 			int user_id = 0;
 			String title = req.getParameter("title");
 			String description = req.getParameter("description");
 			String start = req.getParameter("start");
 			String Duration = req.getParameter("duration");
+			int duration = 0;
 			ProjectType type = ProjectType.SOLICITATION;
-			String SolicitationType = req.getParameter("solicitationType");//
+			String SolicitationType = req.getParameter("solicitationType");
+			SolicitationType solicitationType = null;
 			String[] Majors = req.getParameterValues("majors");
 			String[] Classes = req.getParameterValues("classes");
 			ArrayList<MajorType> majors = new ArrayList<MajorType>();
 			ArrayList<ClassType> classes = new ArrayList<ClassType>();
-			String NumStudents = req.getParameter("numStudents");//
-			String Cost = req.getParameter("cost");//
+			String NumStudents = req.getParameter("numStudents");
+			int numStudents = 0;
+			String Cost = req.getParameter("cost");
+			double cost = 0;
 			boolean isFunded = false;
 			String deadline = null;
 			
-			
-			String username = (String) req.getSession().getAttribute("username");
-			String password = (String) req.getSession().getAttribute("password");
-			try {
-				user = db.findUserByUsernameAndPassword(username, password);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			User user = (User) req.getSession().getAttribute("user");
 			user_id = user.getUserID();
 			
-			for(int i = 0; i<Majors.length;i++){
-				majors.add(getMajorTypeFromParameter(Majors[i]));
+			if (!(Duration.equals(""))) {
+				duration = Integer.parseInt(Duration); 
 			}
-			for(int i = 0; i<Classes.length;i++){
-				classes.add(getClassTypeFromParameter(Classes[i]));
-			}
-				
-			double cost = Double.parseDouble(Cost);
-			int numStudents = Integer.parseInt(NumStudents);
-			int duration = Integer.parseInt(Duration);
-			
-			SolicitationType solicitationType = getSolicitationTypeFromParameter(SolicitationType);
-			System.out.println(title + " " + description + " " + start + " " + duration + " " + type);
-			if (user_id == 0 || title == null || description == null || start == null || duration == 0 || type == null) {
-				errorMessage = "Please specify required fields";
-			} else {
-				try {
-					
-					
-					project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
-				} catch (SQLException e) {
-					e.printStackTrace();
+			if (!(Majors == null)) {
+				for (int i = 0; i < Majors.length; i++) {
+					majors.add(getMajorTypeFromParameter(Majors[i]));
 				}
 			}
+			if (!(Classes == null)) {
+				for(int i = 0; i < Classes.length;i++) {
+					classes.add(getClassTypeFromParameter(Classes[i]));
+				}
+			}
+			if (!(Cost.equals(""))) {
+				cost = Double.parseDouble(Cost);
+			}
+			if (!(NumStudents.equals(""))) {
+				numStudents = Integer.parseInt(NumStudents);
+			} 
+			if (!(SolicitationType == null)) {
+				solicitationType = getSolicitationTypeFromParameter(SolicitationType);
+			}
+ 
+			if (req.getParameter("submit") != null) {
+				if(user_id == 0 || title.equals("") || description.equals("")|| start.equals("") || duration == 0 || type == null) {
+					errorMessage = "Please specify required fields";
+					System.out.println("You have goofed");
+					req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
+				} else {
+					try {
+						project_id = db.insertProject(user_id, title, description, start, duration, type, solicitationType, majors, classes, numStudents, cost, isFunded, deadline);
+						System.out.println(project_id);
+						if (project_id > 0) {
+							successMessage = "Your project was successfully created";
+							resp.sendRedirect(req.getContextPath() + "/myProjects");
+						}
+						else {
+							errorMessage = "Project could not be created";
+							req.getRequestDispatcher("/_view/projectProposal.jsp").forward(req, resp);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			} else if (req.getParameter("logout") != null) {
+				req.getSession().invalidate();
+				resp.sendRedirect(req.getContextPath() + "/login");
+			} else if (req.getParameter("userSearch") != null) {
+				resp.sendRedirect(req.getContextPath() + "/userSearch");
+			} else if (req.getParameter("proposalSearch") != null) {
+				resp.sendRedirect(req.getContextPath() + "/proposalSearch");
+			} else if (req.getParameter("solicitationSearch") != null) {
+				resp.sendRedirect(req.getContextPath() + "/solicitationSearch");
+			} else if (req.getParameter("solicitation") != null) {
+				resp.sendRedirect(req.getContextPath() + "/projectSolicitation");
+			} else if (req.getParameter("proposal") != null) {
+				resp.sendRedirect(req.getContextPath() + "/projectProposal");
+			} else if (req.getParameter("myProjects") != null) {
+				resp.sendRedirect(req.getContextPath() + "/myProjects");
+			} else if (req.getParameter("settings") != null) {
+				resp.sendRedirect(req.getContextPath() + "/userSettingsStudent");
+			} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.STUDENT)) {
+				resp.sendRedirect(req.getContextPath() + "/studentHome");
+			} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.FACULTY)) {
+				resp.sendRedirect(req.getContextPath() + "/facultyHome");
+			} else if (req.getParameter("home") != null && user.getUsertype().equals(UserType.BUSINESS)) {
+				resp.sendRedirect(req.getContextPath() + "/businessHome");
+			} 
+			
+			
 			// Add result objects as request attributes
 			req.setAttribute("errorMessage", errorMessage);
-			
-			//See if the user clicked either of the other account types, redirect accordingly
-			
-			if(req.getParameter("submit") != null && project_id > 0){
-				resp.sendRedirect(req.getContextPath() + "/projectProposal");
-			}
-			else {
-				req.getRequestDispatcher("/_view/projectSolicitation.jsp").forward(req, resp);
-			}
-		}
-
+			req.setAttribute("successMessage", successMessage);
 	}
 	
 	//Translate parameter to MajorType

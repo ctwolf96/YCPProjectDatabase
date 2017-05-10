@@ -4,20 +4,23 @@ import java.util.ArrayList;
 
 import edu.ycp.cs320.cspath1.enums.ClassType;
 import edu.ycp.cs320.cspath1.enums.MajorType;
+import edu.ycp.cs320.cspath1.enums.SolicitationType;
 import edu.ycp.cs320.cspath1.user.User;
 
 public class ProjectModel {
 	private User creator;
+	private int project_id;
 	private ArrayList <MajorType> majors;
 	private ArrayList <ClassType> classes;
 	private String description;
-	private String duration;
+	private int duration;
 	private String title;
+	private double cost;
 	private String startTime;
 	private int numStudents;
 	private boolean isFunded;
-	private boolean hardware;
-	private boolean software;
+	private SolicitationType solicitationType;
+	
 	
 	public User getCreator() {
 		return creator;
@@ -51,11 +54,11 @@ public class ProjectModel {
 		this.description = description;
 	}
 
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
@@ -75,22 +78,6 @@ public class ProjectModel {
 		this.isFunded = isFunded;
 	}
 
-	public boolean isHardware() {
-		return hardware;
-	}
-
-	public void setHardware(boolean hardware) {
-		this.hardware = hardware;
-	}
-
-	public boolean isSoftware() {
-		return software;
-	}
-
-	public void setSoftware(boolean software) {
-		this.software = software;
-	}
-
 	public String getStartTime() {
 		return startTime;
 	}
@@ -105,6 +92,30 @@ public class ProjectModel {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public int getProject_id() {
+		return project_id;
+	}
+
+	public void setProject_id(int project_id) {
+		this.project_id = project_id;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public SolicitationType getSolicitationType() {
+		return solicitationType;
+	}
+
+	public void setSolicitationType(SolicitationType solicitationType) {
+		this.solicitationType = solicitationType;
 	}
 	
 	

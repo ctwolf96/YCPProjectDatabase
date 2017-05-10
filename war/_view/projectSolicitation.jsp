@@ -19,10 +19,23 @@
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
+	<form action="${pageContext.servletContext.contextPath}/projectSolicitation" method="post">
+	<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				  	<a><input type="Submit" name="home" value="Home" class = "buttonDrop" ></a>				  
+					<a><input type="Submit" name="myProjects" value="My Projects" class = "buttonDrop" ></a>				 
+					<a><input type="Submit" name="proposal" value="New Proposal" class = "buttonDrop" ></a>	
+					<a><input type="Submit" name="solicitation" value= "New Solicitation" class = "buttonDrop" ></a>
+					<a><input type="Submit" name="userSearch" value="User Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="proposalSearch" value="Proposal Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="solicitationSearch" value="Solicitation Search" class = "buttonDrop"></a>
+					<a><input type="Submit" name="settings" value="Edit Settings" class = "buttonDrop"></a>
+					<a><input type="Submit" name="logout" value="Logout" class = "buttonDrop" ></a>		
+			</div>
+	</div>
+	
 	<div class="superContainer">
-		<form
-			action="${pageContext.servletContext.contextPath}/projectSolicitation"
-			method="post">
 			<h1 style="text-align: center">Project Solicitation</h1>
 			<label><a>Project Title:</a></label><br> <input type="text"
 				name="title"><br>
@@ -48,8 +61,8 @@
 		<input type="date" name="start"><br><br>
 		
 			<label><a>Majors/Disciplines:</a></label><br>
-			<input type="checkbox" name="majora" value="CE">Computer Engineering
-			<input type="checkbox" name="majora" value="CS">Computer Science
+			<input type="checkbox" name="majors" value="CE">Computer Engineering
+			<input type="checkbox" name="majors" value="CS">Computer Science
 			<input type="checkbox" name="majors" value="EE">Electrical Engineering
 			<input type="checkbox" name="majors" value="ME">Mechanical Engineering
 			<input type="checkbox" name="majors" value="CIV">Civil Engineering
@@ -85,10 +98,7 @@
 			<input type="text" name="cost"><br><br>
 			
 			<input type="Submit" name="submit" value="Create Solicitation" class = "button button5">
-			
-			<input type="Submit" name="proposal" value="Propose Project Form" class = "button button5">
-			
-		</form>
-	</div>
+		</div>	
+	</form>
 </body>
 </html>

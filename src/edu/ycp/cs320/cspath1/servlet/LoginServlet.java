@@ -48,17 +48,22 @@ private IDatabase db;
 		model.setUsername(username);
 		model.setPassword(password);
 		controller.setModel(model);
+		
+		System.out.println(model.getUsername() + " " + model.getPassword());
 			
 		if (username == null || password == null || username.equals("") || password.equals("")) {
 			errorMessage = "Please specify username and password";
 		} else {
 			try {
 				user = controller.login();
-				System.out.println(user.getUsername() + ", " + user.getPassword());
+
 				System.out.println(username + ", " + password);
 				
-				if(user.getUsername() != null && user.getPassword() != null && user.getUsername().equals(username) && user.getPassword().equals(password)){
+				if(user != null){
+					if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+					System.out.println(user.getUsername() + ", " + user.getPassword());
 					validLogin = true;
+					}
 				}
 				else {
 					errorMessage = "Username or Password may be incorrect";
